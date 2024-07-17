@@ -1,3 +1,9 @@
 # macOS
 .DS_Store
 .localized
+
+# Python
+__pycache__/
+
+# SQLite
+*.sqlite3
