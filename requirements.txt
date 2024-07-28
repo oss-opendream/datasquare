@@ -35,3 +35,4 @@ watchfiles==0.22.0
 websockets==12.0
 greenlet==3.0.3
 sqlalchemy==2.0.31
+psycopg2-binary==2.9.9
