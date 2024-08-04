@@ -1,40 +1,35 @@
 import uvicorn
-from fastapi import FastAPI, Request, Depends
-from fastapi.templating import Jinja2Templates
-from sqlalchemy.orm import Session
-from models.database import SessionLocal, engine
-import models
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from app.routers import feed
 
-models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
-templates = Jinja2Templates(directory="templates")
+def create_app() -> None:
+    """
+    FastAPI app 객체를 생성합니다.
+    - 'static' 디렉터리의 파일들을 '/static'으로 라우팅
+    - 모든 라우터를 app에 포함
+    :return: FastAPI app 객체
+    """
+    app = FastAPI(title="Datasquare", description="데이터 협업을 위한 조직 간 커뮤니케이션 플랫폼")
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+    app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.get('/')
+    app.include_router(feed.router)
+
+    return app
+
+
+datasquare = create_app()
+
+
+@datasquare.get('/')
 def read_root():
+    """
+    루트 라우터 함수
+    """
     return {'hello': 'world'}
 
-@app.get("/feed")
-async def read_dashboard(request: Request, db: Session = Depends(get_db)):
-    issues = db.query(models.Issue).all()
-    return templates.TemplateResponse("feed.html", {"request": request, "issues": issues})
 
-@app.get("/feed/my_issues")
-async def read_my_issues(request: Request, db: Session = Depends(get_db)):
-    my_issues = db.query(models.Issue).filter_by(author_id={{"my_id"}}).all()
-    return templates.TemplateResponse("feed.html", {"request": request, "issues": my_issues})
-
-@app.get("/feed/search")
-async def search_issues(request: Request, query: str, db: Session = Depends(get_db)):
-    search_result = db.query(models.Issue).filter(models.Issue.title.contains(query)).all()
-    return templates.TemplateResponse("feed.html", {"request": request, "issues": search_result})
-
-# if __name__ == "__main__":
-#     uvicorn.run(app, host="0.0.0.0", port=80, reload=True)
+if __name__ == "__main__":
+    uvicorn.run(datasquare, host="0.0.0.0", port=80, reload=True)
