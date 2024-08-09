@@ -1,30 +1,30 @@
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-import os
+from pathlib import Path
 from datetime import datetime
 
 app = FastAPI()
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-templates_dir = os.path.join(current_dir, "templates")
-static_dir = os.path.join(current_dir, "static")
-
-app.mount("/static", StaticFiles(directory=static_dir), name="static")
-
-templates = Jinja2Templates(directory=templates_dir)
+BASE_DIR = Path(__file__).resolve().parent
+templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 
 @app.get("/")
 async def home(request: Request):
-    return templates.TemplateResponse("pages/home.html", {
-        "request": request,
-        "company_name": "Your Company",
-        "current_year": datetime.now().year
-    })
+    try:
+        return templates.TemplateResponse("pages/home.html", {
+            "request": request,
+            "company_name": "Your Company",
+            "current_year": datetime.now().year
+        })
+    except Exception as e:
+        print(f"Error: {e}")
+        raise
 
 @app.get("/data-request")
 async def data_request(request: Request):
-    return templates.TemplateResponse("data_request.html", {
+    return templates.TemplateResponse("pages/data_request.html", {
         "request": request,
         "company_name": "Your Company",
         "current_year": datetime.now().year
@@ -32,7 +32,7 @@ async def data_request(request: Request):
 
 @app.get("/databases")
 async def databases(request: Request):
-    return templates.TemplateResponse("databases.html", {
+    return templates.TemplateResponse("pages/databases.html", {
         "request": request,
         "company_name": "Your Company",
         "current_year": datetime.now().year
@@ -40,7 +40,4 @@ async def databases(request: Request):
 
 if __name__ == "__main__":
     import uvicorn
-    print(f"Templates directory: {templates_dir}")
-    print(f"Contents of templates directory: {os.listdir(templates_dir)}")
-    print(f"Contents of pages directory: {os.listdir(os.path.join(templates_dir, 'pages'))}")
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run(app, host="localhost", port=8000)

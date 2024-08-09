@@ -1,0 +1,52 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 30px;
+    margin-right: 10px;
+}
+
+nav ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 10px;
+    position: relative;
+}
+
+.notifications-container {
+    position: relative;
+}
