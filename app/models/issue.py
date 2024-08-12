@@ -55,73 +55,73 @@ class Issue(Base):
 
 # 하단부 모델 코드 별도 모듈화 필요
 
-# class IssueComment(Base):
-#     __tablename__ = 'issue_comment'
+class IssueComment(Base):
+    __tablename__ = 'issue_comment'
 
-#     comment_id = Column(Integer, primary_key=True, unique=True, nullable=False)
-#     publisher_id = Column(Integer, ForeignKey(
-#         'personal_profile.profile_id', onupdate="CASCADE", ondelete="RESTRICT"), nullable=False)
-#     within = Column(Integer, nullable=False)
-#     content = Column(Text, nullable=False)
+    comment_id = Column(Integer, primary_key=True, unique=True, nullable=False)
+    publisher_id = Column(Integer, ForeignKey(
+        'personal_profile.profile_id', onupdate="CASCADE", ondelete="RESTRICT"), nullable=False)
+    within = Column(Integer, nullable=False)
+    content = Column(Text, nullable=False)
 
-#     publisher = relationship(
-#         'PersonalProfile', back_populates='comments_published')
-
-
-# class OrgDatabase(Base):
-#     __tablename__ = 'org_database'
-
-#     database_id = Column(Integer, primary_key=True,
-#                          unique=True, nullable=False)
-#     database = Column(String, nullable=False)
-
-#     tables = relationship('OrgDatabaseTable', back_populates='database')
+    publisher = relationship(
+        'PersonalProfile', back_populates='comments_published')
 
 
-# class OrgDatabaseTable(Base):
-#     __tablename__ = 'org_database_table'
+class OrgDatabase(Base):
+    __tablename__ = 'org_database'
 
-#     table_id = Column(Integer, primary_key=True, unique=True, nullable=False)
-#     table_name = Column(String, nullable=False)
-#     within_db = Column(Integer, ForeignKey('org_database.database_id',
-#                        onupdate="CASCADE", ondelete="RESTRICT"), nullable=False)
+    database_id = Column(Integer, primary_key=True,
+                         unique=True, nullable=False)
+    database = Column(String, nullable=False)
 
-#     database = relationship('OrgDatabase', back_populates='tables')
-
-
-# class DatabaseTag(Base):
-#     __tablename__ = 'database_tag'
-
-#     id = Column(Integer, primary_key=True, unique=True, nullable=False)
-#     tag_name = Column(String, nullable=False)
-
-#     relationships = relationship(
-#         'DatabaseTagRelationship', back_populates='tag')
+    tables = relationship('OrgDatabaseTable', back_populates='database')
 
 
-# class DatabaseTagRelationship(Base):
-#     __tablename__ = 'database_tag_relationship'
+class OrgDatabaseTable(Base):
+    __tablename__ = 'org_database_table'
 
-#     relationship_id = Column(Integer, primary_key=True,
-#                              unique=True, nullable=False)
-#     tag_id = Column(Integer, ForeignKey('database_tag.id',
-#                     onupdate="CASCADE", ondelete="RESTRICT"), nullable=False)
-#     database_id = Column(Integer, ForeignKey(
-#         'org_database.database_id', onupdate="CASCADE", ondelete="RESTRICT"), nullable=False)
+    table_id = Column(Integer, primary_key=True, unique=True, nullable=False)
+    table_name = Column(String, nullable=False)
+    within_db = Column(Integer, ForeignKey('org_database.database_id',
+                       onupdate="CASCADE", ondelete="RESTRICT"), nullable=False)
 
-#     tag = relationship('DatabaseTag', back_populates='relationships')
-#     database = relationship('OrgDatabase')
+    database = relationship('OrgDatabase', back_populates='tables')
 
 
-# class TeamMembership(Base):
-#     __tablename__ = 'team_membership'
+class DatabaseTag(Base):
+    __tablename__ = 'database_tag'
 
-#     membership_id = Column(Integer, primary_key=True,
-#                            unique=True, nullable=False)
-#     member_id = Column(Integer, ForeignKey(
-#         'personal_profile.profile_id', onupdate="CASCADE", ondelete="RESTRICT"))
-#     team_id = Column(Integer, ForeignKey(
-#         'team_profile.profile_id', onupdate="CASCADE", ondelete="RESTRICT"))
+    id = Column(Integer, primary_key=True, unique=True, nullable=False)
+    tag_name = Column(String, nullable=False)
 
-#     member = relationship('PersonalProfile', back_populates='memberships')
-#     team = relationship('TeamProfile', back_populates='memberships')
+    relationships = relationship(
+        'DatabaseTagRelationship', back_populates='tag')
+
+
+class DatabaseTagRelationship(Base):
+    __tablename__ = 'database_tag_relationship'
+
+    relationship_id = Column(Integer, primary_key=True,
+                             unique=True, nullable=False)
+    tag_id = Column(Integer, ForeignKey('database_tag.id',
+                    onupdate="CASCADE", ondelete="RESTRICT"), nullable=False)
+    database_id = Column(Integer, ForeignKey(
+        'org_database.database_id', onupdate="CASCADE", ondelete="RESTRICT"), nullable=False)
+
+    tag = relationship('DatabaseTag', back_populates='relationships')
+    database = relationship('OrgDatabase')
+
+
+class TeamMembership(Base):
+    __tablename__ = 'team_membership'
+
+    membership_id = Column(Integer, primary_key=True,
+                           unique=True, nullable=False)
+    member_id = Column(Integer, ForeignKey(
+        'personal_profile.profile_id', onupdate="CASCADE", ondelete="RESTRICT"))
+    team_id = Column(Integer, ForeignKey(
+        'team_profile.profile_id', onupdate="CASCADE", ondelete="RESTRICT"))
+
+    member = relationship('PersonalProfile', back_populates='memberships')
+    team = relationship('TeamProfile', back_populates='memberships')
