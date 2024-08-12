@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+
 from app.routers import feed
 
 
@@ -11,19 +12,21 @@ def create_app() -> None:
     - 모든 라우터를 app에 포함
     :return: FastAPI app 객체
     """
-    app = FastAPI(title="Datasquare", description="데이터 협업을 위한 조직 간 커뮤니케이션 플랫폼")
+    created_app = FastAPI(title="Datasquare",
+                          description="데이터 협업을 위한 조직 간 커뮤니케이션 플랫폼")
 
-    app.mount("/static", StaticFiles(directory="static"), name="static")
+    created_app.mount(
+        "/static", StaticFiles(directory="static"), name="static")
 
-    app.include_router(feed.router)
+    created_app.include_router(feed.router)
 
-    return app
-
-
-datasquare = create_app()
+    return created_app
 
 
-@datasquare.get('/')
+app = create_app()
+
+
+@app.get('/')
 def read_root():
     """
     루트 라우터 함수
@@ -32,4 +35,4 @@ def read_root():
 
 
 if __name__ == "__main__":
-    uvicorn.run(datasquare, host="0.0.0.0", port=80, reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=80, reload=True)
