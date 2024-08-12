@@ -12,15 +12,11 @@ app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="stat
 
 @app.get("/")
 async def home(request: Request):
-    try:
-        return templates.TemplateResponse("pages/home.html", {
-            "request": request,
-            "company_name": "Your Company",
-            "current_year": datetime.now().year
-        })
-    except Exception as e:
-        print(f"Error: {e}")
-        raise
+    return templates.TemplateResponse("pages/home.html", {
+        "request": request,
+        "company_name": "Your Company",
+        "current_year": datetime.now().year
+    })
 
 @app.get("/data-request")
 async def data_request(request: Request):

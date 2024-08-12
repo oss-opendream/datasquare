@@ -10,43 +10,12 @@
         </ul>
     </nav>
     <div class="user-actions">
-        <div class="notifications-container">
-            <button class="icon-button notifications" id="notificationButton">
-                <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications">
-                <span class="badge">9</span>
-            </button>
-            <div id="notificationPopup" class="notification-popup" style="display: none;">
-                <div class="notification-header">
-                    <h2>Notifications</h2>
-                    <button class="icon-button trash">
-                        <img src="{{ url_for('static', path='/images/trash-icon.svg') }}" alt="Clear all">
-                    </button>
-                </div>
-                <ul class="notification-list">
-                    <li class="notification-item">
-                        <div class="notification-icon">
-                            <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User">
-                        </div>
-                        <div class="notification-content">
-                            <p class="description-top">Description Top</p>
-                            <h3 class="title">Title</h3>
-                            <p class="description-bottom">Description Bottom</p>
-                        </div>
-                        <button class="close-notification">&times;</button>
-                    </li>
-                    <!-- 추가 알림 항목들... -->
-                </ul>
-                <button class="show-all">Show All</button>
-            </div>
+        <div class="notifications-container" id="notificationButton">
+            <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications">
+            <!-- <span class="badge">9</span> -->
         </div>
-        <button class="icon-button settings">
-            <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings">
-        </button>
-        <button class="icon-button user-profile">
-            <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile">
-        </button>
-        <button class="icon-button logout">
-            <img src="{{ url_for('static', path='/images/logout-icon.svg') }}" alt="Logout">
-        </button>
+        <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings">
+        <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile">
+        <img src="{{ url_for('static', path='/images/logout-icon.svg') }}" alt="Logout">
     </div>
 </header>

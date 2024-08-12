@@ -9,46 +9,16 @@
 </head>
 
 <body>
-    <header>
-        <div class="logo">
-            <img src="{{ url_for('static', path='/images/logo.svg') }}" alt="DataSquare Logo">
-            <span>DataSquare for {{ company_name }}</span>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('data_request') }}">Data Request</a></li>
-                <li><a href="{{ url_for('databases') }}">Databases</a></li>
-            </ul>
-        </nav>
-        <div class="user-actions">
-            <div class="notifications-container">
-                <button class="icon-button notifications" id="notificationButton">
-                    <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications">
-                    <span class="badge">9</span>
-                </button>
-            </div>
-            <button class="icon-button settings">
-                <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings">
-            </button>
-            <button class="icon-button user-profile">
-                <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile">
-            </button>
-            <button class="icon-button logout">
-                <img src="{{ url_for('static', path='/images/logout-icon.svg') }}" alt="Logout">
-            </button>
-        </div>
-    </header>
+    {% include 'pages/header.html' %}
 
-    <main>
-        {% block content %}
-        {% endblock %}
+    <main role="main">
+        {% block content %}{% endblock %}
     </main>
 
-    <footer>
-        <p>&copy; {{ current_year }} DataSquare. All rights reserved.</p>
-    </footer>
+    {% include 'pages/footer.html' %}
 
     <script src="{{ url_for('static', path='/js/main.js') }}"></script>
+    <script src="{{ url_for('static', path='/js/notifications.js') }}"></script>
 </body>
 
 </html>
