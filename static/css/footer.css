@@ -1,0 +1,59 @@
+footer {
+    background-color: #666666;
+    color: #ffffff;
+    padding: 10px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer .logo {
+    display: flex;
+    align-items: center;
+}
+
+footer .logo img {
+    height: 24px;
+    margin-right: 10px;
+    filter: brightness(0) invert(1);
+    /* SVG 로고를 흰색으로 변경 */
+}
+
+footer .logo span {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+footer .copyright {
+    font-size: 14px;
+}
+
+footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content .logo {
+    display: flex;
+    align-items: center;
+}
+
+.footer-content .logo img {
+    width: 40px;
+    margin-right: 10px;
+}
+
+.copyright {
+    font-size: 14px;
+    color: #6c757d;
+}

@@ -1,7 +1,11 @@
 @import 'layouts.css';
 @import 'header.css';
+@import 'footer.css';
 @import 'notifications.css';
 @import 'components.css';
+/* @import 'admin_settings.css';
+@import 'db_info.css';
+@import 'error.css'; */
 
 body {
     font-family: Arial, sans-serif;

@@ -12,9 +12,34 @@ header {
     align-items: center;
 }
 
-.logo img {
-    height: 30px;
-    margin-right: 10px;
+.logo svg {
+    width: 24px;
+    height: 24px;
+    padding: 10px 20px;
+    margin-right: 8px;
+    fill: #333;
+    /* 로고 색상 */
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+    color: #333;
+    /* DataSquare 텍스트 색상 */
+}
+
+.company {
+    font-size: 12px;
+    color: #666;
+    /* 'for Company name' 텍스트 색상 */
+    margin-top: 2px;
+    /* 위 텍스트와의 간격 */
 }
 
 nav ul {
@@ -36,7 +61,7 @@ nav ul li a {
 .user-actions {
     display: flex;
     align-items: center;
-    gap: 70px;
+    gap: 20px;
     /* 이 값을 조절하여 간격을 변경할 수 있습니다 */
 }
 
@@ -55,4 +80,55 @@ nav ul li a {
 
 .notifications-container {
     position: relative;
+}
+
+header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+}
+
+header .logo-icon {
+    height: 40px;
+    margin-right: 10px;
+}
+
+header .logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+header .brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+header .tagline {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+header nav ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
+    margin-right: 20px;
+}
+
+header .user-actions {
+    display: flex;
+    align-items: center;
+}
+
+header .user-actions>* {
+    margin-left: 15px;
 }
