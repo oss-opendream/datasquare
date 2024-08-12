@@ -3,7 +3,7 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from app.models.database import Base, SessionLocal, engine
-from app.schemas.issue import Issue
+from app.models.issue import Issue
 
 Base.metadata.create_all(bind=engine)
 
