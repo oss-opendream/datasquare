@@ -19,6 +19,22 @@
 
     <script src="{{ url_for('static', path='/js/main.js') }}"></script>
     <script src="{{ url_for('static', path='/js/notifications.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('DOM loaded');
+            const notificationButton = document.getElementById('notificationButton');
+            if (notificationButton) {
+                notificationButton.addEventListener('click', function () {
+                    console.log('Button clicked');
+                    const popup = document.getElementById('notificationPopup');
+                    if (popup) {
+                        popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

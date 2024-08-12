@@ -1,13 +1,5 @@
 /* 전체 레이아웃 구조 */
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-}
+
 
 header {
     position: fixed;

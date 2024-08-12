@@ -12,10 +12,34 @@
     <div class="user-actions">
         <div class="notifications-container" id="notificationButton">
             <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications">
-            <!-- <span class="badge">9</span> -->
+            <span class="badge">9</span>
         </div>
         <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings">
         <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile">
         <img src="{{ url_for('static', path='/images/logout-icon.svg') }}" alt="Logout">
+    </div>
+    <div id="notificationPopup" class="notification-popup" style="display: none;">
+        <div class="notification-header">
+            <h2>Notifications</h2>
+            <button id="closeNotifications">
+                <img src="{{ url_for('static', path='/images/trash-icon.svg') }}" alt="Clear all" width="24"
+                    height="24">
+            </button>
+        </div>
+        <div class="notification-list">
+            <div class="notification-item">
+                <div class="notification-icon">
+                    <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User">
+                </div>
+                <div class="notification-content">
+                    <p class="description-top">Description Top</p>
+                    <h3 class="title">Title</h3>
+                    <p class="description-bottom">Description Bottom</p>
+                </div>
+                <button class="close-notification">×</button>
+            </div>
+            <!-- More notification items can be added here -->
+        </div>
+        <button class="show-all">Show All</button>
     </div>
 </header>
