@@ -1,9 +1,9 @@
-{% extends "pages/base.html" %}
+{% extends 'pages/base.html' %}
 
 {% block title %}Home - DataSquare{% endblock %}
 
 {% block content %}
-<div class="home-container">
+<div class='home-container'>
     <h1>Welcome to DataSquare</h1>
 
     <p>DataSquare는 데이터 조직 간 협업을 위한 커뮤니케이션 플랫폼입니다.</p>
@@ -11,13 +11,13 @@
     <section>
         <h2>데이터 요청</h2>
         <p>필요한 데이터를 쉽고 빠르게 요청하세요.</p>
-        <a href="{{ url_for(request, 'data_request') }}">데이터 요청하기</a>
+        <a href='{{ url_for("data_request") }}'>데이터 요청하기</a>
     </section>
 
     <section>
         <h2>데이터베이스 관리</h2>
         <p>데이터베이스를 효율적으로 관리하고 모니터링하세요.</p>
-        <a href="{{ url_for(request, 'databases') }}">데이터베이스 보기</a>
+        <a href='{{ url_for("databases") }}'>데이터베이스 보기</a>
     </section>
 </div>
 {% endblock %}

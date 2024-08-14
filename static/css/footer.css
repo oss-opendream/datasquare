@@ -1,35 +1,6 @@
 footer {
     background-color: #666666;
     color: #ffffff;
-    padding: 10px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-footer .logo {
-    display: flex;
-    align-items: center;
-}
-
-footer .logo img {
-    height: 24px;
-    margin-right: 10px;
-    filter: brightness(0) invert(1);
-    /* SVG 로고를 흰색으로 변경 */
-}
-
-footer .logo span {
-    color: #ffffff;
-    font-size: 14px;
-}
-
-footer .copyright {
-    font-size: 14px;
-}
-
-footer {
-    background-color: #f8f9fa;
     padding: 20px 0;
     margin-top: 40px;
 }
@@ -49,11 +20,17 @@ footer {
 }
 
 .footer-content .logo img {
-    width: 40px;
+    height: 24px;
+    width: auto;
     margin-right: 10px;
+}
+
+.footer-content .logo span {
+    color: #ffffff;
+    font-size: 14px;
 }
 
 .copyright {
     font-size: 14px;
-    color: #6c757d;
+    color: #ffffff;
 }

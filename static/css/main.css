@@ -3,9 +3,6 @@
 @import 'footer.css';
 @import 'notifications.css';
 @import 'components.css';
-/* @import 'admin_settings.css';
-@import 'db_info.css';
-@import 'error.css'; */
 
 body {
     font-family: Arial, sans-serif;
@@ -14,18 +11,11 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #f4f4f4;
 }
 
 main {
     flex: 1;
     padding: 20px;
-}
-
-footer {
-    background-color: #f5f5f5;
-    text-align: center;
-    padding: 10px;
 }
 
 .badge {

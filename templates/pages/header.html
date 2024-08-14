@@ -1,8 +1,6 @@
 <header>
     <div class="logo">
-        <img src="{{ url_for(request, 'static', path='/images/logo_withouttext.svg') }}" alt="DataSquare Logo"
-            class="logo-icon">
-
+        <img src="{{ url_for('static', path='/images/logo_withouttext.svg') }}" alt="DataSquare Logo" class="logo-icon">
         <div class="logo-text">
             <span class="brand">DataSquare</span>
             <span class="tagline">for {{ company_name }}</span>
@@ -10,17 +8,38 @@
     </div>
     <nav>
         <ul>
-            <li><a href="{{ url_for(request, 'data_request') }}">Data Request</a></li>
-            <li><a href="{{ url_for(request, 'databases') }}">Databases</a></li>
+            <li><a href="{{ url_for('data_request') }}">Data Request</a></li>
+            <li><a href="{{ url_for('databases') }}">Databases</a></li>
         </ul>
     </nav>
     <div class="user-actions">
-        <div class="notifications-container" id="notificationButton">
-            <img src="{{ url_for(request, 'static', path='/images/bell-icon.svg') }}" alt="Notifications">
-            <span class="badge">9</span>
+        <div id="notificationButton" class="notifications-container">
+            <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications">
+            {% if notification_count > 0 %}
+            <span class="badge">{{ notification_count }}</span>
+            {% endif %}
         </div>
-        <img src="{{ url_for(request, 'static', path='/images/settings-icon.svg') }}" alt="Settings">
-        <img src="{{ url_for(request, 'static', path='/images/user-icon.svg') }}" alt="User Profile">
-        <img src="{{ url_for(request, 'static', path='/images/logout-icon.svg') }}" alt="Logout">
+        <div id="notificationPopup" class="notification-popup">
+            <div class="notification-header">
+                <h3>알림</h3>
+                <button id="closeNotifications">×</button>
+            </div>
+            <div class="notification-list">
+                {% if notifications %}
+                {% for notification in notifications %}
+                <div class="notification-item">
+                    {{ notification.message }}
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="notification-item">
+                    새로운 알림이 없습니다.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings">
+        <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile">
+        <img src="{{ url_for('static', path='/images/logout-icon.svg') }}" alt="Logout">
     </div>
 </header>

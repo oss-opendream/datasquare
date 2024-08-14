@@ -1,9 +1,9 @@
 <footer>
-    <div class="footer-content">
-        <div class="logo">
-            <img src="{{ url_for(request, 'static', path='/images/logo_withouttext.svg') }}" alt="DataSquare Logo">
+    <div class='footer-content'>
+        <div class='logo'>
+            <img src='{{ url_for("static", path="/images/logo_withouttext.svg") }}' alt='DataSquare Logo'>
             <span>DataSquare for {{ company_name }}</span>
         </div>
-        <p class="copyright">{{ company_name }} @ {{ current_year }}. All rights reserved.</p>
+        <p class='copyright'>{{ company_name }} @ {{ current_year }}. All rights reserved.</p>
     </div>
 </footer>
