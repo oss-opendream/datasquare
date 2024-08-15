@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from app.models.database import Base, SessionLocal, engine
-from app.models.issue import Issue, PersonalProfile
+from app.models.issue import Issue, TeamMembership
 
 Base.metadata.create_all(bind=engine)
 
@@ -29,12 +29,14 @@ async def read_dashboard(request: Request, db: Session = Depends(get_db)):
 
     for issue in issues:
         author = issue.publisher
+        author_team_name = db.query(TeamMembership).filter_by(
+            member_id=author.profile_id).first().team.team_name
 
         issue_data.append({
             "title": issue.title,
             "content": issue.content,
             "author_name": author.name,
-            # "team": author.memberships.team_id,
+            "team": author_team_name,
             "profile_pic": base64.b64encode(author.profile_image).decode("utf-8")
         })
 
@@ -51,12 +53,14 @@ async def read_my_issues(request: Request, db: Session = Depends(get_db)):
 
     for issue in my_issues:
         author = issue.publisher
+        author_team_name = db.query(TeamMembership).filter_by(
+            member_id=author.profile_id).first().team.team_name
 
         issue_data.append({
             "title": issue.title,
             "content": issue.content,
             "author_name": author.name,
-            # "team": author.memberships.team_id,
+            "team": author_team_name,
             "profile_pic": base64.b64encode(author.profile_image).decode("utf-8")
         })
 
@@ -72,12 +76,14 @@ async def search_issues(request: Request, query: str, db: Session = Depends(get_
 
     for issue in search_result:
         author = issue.publisher
+        author_team_name = db.query(TeamMembership).filter_by(
+            member_id=author.profile_id).first().team.team_name
 
         result_data.append({
             "title": issue.title,
             "content": issue.content,
             "author_name": author.name,
-            # "team": author.memberships.team_id,
+            "team": author_team_name,
             "profile_pic": base64.b64encode(author.profile_image).decode("utf-8")
         })
 
