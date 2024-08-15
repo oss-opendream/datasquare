@@ -27,9 +27,10 @@
             <div class="issues">
                 {% for issue in issues %}
                 <div class="issue-card">
-                    <img src="{{ issue.profile_pic }}" alt="Profile Picture">
+                    <img src="data:image;base64,{{ issue.profile_pic | safe }}" alt="Profile Picture">
                     <h3>{{ issue.title }}</h3>
                     <p>{{ issue.content }}</p>
+                    <p>{{ issue.author_name }}</p>
                     <p>{{ issue.team }}</p>
                 </div>
                 {% endfor %}
@@ -39,11 +40,11 @@
     <script>
         function search() {
             const query = document.getElementById('search').value;
-            window.location.href = '/feed/search?query=${query}';
+            window.location.href = '/feed/search?query=' + query;
         }
 
         function filterMyIssues() {
-            window.location.href = 'feed/my_issues';
+            window.location.href = '/feed/my_issues';
         }
 
         function sortIssues(order) {
