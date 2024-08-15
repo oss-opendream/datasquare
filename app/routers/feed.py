@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from app.models.database import Base, SessionLocal, engine
-from app.models.issue import Issue, TeamMembership
+from app.models.issue import Issue, TeamProfile, TeamMembership
 
 Base.metadata.create_all(bind=engine)
 
@@ -23,6 +23,10 @@ def get_db():
 
 @router.get("/feed")
 async def read_dashboard(request: Request, db: Session = Depends(get_db)):
+    # retrieve teams list
+    teams = db.query(TeamProfile).with_entities(
+        TeamProfile.team_name, TeamProfile.profile_id).all()
+
     issues = db.query(Issue).filter_by(is_private=0).all()
 
     issue_data = []
@@ -40,12 +44,13 @@ async def read_dashboard(request: Request, db: Session = Depends(get_db)):
             "profile_pic": base64.b64encode(author.profile_image).decode("utf-8")
         })
 
-    # return issues
-    return templates.TemplateResponse("feed.html", {"request": request, "issues": issue_data})
+    return templates.TemplateResponse("feed.html", {"request": request, "teams": teams, "issues": issue_data, "teams": teams})
 
 
 @router.get("/feed/my_issues")
 async def read_my_issues(request: Request, db: Session = Depends(get_db)):
+    teams = db.query(TeamProfile).with_entities(
+        TeamProfile.team_name, TeamProfile.profile_id).all()
     # 'author_id='에 로그인 유저 ID 값 입력 필요(예시 ID: 1)
     my_issues = db.query(Issue).filter_by(publisher_id=1).all()
 
@@ -64,13 +69,15 @@ async def read_my_issues(request: Request, db: Session = Depends(get_db)):
             "profile_pic": base64.b64encode(author.profile_image).decode("utf-8")
         })
 
-    return templates.TemplateResponse("feed.html", {"request": request, "issues": issue_data})
+    return templates.TemplateResponse("feed.html", {"request": request, "teams": teams, "issues": issue_data})
 
 
 @router.get("/feed/search")
-async def search_issues(request: Request, query: str, db: Session = Depends(get_db)):
+async def search_issues(request: Request, keyword: str, db: Session = Depends(get_db)):
+    teams = db.query(TeamProfile).with_entities(
+        TeamProfile.team_name, TeamProfile.profile_id).all()
     search_result = db.query(Issue).filter(
-        Issue.title.contains(query)).all()
+        Issue.title.contains(keyword)).all()
 
     result_data = []
 
@@ -87,4 +94,4 @@ async def search_issues(request: Request, query: str, db: Session = Depends(get_
             "profile_pic": base64.b64encode(author.profile_image).decode("utf-8")
         })
 
-    return templates.TemplateResponse("feed.html", {"request": request, "issues": result_data})
+    return templates.TemplateResponse("feed.html", {"request": request, "teams": teams, "issues": result_data})

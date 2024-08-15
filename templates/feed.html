@@ -17,7 +17,11 @@
                 </ul>
             </div>
             <div id="teams">
-                <!-- 부서 목록 표시 -->
+                <ul id="teams">
+                    {% for team in teams %}
+                    <li><a href="/feed/search?keyword={{ team.team_name }}">{{ team.team_name }}</a></li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
         <div class="right">
@@ -57,7 +61,7 @@
                     sessionStorage.setItem('recentSearches', JSON.stringify(recentSearches));
                 }
 
-                window.location.href = '/feed/search?query=' + searchInput;
+                window.location.href = '/feed/search?keyword=' + searchInput;
             }
         }
 
@@ -71,7 +75,7 @@
                 searchItem.setAttribute("style", "cursor:pointer;")
                 searchItem.textContent = search;
                 searchItem.onclick = function () {
-                    window.location.href = '/feed/search?query=' + search;
+                    window.location.href = '/feed/search?keyword=' + search;
                 };
                 recentSearchesContainer.appendChild(searchItem);
             });
