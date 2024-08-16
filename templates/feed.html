@@ -19,7 +19,7 @@
             <div id="teams">
                 <ul id="teams">
                     {% for team in teams %}
-                    <li><a href="/feed/search?keyword={{ team.team_name }}">{{ team.team_name }}</a></li>
+                    <li><a href="/feed/search?keyword=&team={{ team.team_name }}">{{ team.team_name }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -61,7 +61,7 @@
                     sessionStorage.setItem('recentSearches', JSON.stringify(recentSearches));
                 }
 
-                window.location.href = '/feed/search?keyword=' + searchInput;
+                window.location.href = '/feed/search?team=&keyword=' + searchInput;
             }
         }
 
@@ -75,7 +75,7 @@
                 searchItem.setAttribute("style", "cursor:pointer;")
                 searchItem.textContent = search;
                 searchItem.onclick = function () {
-                    window.location.href = '/feed/search?keyword=' + search;
+                    window.location.href = '/feed/search?team=&keyword=' + search;
                 };
                 recentSearchesContainer.appendChild(searchItem);
             });
