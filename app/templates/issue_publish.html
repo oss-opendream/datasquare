@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Publish - DataSquare</title>
+    <link rel="stylesheet" href="/static/css/issue_publish.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <div class="icon-container">
+
+                </div>
+                <div class="text">
+                    <span class="webby-frames">DataSquare</span>
+                    <span class="for-figma">for {Company name}</span>
+                </div>
+            </div>
+            <nav class="menu">
+                <div class="menu-item"><span>Data Request</span></div>
+                <div class="menu-item"><span>Databases</span></div>
+            </nav>
+            <div class="buttons-group">
+                <div class="button-3">
+                    <div class="icon-jam-icons-outline-logos-bell">
+
+                    </div>
+                    <div class="badge-10">
+                        <span class="text-2">9</span>
+                    </div>
+                </div>
+                <div class="button-2">
+
+                </div>
+                <div class="user-thumb">
+
+                </div>
+                <div class="log-out">
+
+                </div>
+            </div>
+        </header>
+
+        <main class="page-content">
+            <h1 class="secondary-headline">Data Publish</h1>
+            <div class="contents">
+                <form action="/issue/publish" method="post">
+                    <div>
+                        <h4>requirement</h4>
+                        <div>
+                            title <br>
+                            <input id="issue_publish_title" , name="title" , placeholder="title"></input>
+                            <br>
+                            content
+                            <br>
+                            <textarea id="issue_publish_content" , name="content" , placeholder="content"></textarea>
+                            <br>
+                            requested_team
+                            <br>
+                            <input id="issue_publish_requested_team" , name="requested_team" ,
+                                placeholder="requested_team"></input>
+                            <br>
+                            <label>
+                                <input type="radio" name="is_private" value="2">
+                                PRIVATE
+                            </label>
+                            <br>
+                            <label>
+                                <input type="radio" name="is_private" value="1">
+                                HALF PUBLIC
+                            </label>
+                            <br>
+                            <label>
+                                <input type="radio" name="is_private" value="0" checked>
+                                PUBLIC
+                            </label>
+                        </div>
+                        <button class="issue_publish_cancle_button" onclick="alert('이슈 발행을 취소 하였습니다.')">
+                            CANCLE
+                        </button>
+                        <button type="submit" class="issue_publish_button" onclick="alert('이슈를 성공적으로 발행하였습니다.')">
+                            PUBLISH
+                        </button>
+                    </div>
+                    <br>
+                    <hr>
+                    <table>
+                        <tr>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Publisher</th>
+                            <th>Requested Team</th>
+                            <th>Is Private</th>
+                            <th>Created At</th>
+                            <th>Modified At</th>
+                        </tr>
+                        {% for issue in issues %}
+                        <tr>
+                            <td>{{ issue.title }}</td>
+                            <td>{{ issue.content }}</td>
+                            <td>{{ issue.publisher_id }}</td>
+                            <td>{{ issue.requested_team }}</td>
+                            <td>{{ issue.is_private }}</td>
+                            <td>{{ issue.create_at }}</td>
+                            <td>{{ issue.modified_at }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </form>
+                <section class="right-section">
+                    <div>
+                        <h4>asdf</h4>
+                    </div>
+
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
