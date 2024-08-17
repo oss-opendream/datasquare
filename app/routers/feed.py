@@ -3,10 +3,10 @@ import base64
 from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
-from sqlalchemy.dialects import sqlite
 
 from app.models.database import Base, SessionLocal, engine
-from app.models.issue import Issue, PersonalProfile, TeamProfile, TeamMembership
+from app.models.issue import Issue
+from app.models.profile import PersonalProfile, TeamProfile, TeamMembership
 
 
 Base.metadata.create_all(bind=engine)
@@ -47,15 +47,23 @@ async def read_dashboard(request: Request, db: Session = Depends(get_db)):
 
     for issue, personal_profile, team_profile in issues:
 
-        issue_data.append({
-            'title': issue.title,
-            'content': issue.content,
-            'author_name': personal_profile.name,
-            'team': team_profile.team_name,
-            'profile_pic': base64.b64encode(personal_profile.profile_image).decode('utf-8')
-        })
+        issue_data.append(
+            {
+                'title': issue.title,
+                'content': issue.content,
+                'author_name': personal_profile.name,
+                'team': team_profile.team_name,
+                'profile_pic': base64.b64encode(personal_profile.profile_image).decode('utf-8')
+            }
+        )
 
-    return templates.TemplateResponse('feed.html', {'request': request, 'teams': teams, 'issues': issue_data})
+    return templates.TemplateResponse('feed.html',
+                                      {
+                                          'request': request,
+                                          'teams': teams,
+                                          'issues': issue_data
+                                      }
+                                      )
 
 
 @router.get('/feed/my_issues')
@@ -76,16 +84,21 @@ async def read_my_issues(request: Request, db: Session = Depends(get_db)):
     issue_data = []
 
     for issue, personal_profile, team_profile in issues:
+        issue_data.append(
+            {
+                'title': issue.title,
+                'content': issue.content,
+                'author_name': personal_profile.name,
+                'team': team_profile.team_name,
+                'profile_pic': base64.b64encode(personal_profile.profile_image).decode('utf-8')
+            }
+        )
 
-        issue_data.append({
-            'title': issue.title,
-            'content': issue.content,
-            'author_name': personal_profile.name,
-            'team': team_profile.team_name,
-            'profile_pic': base64.b64encode(personal_profile.profile_image).decode('utf-8')
-        })
-
-    return templates.TemplateResponse('feed.html', {'request': request, 'teams': teams, 'issues': issue_data})
+    return templates.TemplateResponse('feed.html',
+                                      {
+                                          'request': request, 'teams': teams, 'issues': issue_data
+                                      }
+                                      )
 
 
 @router.get('/feed/search')
