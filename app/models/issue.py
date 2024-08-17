@@ -13,7 +13,7 @@ class Issue(Base):
     title = Column(String, nullable=False)
     content = Column(Text, nullable=False)
     publisher_id = Column(Integer, ForeignKey(
-        'personal_profile.profile_id', onupdate="CASCADE", ondelete="RESTRICT"), nullable=False)
+        'personal_profile.profile_id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
     requested_team = Column(Integer, nullable=False)
     is_private = Column(Integer, nullable=False)
     created_at = Column(String, nullable=False)
@@ -30,9 +30,9 @@ class IssueComment(Base):
 
     comment_id = Column(Integer, primary_key=True, unique=True, nullable=False)
     publisher_id = Column(Integer, ForeignKey(
-        'personal_profile.profile_id', onupdate="CASCADE", ondelete="RESTRICT"), nullable=False)
-    within = Column(Integer, ForeignKey('issue.issue_id', onupdate="CASCADE",
-                    ondelete="CASCADE"), nullable=False)   # ondelete에 대한 옵션 논의 필요
+        'personal_profile.profile_id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
+    within = Column(Integer, ForeignKey('issue.issue_id', onupdate='CASCADE',
+                    ondelete='CASCADE'), nullable=False)   # ondelete에 대한 옵션 논의 필요
     content = Column(Text, nullable=False)
 
     publisher = relationship(
