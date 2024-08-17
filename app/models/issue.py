@@ -1,9 +1,6 @@
 from sqlalchemy import Column, Integer, ForeignKey, Text, String
 from sqlalchemy.orm import relationship
-from app.models import database
-
-
-Base = database.Base
+from app.models.database import Base
 
 
 class Issue(Base):
