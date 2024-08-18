@@ -8,7 +8,6 @@ from fastapi.staticfiles import StaticFiles
 
 def create_app():
     app = FastAPI()
-    # Base.metadata.create_all(bind=engine)
 
     # css, js, images 넣는 폴더 마운트
     app.mount("/static", StaticFiles(directory="app/static"), name="static")
