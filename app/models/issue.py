@@ -5,6 +5,7 @@ from sqlalchemy import Column, Integer, ForeignKey, Text, String
 from sqlalchemy.orm import relationship
 
 from app.models.database import Base, datasquare_db
+from app.models.profile import *
 
 
 Base.metadata.create_all(bind=datasquare_db.engine)
@@ -23,9 +24,8 @@ class Issue(Base):
     modified_at = Column(Text, nullable=False)
 
     # Relationships
-    publisher = relationship('PersonalProfile', back_populates='issues')
-    requested_team = relationship('TeamProfile', back_populates='issues')
-    comments = relationship('IssueComment', back_populates='issue')
+    publisher_re = relationship('PersonalProfile', back_populates='issues_re')
+    comments_re = relationship('IssueComment', back_populates='issue_re')
 
 class IssueComment(Base):
     __tablename__ = 'issue_comment'
@@ -36,5 +36,5 @@ class IssueComment(Base):
     content = Column(Text, nullable=False)
 
     # Relationships
-    publisher = relationship('PersonalProfile', back_populates='comments')
-    issue = relationship('Issue', back_populates='comments')
+    publisher_re = relationship('PersonalProfile', back_populates='comments_re')
+    issue_re = relationship('Issue', back_populates='comments_re')

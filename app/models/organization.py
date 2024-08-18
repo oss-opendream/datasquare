@@ -17,8 +17,8 @@ class OrgDatabase(Base):
     database = Column(String, unique=True, nullable=False)
 
     # Relationships
-    tables = relationship('OrgDatabaseTable', back_populates='database')
-    tags = relationship('DatabaseTagRelationship', back_populates='database')
+    tables_re = relationship('OrgDatabaseTable', back_populates='database_re')
+    tags_re = relationship('DatabaseTagRelationship', back_populates='database_re')
 
 class OrgDatabaseTable(Base):
     __tablename__ = 'org_database_table'
@@ -28,7 +28,7 @@ class OrgDatabaseTable(Base):
     within_db = Column(Integer, ForeignKey('org_database.database_id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
 
     # Relationships
-    database = relationship('OrgDatabase', back_populates='tables')
+    database_re = relationship('OrgDatabase', back_populates='tables_re')
 
 class DatabaseTag(Base):
     __tablename__ = 'database_tag'
@@ -37,7 +37,7 @@ class DatabaseTag(Base):
     tag_name = Column(String, unique=True, nullable=False)
 
     # Relationships
-    relationships = relationship('DatabaseTagRelationship', back_populates='tag')
+    relationships_re = relationship('DatabaseTagRelationship', back_populates='tag_re')
 
 class DatabaseTagRelationship(Base):
     __tablename__ = 'database_tag_relationship'
@@ -47,5 +47,5 @@ class DatabaseTagRelationship(Base):
     database_id = Column(Integer, ForeignKey('org_database.database_id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
 
     # Relationships
-    tag = relationship('DatabaseTag', back_populates='relationships')
-    database = relationship('OrgDatabase', back_populates='tags')
+    tag_re = relationship('DatabaseTag', back_populates='relationships_re')
+    database_re = relationship('OrgDatabase', back_populates='tags_re')

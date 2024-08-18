@@ -5,6 +5,7 @@ from sqlalchemy import Column, Integer, ForeignKey, BLOB, Text, String
 from sqlalchemy.orm import relationship
 
 from app.models.database import Base, datasquare_db
+from app.models.issue import *
 
 
 Base.metadata.create_all(bind=datasquare_db.engine)
@@ -21,10 +22,10 @@ class PersonalProfile(Base):
     profile_image = Column(BLOB)
 
     # Relationships
-    teams = relationship('TeamProfile', back_populates='team_manager')
-    issues = relationship('Issue', back_populates='publisher')
-    comments = relationship('IssueComment', back_populates='publisher')
-    memberships = relationship('TeamMembership', back_populates='member')
+    teams_re = relationship('TeamProfile', back_populates='team_manager_re')
+    issues_re = relationship('Issue', back_populates='publisher_re')
+    comments_re = relationship('IssueComment', back_populates='publisher_re')
+    memberships_re = relationship('TeamMembership', back_populates='member_re')
 
 class TeamProfile(Base):
     __tablename__ = 'team_profile'
@@ -36,9 +37,8 @@ class TeamProfile(Base):
     profile_image = Column(BLOB)
 
     # Relationships
-    team_manager = relationship('PersonalProfile', back_populates='teams')
-    issues = relationship('Issue', back_populates='requested_team')
-    members = relationship('TeamMembership', back_populates='team')
+    team_manager_re = relationship('PersonalProfile', back_populates='teams_re')
+    members_re = relationship('TeamMembership', back_populates='team_re')
 
 class TeamMembership(Base):
     __tablename__ = 'team_membership'
@@ -48,5 +48,5 @@ class TeamMembership(Base):
     team_id = Column(Integer, ForeignKey('team_profile.profile_id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
 
     # Relationships
-    member = relationship('PersonalProfile', back_populates='memberships')
-    team = relationship('TeamProfile', back_populates='members')
+    member_re = relationship('PersonalProfile', back_populates='memberships_re')
+    team_re = relationship('TeamProfile', back_populates='members_re')
