@@ -14,7 +14,7 @@ class PersonalProfile(Base):
     __tablename__ = 'personal_profile'
 
     profile_id = Column(Integer, primary_key=True, unique=True, nullable=False)
-    name = Column(String, unique=True, nullable=False)
+    name = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
     password = Column(Text, nullable=False)
     phone_number = Column(String, unique=True, nullable=False)
