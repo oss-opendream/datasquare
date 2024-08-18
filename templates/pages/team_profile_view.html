@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}팀 프로필 - DataSquare{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1 class="page-title">Team Profile</h1>
+
+    <div class="team-profile">
+        <div class="team-image">
+            <div class="image-container">
+                {% if team.image %}
+                    <img src="{{ url_for('static', filename=team.image) }}" alt="Team Picture">
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/default_team.svg') }}" alt="Default Team Picture">
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="team-details">
+            <h2 class="team-name">{{ team.name }}</h2>
+
+            <div class="team-members">
+                <h3>Team members</h3>
+                {% for member in team.members %}
+                <div class="member">
+                    <div class="member-avatar">
+                        {% if member.avatar %}
+                            <img src="{{ url_for('static', filename=member.avatar) }}" alt="{{ member.name }} Avatar">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/default_avatar.svg') }}" alt="Default Avatar">
+                        {% endif %}
+                    </div>
+                    <span class="member-name">{{ member.name }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

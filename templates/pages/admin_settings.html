@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Settings - DataSquare{% endblock %}
+
+{% block content %}
+<div class='settings-container'>
+    <h1>Settings</h1>
+    <div class='settings-content'>
+        <nav class='settings-nav'>
+            <ul>
+                <li><a href='#personal'>Personal</a></li>
+                <li><a href='#team'>Team</a></li>
+                <li><a href='#admin' class='active'>Admin</a></li>
+            </ul>
+        </nav>
+        <div class='admin-settings'>
+            <h2>Admin Settings</h2>
+            <form id='adminSettingsForm'>
+                <h3>Teams</h3>
+                <div id='teamList'>
+
+                </div>
+                <button type='button' id='addTeamBtn' class='btn-secondary'>+ Add Team</button>
+                <button type='submit' class='btn-primary'>Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div id='successMessage' class='success-message' style='display: none;'>
+    <span>✓ Changes have been applied.</span>
+    <button class='close-btn'>×</button>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src='{{ url_for(' static', filename='js/admin_settings.js' ) }}'></script>
+{% endblock %}

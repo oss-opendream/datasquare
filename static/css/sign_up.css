@@ -1,0 +1,111 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.right-column {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.section-text {
+    margin-bottom: 20px;
+}
+
+.secondary-headline {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.form-5-fields-checkbox-button {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.text-field,
+.fields-group,
+.fields-group-2 {
+    margin-bottom: 15px;
+}
+
+.label,
+.label-1,
+.label-2 {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.field input,
+.field select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.description {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.frame-2301 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-text {
+    font-weight: bold;
+}
+
+.img-inform {
+    font-size: 12px;
+    color: #666;
+}
+
+.sep {
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px 0;
+}
+
+.sign-up input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.horizontal-line {
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px 0;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

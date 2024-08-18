@@ -1,0 +1,82 @@
+.page-content {
+    padding: 20px;
+}
+
+.headline {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.frame-2300 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.section-1 {
+    width: 70%;
+}
+
+.section-2 {
+    width: 25%;
+}
+
+.data-requirements {
+    margin-bottom: 20px;
+}
+
+.text-field, .container, .container-1, .text-field-1 {
+    margin-bottom: 15px;
+}
+
+.label, .label-1, .label-2, .label-3, .label-4 {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.field, .field-1, .field-2, .field-3, .field-5 {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.text-field-1 {
+    display: flex;
+    gap: 10px;
+}
+
+.issue_views_comments {
+    margin-top: 20px;
+}
+
+.comment {
+    margin-bottom: 15px;
+}
+
+.write-comment {
+    margin-top: 20px;
+}
+
+.button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.button-text {
+    margin-left: 5px;
+}
+
+.field-4 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}

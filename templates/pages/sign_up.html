@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}회원가입 - DataSquare{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="right-column">
+        <div class="section-text">
+            <h1 class="secondary-headline">Sign Up</h1>
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-5-fields-checkbox-button">
+                <div class="text-field">
+                    <label class="label" for="email">Company Email</label>
+                    <div class="field">
+                        <input type="email" id="email" name="email" placeholder="Enter your Email Address"
+                            value="{{ email }}">
+                    </div>
+                </div>
+                <div class="text-field">
+                    <label class="label" for="name">Name</label>
+                    <div class="field">
+                        <input type="text" id="name" name="name" placeholder="Enter your Name" value="{{ name }}">
+                    </div>
+                </div>
+                <div class="container-1">
+                    <div class="text-field-1">
+                        <div class="password_group">
+                            <label class="label-2" for="password">Password</label>
+                            <div class="field">
+                                <input type="password" id="password" name="password" placeholder="Enter your password"
+                                    value="{{ password }}">
+                            </div>
+                            <div class="description">
+                                <span class="description-3">Password must be at least 8 characters long and include
+                                    uppercase, lowercase, numbers, and special characters.</span>
+                            </div>
+                        </div>
+                        <div class="fields-group">
+                            <label class="label" for="phone">Phone</label>
+                            <div class="field">
+                                <input type="tel" id="phone" name="phone" placeholder="000-0000-0000"
+                                    value="{{ phone }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-1">
+                    <div class="fields-group-2">
+                        <label class="label" for="department">Department</label>
+                        <div class="field">
+                            <select id="department" name="department">
+                                <option value="">--Department--</option>
+                                {% for department in departments %}
+                                <option value="{{ department.value }}">{{ department.text }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="fields-group-1">
+                    <label class="label-1" for="profile_image">Profile Image</label>
+                    <div class="frame-2301">
+                        <div class="button">
+                            <input type="file" id="profile_image" name="profile_image" accept="image/*">
+                            <span class="button-text">Upload</span>
+                        </div>
+                        <div class="img-inform">
+                            <div class="description">
+                                <span class="description-4">Image size must be at least 400px by 400px.</span>
+                            </div>
+                            <div class="description-1">
+                                <span class="description-5">File size must be under 2MB.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sep"></div>
+                <div class="sign-up">
+                    <input type="submit" value="Sign Up">
+                </div>
+            </div>
+        </form>
+        <div class="horizontal-line"></div>
+        <a href="{{ url_for('auth.login') }}">Sign In</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/sign_up.js') }}"></script>
+{% endblock %}

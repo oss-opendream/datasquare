@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}설정 - DataSquare{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1 class="headline">Settings</h1>
+
+    <div class="content">
+        <div class="menu">
+            <a href="{{ url_for('personal_settings') }}" class="menu-item active">Personal</a>
+            <a href="{{ url_for('team_settings') }}" class="menu-item">Team</a>
+            <a href="{{ url_for('admin_settings') }}" class="menu-item">Admin</a>
+        </div>
+
+        <div class="right-column">
+            <div class="box profile-image">
+                <h2 class="description-top">Profile Image</h2>
+                <div class="frame-2295">
+                    <div class="frame-22951">
+                        <div class="user-thumb">
+                            {% if user.profile_image %}
+                                <img src="{{ url_for('static', filename=user.profile_image) }}" alt="User" class="vector">
+                            {% else %}
+                                <img src="{{ url_for('static', filename='images/default_avatar.svg') }}" alt="Default User" class="vector">
+                            {% endif %}
+                        </div>
+                        <div class="frame-22952">
+                            <label for="profile-upload" class="button upload">Upload</label>
+                            <input type="file" id="profile-upload" name="profile_image" style="display: none;">
+                            <button class="delete">Delete</button>
+                        </div>
+                    </div>
+                    <div class="frame-2296">
+                        Image size must be at least 400px by 400px.<br>
+                        File size must be under 2MB.
+                    </div>
+                </div>
+            </div>
+
+            <div class="box profile">
+                <h2 class="description-top">Profile</h2>
+                <form method="POST" action="{{ url_for('profile_update') }}">
+                    <div class="text-field">
+                        <label class="label" for="email">Company Email</label>
+                        <input type="email" id="email" name="email" class="field" value="{{ user.email }}" readonly>
+                    </div>
+                    <div class="text-field">
+                        <label class="label" for="name">Name</label>
+                        <input type="text" id="name" name="name" class="field" value="{{ user.name }}" required>
+                    </div>
+                    <div class="text-field">
+                        <label class="label" for="password">Password</label>
+                        <input type="password" id="password" name="password" class="field" placeholder="Leave blank to keep current password">
+                    </div>
+                    <div class="text-field">
+                        <label class="label" for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" class="field" value="{{ user.phone }}" required>
+                    </div>
+                    <div class="fields-group">
+                        <label class="label" for="department">Department</label>
+                        <div class="field">
+                            <select id="department" name="department" required>
+                                <option value="">--Select Department--</option>
+                                {% for dept in departments %}
+                                    <option value="{{ dept.id }}" {% if dept.id == user.department_id %}selected{% endif %}>{{ dept.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="buttons-group">
+                        <button type="submit" class="button save">Save</button>
+                    </div>
+                </form>
+            </div>
+
+            {% if message %}
+            <div class="notification">
+                <div class="icon">
+                    <img src="{{ url_for('static', filename='images/success_icon.svg') }}" alt="Success" class="vector">
+                </div>
+                <div class="content">
+                    <span class="title">{{ message }}</span>
+                </div>
+                <div class="right">
+                    <img src="{{ url_for('static', filename='images/close_icon.svg') }}" alt="Close" class="vector" onclick="closeNotification()">
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/profile_edit.js') }}"></script>
+{% endblock %}

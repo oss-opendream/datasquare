@@ -1,8 +1,46 @@
+/* Theme 전역변수화 */
+:root {
+    --primary-color: #0F62FE;
+    --primary-color-dark: #0043CE;
+    --primary-color-light: #4589FF;
+    --secondary-color: #697077;
+    --text-color: #161616;
+    --background-color: #F4F4F4;
+    --background-color-light: #F8F9FA;
+    --background-color-dark: #E9ECEF;
+    --border-color: #E0E0E0;
+    --hover-color: #F1F3F5;
+    --color-white: #FFFFFF;
+    --color-red: #DA1E28;
+    --font-size-small: 12px;
+    --font-size-medium: 14px;
+    --font-size-large: 16px;
+    --spacing-xs: 2px;
+    --spacing-sm: 5px;
+    --spacing-md: 10px;
+    --spacing-lg: 15px;
+    --border-radius-small: 4px;
+    --border-radius-circle: 50%;
+}
+
+/* CSS파일들 imports */
 @import 'layouts.css';
 @import 'header.css';
 @import 'footer.css';
 @import 'notifications.css';
 @import 'components.css';
+@import 'admin_settings.css';
+@import '404.css';
+@import 'db_info.css';
+@import 'feed.css';
+@import 'issue_view.css';
+@import 'success.css';
+@import 'sign_up.css';
+@import 'sign_in.css';
+@import 'profile_view.css';
+@import 'team_profile_edit.css';
+@import 'team_profile_view.css';
+@import 'profile_edit.css';
 
 body {
     font-family: Arial, sans-serif;
@@ -11,6 +49,8 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    color: var(--text-color);
+    background-color: var(--background-color);
 }
 
 main {

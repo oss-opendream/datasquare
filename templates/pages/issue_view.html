@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}데이터 요청 - DataSquare{% endblock %}
+
+{% block content %}
+<main class="page-content">
+    <h1 class="headline secondary-headline">데이터 요청</h1>
+    <div class="frame-2300">
+        <section class="section-1">
+            <div class="data-requirements">
+                <div class="complete-your-profile">
+                    <div class="progress-indicator">
+                        <div class="icon-1"></div>
+                        <div class="content">
+                            <span class="title">요청사항</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Form fields -->
+                <div class="form-5-fields-checkbox-button">
+                    <!-- Title field -->
+                    <div class="text-field">
+                        <label class="label" for="title">제목</label>
+                        <div class="field">{{ issue.title }}</div>
+                    </div>
+                    <!-- Request details field -->
+                    <div class="container">
+                        <label class="label" for="request-details">요청 사항</label>
+                        <div class="field">{{ issue.content }}</div>
+                    </div>
+                    <!-- Data usage purpose field -->
+                    <div class="text-field">
+                        <label class="label" for="data-purpose">데이터 활용 목적</label>
+                        <input type="text" id="data-purpose" class="field" placeholder="데이터 활용 목적">
+                    </div>
+                    <!-- Data format field -->
+                    <div class="container-1">
+                        <label class="label-1" for="data-format">제공 데이터 형식</label>
+                        <select id="data-format" class="field-1">
+                            <option value="csv">CSV 파일(*.csv)</option>
+                        </select>
+                    </div>
+                    <!-- Date range fields -->
+                    <div class="text-field-1">
+                        <div class="text-field-2">
+                            <label class="label-2" for="start-date">요청 데이터 기간 범위</label>
+                            <input type="date" id="start-date" class="field-2" placeholder="시작일">
+                        </div>
+                        <div class="text-field-3">
+                            <input type="date" id="end-date" class="field-3" placeholder="종료일">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Comment section -->
+            <div class="issue_views_comments">
+                {% for comment in comments %}
+                <div class="comment">
+                    <p>{{ comment.content }}</p>
+                    <p>{{ comment.publisher_id }}</p>
+                    <hr>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="write-comment">
+                <div class="container-2">
+                    <label class="label-4" for="comment">댓글</label>
+                    <textarea id="comment" class="field-5" placeholder="댓글 본문"></textarea>
+                </div>
+                <button class="button" id="submit-comment">
+                    <div class="icon-jam-icons-outline-logos-plus"></div>
+                    <span class="button-text">등록</span>
+                </button>
+            </div>
+        </section>
+        <aside class="section-2">
+            <div class="complete-your-profile-1">
+                <div class="progress-indicator-1">
+                    <div class="icon-2"></div>
+                    <div class="content-1">
+                        <span class="title-1">담당 부서 및 공개범위</span>
+                    </div>
+                </div>
+            </div>
+            <div class="frame-2295">
+                <label class="label-3" for="department">제공 부서</label>
+                <div class="field-4">
+                    <div class="container">
+                        <div class="icon-jam-icons-outline-logos-search"></div>
+                        <span class="text-10">제공 부서</span>
+                    </div>
+                    <div class="icon-jam-icons-outline-logos-chevron-down"></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/issue_view.js') }}"></script>
+{% endblock %}

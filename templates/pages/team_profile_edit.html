@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}팀 설정 - DataSquare{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1 class="headline">Settings</h1>
+
+    <div class="content">
+        <div class="menu">
+            <a href="{{ url_for('personal_settings') }}" class="menu-item">Personal</a>
+            <a href="{{ url_for('team_settings') }}" class="menu-item active">Team</a>
+            <a href="{{ url_for('admin_settings') }}" class="menu-item">Admin</a>
+        </div>
+
+        <div class="right-column">
+            <div class="box">
+                <h2 class="description-top">Team Settings</h2>
+                <form method="POST" action="{{ url_for('team_settings_update') }}"
+                    class="form-5-fields-checkbox-button">
+                    <div class="text-field">
+                        <label class="label" for="team_name">Team Name</label>
+                        <input type="text" id="team_name" name="team_name" class="field" value="{{ team.name }}"
+                            required>
+                    </div>
+
+                    <div class="text-field">
+                        <label class="label" for="members">Members</label>
+                        <select id="members" name="members" class="field" multiple required>
+                            {% for user in all_users %}
+                            <option value="{{ user.id }}" {% if user in team.members %}selected{% endif %}>
+                                {{ user.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="text-field">
+                        <label class="label" for="introduction">Introduction</label>
+                        <textarea id="introduction" name="introduction" class="field"
+                            rows="4">{{ team.introduction }}</textarea>
+                    </div>
+
+                    <button type="submit" class="button save">Save</button>
+                </form>
+            </div>
+
+            {% if message %}
+            <div class="notification">
+                <div class="icon">
+                    <img src="{{ url_for('static', filename='images/success_icon.svg') }}" alt="Success" class="vector">
+                </div>
+                <div class="content">
+                    <span class="title">{{ message }}</span>
+                </div>
+                <div class="right">
+                    <img src="{{ url_for('static', filename='images/close_icon.svg') }}" alt="Close" class="vector"
+                        onclick="closeNotification()">
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/team_profile_edit.js') }}"></script>
+{% endblock %}

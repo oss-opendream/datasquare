@@ -1,0 +1,12 @@
+.success-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.success-message {
+    font-size: 2em;
+    color: var(--primary-color);
+    text-align: center;
+}

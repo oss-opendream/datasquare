@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}404 - Page Not Found{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <img src="{{ url_for('static', filename='images/rocket.svg') }}" alt="Rocket" class="error-image">
+    <h1>404</h1>
+    <h2>Page not found.</h2>
+    <p>The page does not exist or you have accessed an incorrect address.</p>
+    <p>Please click the button below to go to the main page.</p>
+    <a href="{{ url_for('home') }}" class="btn-primary">메인 페이지</a>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}로그인 - DataSquare{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="right-column">
+        <div class="section-text">
+            <h1 class="secondary-headline">Sign In</h1>
+        </div>
+        <form method="post">
+            <div class="form-5-fields-checkbox-button">
+                <div class="text-field">
+                    <label class="label" for="email">Email</label>
+                    <div class="field">
+                        <input type="email" id="email" name="email" placeholder="Enter your email" value="{{ email }}">
+                    </div>
+                </div>
+                <div class="text-field">
+                    <label class="label" for="password">Password</label>
+                    <div class="field">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" value="{{ password }}">
+                    </div>
+                </div>
+            </div>
+            <div class="sep"></div>
+            <div class="sign-in">
+                <input type="submit" value="Sign In">
+            </div>
+        </form>
+        <div class="horizontal-line"></div>
+        <a href="{{ url_for('auth.signup') }}">Sign up</a>
+    </div>
+</div>
+{% endblock %}

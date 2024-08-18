@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Databases - DataSquare{% endblock %}
+
+{% block content %}
+<div class="db-info-container">
+    <h1>Databases</h1>
+    <div class="db-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="team1">◯◯팀</button>
+        <button class="filter-btn" data-filter="team2">◯◯팀</button>
+        <button class="filter-btn" data-filter="team3">◯◯팀</button>
+        <input type="text" id="dbSearch" placeholder="검색">
+    </div>
+    <table class="db-table">
+        <thead>
+            <tr>
+                <th>DB명 / 테이블명</th>
+                <th>설명</th>
+                <th>Row 수</th>
+                <th>최초 데이터 Timestamp</th>
+                <th>마지막 데이터 Timestamp</th>
+                <th>Tag</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="dbTableBody">
+            <!-- Database rows will be dynamically added here -->
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/db_info.js') }}"></script>
+{% endblock %}
