@@ -24,8 +24,7 @@ class UserData:
             personal_db = PersonalProfile(name=user_create.name,
                                   email=user_create.email,
                                   password=self.pwd_context.hash(
-                                      user_create.password
-                                      ),
+                                      user_create.passwords),
                                   phone_number=user_create.phone_number
                                   )
             
@@ -52,40 +51,3 @@ class UserData:
                                         .first()
             
         return personal_data
-
-
-##############################
-# 암호화 객체 (bcrypt 사용)
-# pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-# def create_user(db: Session, user_create: UserCreate):
-#     '''회원 가입 정보를 DB에 적재.'''
-
-#     # 회원가입 정보 저장
-#     personal_db = PersonalProfile(name=user_create.name,
-#                                   email=user_create.email,
-#                                   password=pwd_context.hash(
-#                                       user_create.password),
-#                                   phone_number=user_create.phone_number)
-
-#     db.add(personal_db)
-#     db.commit()
-#     db.refresh(personal_db)
-
-#     # 부서 추가
-#     team_db = TeamMembership(
-#         member_id=personal_db.profile_id,
-#         team_id=db.query(TeamProfile).filter_by(
-#             team_name=user_create.department).first().profile_id
-#     )
-
-#     db.add(team_db)
-#     db.commit()
-
-
-# def get_user(db: Session, email : str):
-#     '''주어진 사용자의 Email 정보로 데이터베이스에서 사용자의 존재 여부를 확인.'''
-
-#     return db.query(PersonalProfile).filter(
-#         PersonalProfile.email == email).first()
-

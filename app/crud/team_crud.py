@@ -19,7 +19,6 @@ class TeamData:
         '''모든 Team 부서 list를 DB에서 반환.'''
 
         with next(self.db.get_db()) as db_session:
-                
             team_list = db_session.query(TeamProfile).all()
             departments = [team.team_name for team in team_list]
 
