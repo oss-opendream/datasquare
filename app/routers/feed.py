@@ -20,7 +20,8 @@ async def read_dashboard(request: Request):
     team = Team()
     teams_list = team.get_all()
 
-    issue = IssueData(current_userid=2)
+    # current_userid: 현재 user의 personal_profile 테이블 중 profile_id
+    issue = IssueData(current_userid=1)
     issue_data = issue.get_all()
 
     return templates.TemplateResponse('feed.html',
@@ -41,12 +42,15 @@ async def read_my_issues(request: Request):
     team = Team()
     teams_list = team.get_all()
 
-    issue = IssueData(current_userid=2)
+    # current_userid: 현재 user의 personal_profile 테이블 중 profile_id
+    issue = IssueData(current_userid=1)
     issue_data = issue.get_current_users()
 
     return templates.TemplateResponse('feed.html',
                                       {
-                                          'request': request, 'teams': teams_list, 'issues': issue_data
+                                          'request': request,
+                                          'teams': teams_list,
+                                          'issues': issue_data
                                       }
                                       )
 
@@ -57,10 +61,13 @@ async def search_issues(request: Request, keyword: str, team=str):
     제목 또는 팀으로 검색된 이슈 목록 출력 함수
     '''
 
-    team = Team()
-    teams_list = team.get_all()
+    team_data = Team()
+    teams_list = team_data.get_all()
 
-    issue = IssueData(current_userid=2)
+    # current_userid: 현재 user의 personal_profile 테이블 중 profile_id
+    issue = IssueData(current_userid=1)
     result_data = issue.search(keyword=keyword, team=team)
 
-    return templates.TemplateResponse('feed.html', {'request': request, 'teams': teams_list, 'issues': result_data})
+    return templates.TemplateResponse('feed.html', {'request': request,
+                                                    'teams': teams_list,
+                                                    'issues': result_data})
