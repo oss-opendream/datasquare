@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/sign_in.css" />
+    <title>Login</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // 쿼리 파라미터에서 오류 메시지 가져오기
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+
+            if (error) {
+                alert(error); // 오류 메시지 팝업 표시
+            }
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <div class="container">
+        <form action="/signin/post" method="post">
+            <div class="right-column">
+                <div class="section-text">
+                    <span class="secondary-headline">Sign In</span>
+                </div>
+                <div class="form-5-fields-checkbox-button">
+                    <div class="text-field">
+                        <div class="label">Email</div>
+                        <div class="field">
+                            <input type="string" name="username" placeholder="Enter your email" value="{{username}}"
+                                required />
+                        </div>
+                    </div>
+                    <div class="text-field">
+                        <div class="label">Password</div>
+                        <div class="field">
+                            <input type="password" name="password" placeholder="Enter your password"
+                                value="{{password}}" required />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="sep"></div>
+                <div class="sign-in"><input type="submit" value="Sign In"> </div>
+        </form>
+        <div class="horizontal-line"></div>
+        <a href="signup">Sign up</a>
+    </div>
+
+
+
+</body>
+
+</html>
