@@ -88,17 +88,6 @@ def get_current_user(access_token: str = Cookie(None)):
         raise HTTPException(
             status_code=401, detail="Invalid authentication credentials")
 
-
-# @router.get('/issue/feed',  response_class=HTMLResponse)
-# async def issue(request: Request, current_user: user_schema.User = Depends(get_current_user)):
-#     print(str(current_user.profile_id))
-#     return templates.TemplateResponse('success.html',
-#                                       context={'request': request}
-#                                       )
-
-########
-
-
 @router.get("/signup")
 async def signup_get(request: Request):
 

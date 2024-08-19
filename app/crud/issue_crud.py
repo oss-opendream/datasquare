@@ -31,6 +31,7 @@ class IssueData():
         '''issue 데이터를 생성, 저장합니다.'''
 
         now = current_time()
+        
         new_issue = Issue(
             title=title,
             content=content,

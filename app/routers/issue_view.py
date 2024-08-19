@@ -60,4 +60,9 @@ async def issue_views(request: Request,
         raise HTTPException(status_code=404, detail='Issue_Comments not found')
 
     return templates.TemplateResponse('issue_view.html',
-                                      {'request': request, 'issue': issue, 'comments': comments})
+                                      {
+                                          'request': request, 
+                                          'issue': issue, 
+                                          'comments': comments,
+                                      }
+    )

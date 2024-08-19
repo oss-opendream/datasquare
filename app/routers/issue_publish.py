@@ -27,24 +27,28 @@ async def create_issue(title: str = Form(...),
     issue/view/issue_id={Issue.issue_id} 페이지로 Redirect합니다.
     '''
 
-    ###
-    # test user_id
-    ###
     issue_data = IssueData(current_user.profile_id)
+
     new_issue = issue_data.create_issue(
         title=title,
         content=content,
         requested_team=requested_team,
         is_private=is_private
     )
+
     IssueCommentData(current_user.profile_id).create_issue_comment(
         new_issue.issue_id)
 
-    return RedirectResponse(url=f'/issue/view?issue_id={new_issue.issue_id}', status_code=303)
+    return RedirectResponse(
+        url=f'/issue/view?issue_id={new_issue.issue_id}',
+        status_code=303
+    )
 
 
 @router.get('/issue/publish', response_class=HTMLResponse)
-async def issue_pulish(request: Request, current_user: User = Depends(get_current_user)):
+async def issue_pulish(request: Request,
+                       current_user: User = Depends(get_current_user)
+                       ):
     '''
     이슈 발행 페이지 함수입니다.
     '''

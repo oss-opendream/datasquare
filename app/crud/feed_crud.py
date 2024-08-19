@@ -1,6 +1,7 @@
 '''
-    issue 목록 쿼리 후 Jinja2 template용 데이터로 출력하기 위한 모듈
+issue 목록 쿼리 후 Jinja2 template용 데이터로 출력하기 위한 모듈
 '''
+
 import base64
 
 from sqlalchemy import or_
@@ -24,6 +25,7 @@ class IssueData:
         '''
         Base query 객체 생성 함수
         '''
+
         base_query = db_session \
             .query(Issue, PersonalProfile, TeamProfile) \
             .outerjoin(PersonalProfile, Issue.publisher == PersonalProfile.profile_id) \
@@ -68,7 +70,6 @@ class IssueData:
 
         with next(self.db.get_db()) as db_session:
             base_query = self.__create_base_query(db_session)
-
             issues = base_query.all()
 
         result_data = self.__format_issue_data(issues)
@@ -121,6 +122,7 @@ class Team:
         '''
         Context manager 기반 Base query 객체 생성 함수
         '''
+
         base_query = db_session \
             .query(TeamProfile)
 
@@ -140,4 +142,5 @@ class Team:
                     TeamProfile.profile_id
                 ) \
                 .all()
+            
         return teams
