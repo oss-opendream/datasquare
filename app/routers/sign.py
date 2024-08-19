@@ -49,44 +49,52 @@ async def signin_post(request: Request,
         return RedirectResponse(url='/signin?error=비밀번호가 일치하지 않습니다.', status_code=status.HTTP_302_FOUND)
 
     data = {
-        "sub": user.profile_id,  # 사용자 식별
+        "sub": user.email,  # 사용자 식별
         "exp": datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)  # token 유효기간
     }
     access_token = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
 
     # HTTPOnly 쿠키로 토큰 반환
     response = RedirectResponse(
-        url='/issue/feed', status_code=status.HTTP_302_FOUND)
+        url='/feed', status_code=status.HTTP_302_FOUND)
     response.set_cookie(
         key="access_token", value=access_token, httponly=True, secure=True, samesite="Lax"
     )
 
     return response
 
-######
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/signin/post")
+def get_current_user(access_token: str = Cookie(None)):
+    if not access_token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
 
-
-def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        id: str = payload.get("sub")
-        # if id is None:
-        #     raise HTTPException(status_code=401, detail="Invalid authentication credentials")
-        return UserData().get_user(id, key='profile_id')
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms=ALGORITHM)
+        user_id: str = payload.get("sub")
+        print("userid ", user_id)
 
-    except jwt.PyJWTError:
+        if user_id is None:
+            raise HTTPException(
+                status_code=401, detail="Invalid authentication credentials")
+
+        user = UserData().get_user(user_id, key='email')
+        print("user", user)
+        if user is None:
+            raise HTTPException(status_code=401, detail="User not found")
+
+        return user
+
+    except jwt.JWTError:
         raise HTTPException(
             status_code=401, detail="Invalid authentication credentials")
 
 
-@router.get('/issue/feed',  response_class=HTMLResponse)
-async def issue(request: Request, current_user: user_schema.User = Depends(get_current_user)):
-    print(str(current_user.profile_id))
-    return templates.TemplateResponse('success.html',
-                                      context={'request': request}
-                                      )
+# @router.get('/issue/feed',  response_class=HTMLResponse)
+# async def issue(request: Request, current_user: user_schema.User = Depends(get_current_user)):
+#     print(str(current_user.profile_id))
+#     return templates.TemplateResponse('success.html',
+#                                       context={'request': request}
+#                                       )
 
 ########
 
@@ -121,7 +129,7 @@ async def signup_post(request: Request, name: Annotated[str, Form()], email: Ann
     # 이미 회원가입이 되어있는지 확인
     userdata_obj = UserData()
 
-    if userdata_obj.get_user(email=user_create.email):
+    if userdata_obj.get_user(email, key='email'):
         return RedirectResponse(url='/signup?error=이미 등록된 계정입니다. 로그인해주세요', status_code=status.HTTP_302_FOUND)
     else:
         userdata_obj.create_user(user_create=user_create)

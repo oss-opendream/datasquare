@@ -36,7 +36,7 @@ async def read_dashboard(request: Request, current_user: User = Depends(get_curr
 
 
 @router.get('/feed/my_issues')
-async def read_my_issues(request: Request):
+async def read_my_issues(request: Request, current_user: User = Depends(get_current_user)):
     '''
     현재 접속자가 작성한 이슈 목록 출력 라우터
     '''
@@ -45,7 +45,7 @@ async def read_my_issues(request: Request):
     teams_list = team.get_all()
 
     # current_userid: 현재 user의 personal_profile 테이블 중 profile_id
-    issue = IssueData(current_userid=1)
+    issue = IssueData(current_user.profile_id)
     issue_data = issue.get_current_users()
 
     return templates.TemplateResponse('feed.html',
@@ -58,7 +58,7 @@ async def read_my_issues(request: Request):
 
 
 @ router.get('/feed/search')
-async def search_issues(request: Request, keyword: str, team=str):
+async def search_issues(request: Request, keyword: str, team=str, current_user: User = Depends(get_current_user)):
     '''
     제목 또는 팀으로 검색된 이슈 목록 출력 함수
     '''
@@ -67,7 +67,7 @@ async def search_issues(request: Request, keyword: str, team=str):
     teams_list = team_data.get_all()
 
     # current_userid: 현재 user의 personal_profile 테이블 중 profile_id
-    issue = IssueData(current_userid=1)
+    issue = IssueData(current_user.profile_id)
     result_data = issue.search(keyword=keyword, team=team)
 
     return templates.TemplateResponse('feed.html', {'request': request,
