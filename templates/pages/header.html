@@ -1,6 +1,6 @@
 <header class="header">
-    <div class="header__logo">
-        <img src="{{ url_for('static', filename='images/logo_withouttext.svg') }}" alt="DataSquare Logo"
+    <div class="header__logo">f
+        <img src="{{ url_for('static', path='/images/logo_withouttext.svg') }}" alt="DataSquare Logo"
             class="header__logo-image">
         <div class="header__logo-text">
             <span class="header__logo-brand">DataSquare</span>
@@ -13,7 +13,7 @@
     </nav>
     <div class="header__user-actions">
         <div id="header__notification-button" class="header__notification-container">
-            <img src="{{ url_for('static', path='images/bell-icon.svg') }}" alt="Notifications">
+            <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications">
             {% if notification_count > 0 %}
             <span class="header__notification-badge">{{ notification_count }}</span>
             {% endif %}
@@ -33,10 +33,9 @@
                 {% endif %}
             </ul>
         </div>
-        <img src="{{ url_for('static', filename='images/settings-icon.svg') }}" alt="Settings"
+        <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings"
             class="header__settings-icon">
-        <img src="{{ url_for('static', filename='images/user-icon.svg') }}" alt="User Profile"
-            class="header__user-icon">
-        <img src="{{ url_for('static', filename='images/logout-icon.svg') }}" alt="Logout" class="header__logout-icon">
+        <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile" class="header__user-icon">
+        <img src="{{ url_for('static', path='/images/logout-icon.svg') }}" alt="Logout" class="header__logout-icon">
     </div>
 </header>
