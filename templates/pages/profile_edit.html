@@ -18,10 +18,10 @@
                 <div class="profile-edit__image-container">
                     <div class="profile-edit__user-thumb">
                         {% if user.profile_image %}
-                        <img src="{{ url_for('static', filename=user.profile_image) }}" alt="User"
+                        <img src="{{ url_for('static', path=user.profile_image) }}" alt="User"
                             class="profile-edit__user-image">
                         {% else %}
-                        <img src="{{ url_for('static', filename='images/default_avatar.svg') }}" alt="Default User"
+                        <img src="{{ url_for('static', path='images/default_avatar.svg') }}" alt="Default User"
                             class="profile-edit__user-image">
                         {% endif %}
                     </div>

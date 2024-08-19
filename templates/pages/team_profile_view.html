@@ -1,41 +1,28 @@
 {% extends "base.html" %}
-
 {% block title %}팀 프로필 - DataSquare{% endblock %}
-
 {% block content %}
-<div class="page-content">
-    <h1 class="page-title">Team Profile</h1>
 
-    <div class="team-profile">
-        <div class="team-image">
-            <div class="image-container">
-                {% if team.image %}
-                <img src="{{ url_for('static', path=team.image) }}" alt="Team Picture">
-                {% else %}
-                <img src="{{ url_for('static', path='/images/default_team.svg') }}" alt="Default Team Picture">
-                {% endif %}
-            </div>
+<div class="team-profile-view">
+    <h1 class="team-profile-view__title">Team Profile</h1>
+    <div class="team-profile-view__content">
+        <div class="team-profile-view__image">
+            <img src="{{ team.image or url_for('static', path='images/default_team.svg') }}"
+                alt="{{ team.name }} team picture" class="team-profile-view__picture">
         </div>
-
-        <div class="team-details">
-            <h2 class="team-name">{{ team.name }}</h2>
-
-            <div class="team-members">
-                <h3>Team members</h3>
+        <div class="team-profile-view__details">
+            <h2 class="team-profile-view__name">{{ team.name }}</h2>
+            <div class="team-profile-view__members">
+                <h3 class="team-profile-view__members-title">Team members</h3>
                 {% for member in team.members %}
-                <div class="member">
-                    <div class="member-avatar">
-                        {% if member.avatar %}
-                        <img src="{{ url_for('static', path=member.avatar) }}" alt="{{ member.name }} Avatar">
-                        {% else %}
-                        <img src="{{ url_for('static', path='/images/default_avatar.svg') }}" alt="Default Avatar">
-                        {% endif %}
-                    </div>
-                    <span class="member-name">{{ member.name }}</span>
+                <div class="team-profile-view__member">
+                    <img src="{{ member.avatar or url_for('static', path='images/default_avatar.svg') }}"
+                        alt="{{ member.name }} avatar" class="team-profile-view__member-avatar">
+                    <span class="team-profile-view__member-name">{{ member.name }}</span>
                 </div>
                 {% endfor %}
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

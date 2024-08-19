@@ -8,8 +8,8 @@ from fastapi import HTTPException
 app = FastAPI()
 
 BASE_DIR = Path(__file__).resolve().parent
-templates = Jinja2Templates(directory=str(BASE_DIR / 'templates'))
 app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 
 def get_notification_count(user_id):
     return 5  # 임시로 5개의 알림이 있다고 가정
@@ -101,6 +101,44 @@ async def api_notification_count(request: Request):
     user_id = 1
     notification_count = get_notification_count(user_id)
     return {"count": notification_count}
+
+@app.get('/profile/edit', name='profile_edit')
+async def profile_edit(request: Request):
+    user_id = 1
+    notification_count = get_notification_count(user_id)
+    return templates.TemplateResponse('pages/profile_edit.html', {
+        'request': request,
+        'company_name': 'Your Company',
+        'current_year': datetime.now().year,
+        'notification_count': notification_count,
+        'user': {'name': 'John Doe', 'email': 'john@example.com', 'department': 'IT', 'phone': '123-456-7890'},
+        'departments': [{'id': 1, 'name': 'IT'}, {'id': 2, 'name': 'HR'}]
+    })
+
+@app.get('/team-profile/edit', name='team_profile_edit')
+async def team_profile_edit(request: Request):
+    user_id = 1
+    notification_count = get_notification_count(user_id)
+    return templates.TemplateResponse('pages/team_profile_edit.html', {
+        'request': request,
+        'company_name': 'Your Company',
+        'current_year': datetime.now().year,
+        'notification_count': notification_count,
+        'team': {'name': 'IT Team', 'members': [{'name': 'John Doe'}, {'name': 'Jane Smith'}]},
+        'all_users': [{'id': 1, 'name': 'John Doe'}, {'id': 2, 'name': 'Jane Smith'}]
+    })
+
+@app.get('/admin/settings', name='admin_settings')
+async def admin_settings(request: Request):
+    user_id = 1
+    notification_count = get_notification_count(user_id)
+    return templates.TemplateResponse('pages/admin_settings.html', {
+        'request': request,
+        'company_name': 'Your Company',
+        'current_year': datetime.now().year,
+        'notification_count': notification_count,
+        'teams': [{'name': 'IT Team', 'admin': {'name': 'John Doe'}}, {'name': 'HR Team', 'admin': {'name': 'Jane Smith'}}]
+    })
 
 if __name__ == '__main__':
     import uvicorn

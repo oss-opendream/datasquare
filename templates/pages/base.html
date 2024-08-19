@@ -9,16 +9,16 @@
     {% block extra_css %}{% endblock %}
 </head>
 
-<body class="layout">
-    {% include 'pages/header.html' %}
+<body>
+    {% include 'header.html' %}
 
     <main class="layout__main">
         {% block content %}{% endblock %}
     </main>
 
-    {% include 'pages/footer.html' %}
+    {% include 'footer.html' %}
 
-    <script src="{{ url_for('static', path='/js/main.js') }}"></script>
+    <script src="{{ url_for('static', path='js/main.js') }}" type="module"></script>
     {% block extra_js %}{% endblock %}
 </body>
 

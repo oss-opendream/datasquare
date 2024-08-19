@@ -1,5 +1,5 @@
 <header class="header">
-    <div class="header__logo">f
+    <div class="header__logo">
         <img src="{{ url_for('static', path='/images/logo_withouttext.svg') }}" alt="DataSquare Logo"
             class="header__logo-image">
         <div class="header__logo-text">
@@ -18,24 +18,25 @@
             <span class="header__notification-badge">{{ notification_count }}</span>
             {% endif %}
         </div>
-        <div id="header__notification-popup" class="header__notification-popup">
-            <div class="header__notification-header">
-                <h3 class="header__notification-title">알림</h3>
-                <button class="header__notification-close">&times;</button>
-            </div>
-            <ul class="header__notification-list">
-                {% if notifications %}
-                {% for notification in notifications %}
-                <li class="header__notification-item">{{ notification.message }}</li>
-                {% endfor %}
-                {% else %}
-                <li class="header__notification-item header__notification-item--empty">새로운 알림이 없습니다.</li>
-                {% endif %}
-            </ul>
-        </div>
         <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings"
             class="header__settings-icon">
         <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile" class="header__user-icon">
         <img src="{{ url_for('static', path='/images/logout-icon.svg') }}" alt="Logout" class="header__logout-icon">
     </div>
 </header>
+
+<div id="header__notification-popup" class="header__notification-popup">
+    <div class="header__notification-header">
+        <h3 class="header__notification-title">알림</h3>
+        <button class="header__notification-close">&times;</button>
+    </div>
+    <ul class="header__notification-list">
+        {% if notifications %}
+        {% for notification in notifications %}
+        <li class="header__notification-item">{{ notification.message }}</li>
+        {% endfor %}
+        {% else %}
+        <li class="header__notification-item header__notification-item--empty">새로운 알림이 없습니다.</li>
+        {% endif %}
+    </ul>
+</div>

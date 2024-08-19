@@ -1,37 +1,40 @@
-{% extends 'base.html' %}
-
-{% block title %}Admin Settings - DataSquare{% endblock %}
-
+{% extends "base.html" %}
+{% block title %}관리자 설정 - DataSquare{% endblock %}
 {% block content %}
-<div class='settings-container'>
-    <h1>Settings</h1>
-    <div class='settings-content'>
-        <nav class='settings-nav'>
-            <ul>
-                <li><a href='#personal'>Personal</a></li>
-                <li><a href='#team'>Team</a></li>
-                <li><a href='#admin' class='active'>Admin</a></li>
-            </ul>
-        </nav>
-        <div class='admin-settings'>
-            <h2>Admin Settings</h2>
-            <form id='adminSettingsForm'>
-                <h3>Teams</h3>
-                <div id='teamList'>
 
+<div class="admin-settings">
+    <h1 class="admin-settings__title">Settings</h1>
+    <div class="admin-settings__content">
+        <nav class="admin-settings__nav">
+            <a href="{{ url_for('personal_settings') }}" class="admin-settings__nav-item">Personal</a>
+            <a href="{{ url_for('team_settings') }}" class="admin-settings__nav-item">Team</a>
+            <a href="{{ url_for('admin_settings') }}"
+                class="admin-settings__nav-item admin-settings__nav-item--active">Admin</a>
+        </nav>
+        <div class="admin-settings__main">
+            <h2 class="admin-settings__section-title">Admin Settings</h2>
+            <div class="admin-settings__teams">
+                <h3 class="admin-settings__subsection-title">Teams</h3>
+                <div id="teamList" class="admin-settings__team-list">
+                    {% for team in teams %}
+                    <div class="admin-settings__team-item">
+                        <span class="admin-settings__team-name">{{ team.name }}</span>
+                        <span class="admin-settings__team-admin">{{ team.admin.name }}</span>
+                    </div>
+                    {% endfor %}
                 </div>
-                <button type='button' id='addTeamBtn' class='btn-secondary'>+ Add Team</button>
-                <button type='submit' class='btn-primary'>Save</button>
-            </form>
+                <button class="btn btn--secondary admin-settings__add-team">+ Add Team</button>
+            </div>
+            <button type="submit" class="btn btn--primary admin-settings__save">Save</button>
         </div>
     </div>
 </div>
-<div id='successMessage' class='success-message' style='display: none;'>
-    <span>✓ Changes have been applied.</span>
-    <button class='close-btn'>×</button>
-</div>
-{% endblock %}
 
-{% block extra_js %}
-<script src='{{ url_for(' static', path='/js/admin_settings.js' ) }}'></script>
+{% if message %}
+<div class="notification notification--success">
+    <p class="notification__message">{{ message }}</p>
+    <button class="notification__close">&times;</button>
+</div>
+{% endif %}
+
 {% endblock %}

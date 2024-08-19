@@ -1,6 +1,7 @@
-{% extends "base.html" %}
+{% extends "pages/base.html" %}
 {% block title %}팀 설정 - DataSquare{% endblock %}
 {% block content %}
+
 <div class="team-profile-edit">
     <h1 class="team-profile-edit__title">Settings</h1>
     <div class="team-profile-edit__content">
@@ -10,54 +11,35 @@
                 class="team-profile-edit__nav-item team-profile-edit__nav-item--active">Team</a>
             <a href="{{ url_for('admin_settings') }}" class="team-profile-edit__nav-item">Admin</a>
         </nav>
-        <div class="team-profile-edit__main">
-            <section class="team-profile-edit__section">
-                <h2 class="team-profile-edit__section-title">Team Settings</h2>
-                <form class="team-profile-edit__form" method="POST" action="{{ url_for('team_settings_update') }}">
-                    <div class="team-profile-edit__field">
-                        <label class="team-profile-edit__label" for="team_name">Team Name</label>
-                        <input type="text" id="team_name" name="team_name" class="team-profile-edit__input"
-                            value="{{ team.name }}" required>
-                    </div>
-                    <div class="team-profile-edit__field">
-                        <label class="team-profile-edit__label" for="members">Members</label>
-                        <select id="members" name="members" class="team-profile-edit__input" multiple required>
-                            {% for user in all_users %}
-                            <option value="{{ user.id }}" {% if user in team.members %}selected{% endif %}>{{ user.name
-                                }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="team-profile-edit__field">
-                        <label class="team-profile-edit__label" for="introduction">Introduction</label>
-                        <textarea id="introduction" name="introduction" class="team-profile-edit__textarea"
-                            rows="4">{{ team.introduction }}</textarea>
-                    </div>
-                    <div class="team-profile-edit__submit">
-                        <button type="submit" class="team-profile-edit__save-button">Save</button>
-                    </div>
-                </form>
-            </section>
-            {% if message %}
-            <div class="team-profile-edit__notification">
-                <div class="team-profile-edit__notification-icon">
-                    <img src="{{ url_for('static', path='/images/success_icon.svg') }}" alt="Success"
-                        class="team-profile-edit__notification-image">
-                </div>
-                <div class="team-profile-edit__notification-content">
-                    <span class="team-profile-edit__notification-message">{{ message }}</span>
-                </div>
-                <div class="team-profile-edit__notification-close">
-                    <img src="{{ url_for('static', path='/images/close_icon.svg') }}" alt="Close"
-                        class="team-profile-edit__notification-close-icon" onclick="closeNotification()">
-                </div>
+        <form class="team-profile-edit__form" method="post">
+            <h2 class="team-profile-edit__section-title">Team Settings</h2>
+            <div class="form-group">
+                <label for="team_name" class="form-label">Team Name</label>
+                <input type="text" id="team_name" name="team_name" class="form-input" value="{{ team.name }}" required>
             </div>
-            {% endif %}
-        </div>
+            <div class="form-group">
+                <label for="members" class="form-label">Members</label>
+                <select id="members" name="members" class="form-select" multiple required>
+                    {% for user in all_users %}
+                    <option value="{{ user.id }}" {% if user in team.members %}selected{% endif %}>{{ user.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="introduction" class="form-label">Introduction</label>
+                <textarea id="introduction" name="introduction" class="form-textarea"
+                    rows="4">{{ team.introduction }}</textarea>
+            </div>
+            <button type="submit" class="btn btn--primary">Save</button>
+        </form>
     </div>
 </div>
-{% endblock %}
 
-{% block extra_js %}
-<script src="{{ url_for('static', path='/js/team_profile_edit.js') }}"></script>
+{% if message %}
+<div class="notification notification--success">
+    <p class="notification__message">{{ message }}</p>
+</div>
+{% endif %}
+
 {% endblock %}

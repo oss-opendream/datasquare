@@ -1,51 +1,153 @@
-/* 공통 컴포넌트 스타일 */
-/* 버튼 스타일 */
-.button {
-    border: none;
+/* 헤더 */
+.header {
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.header__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.header__logo {
+    display: flex;
+    align-items: center;
+}
+
+.header__logo-image {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.5rem;
+}
+
+.header__logo-text {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333333;
+}
+
+.header__nav {
+    display: flex;
+}
+
+.header__nav-item {
+    margin-left: 1.5rem;
+    color: #0000FF;
+    text-decoration: none;
+}
+
+.header__user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.header__notification {
+    position: relative;
+    margin-right: 1rem;
+}
+
+.header__icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-left: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.button--icon {
-    background: none;
-    padding: var(--spacing-sm, 5px);
-}
-
-.button--primary {
-    background-color: var(--primary-color, #0F62FE);
-    color: var(--color-white, white);
-    padding: var(--spacing-md, 10px) var(--spacing-lg, 15px);
-}
-
-.button--secondary {
-    background-color: var(--secondary-color, #697077);
-    color: var(--color-white, white);
-    padding: var(--spacing-md, 10px) var(--spacing-lg, 15px);
-}
-
-.button--close {
-    background: none;
-    border: none;
-    font-size: var(--font-size-large, 18px);
-    cursor: pointer;
-}
-
-/* 뱃지 스타일 */
-.badge {
-    background-color: var(--color-red, red);
-    color: var(--color-white, white);
-    border-radius: var(--border-radius-circle, 50%);
-    padding: var(--spacing-xs, 2px) var(--spacing-sm, 5px);
-    font-size: var(--font-size-small, 12px);
+.header__notification-badge {
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: -0.5rem;
+    right: -0.5rem;
+    background-color: #FF0000;
+    color: #FFFFFF;
+    border-radius: 50%;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.75rem;
 }
 
-/* 알림 닫기 버튼 스타일 */
-.notification__close {
-    background: none;
-    border: none;
-    font-size: var(--font-size-large, 18px);
-    cursor: pointer;
+/* 푸터 */
+.footer {
+    background-color: var(--secondary-color);
+    color: #fff;
+    padding: var(--spacing-lg) 0;
+}
+
+.footer__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .header__nav {
+        display: none;
+    }
+}
+
+.footer {
+    background-color: #697077;
+    color: #fff;
+    padding: 1.5% 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.footer__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2%;
+}
+
+.footer__logo {
+    display: flex;
+    align-items: center;
+}
+
+.footer__logo-image {
+    width: 10%;
+    max-width: 40px;
+    margin-right: 2%;
+}
+
+.footer__company-name {
+    font-size: 0.9rem;
+}
+
+.footer__copyright {
+    font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .footer__content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer__logo {
+        margin-bottom: 1rem;
+    }
+
+    .footer__copyright {
+        margin-top: 0.5rem;
+    }
 }
