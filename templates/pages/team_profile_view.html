@@ -10,9 +10,9 @@
         <div class="team-image">
             <div class="image-container">
                 {% if team.image %}
-                    <img src="{{ url_for('static', filename=team.image) }}" alt="Team Picture">
+                <img src="{{ url_for('static', filename=team.image) }}" alt="Team Picture">
                 {% else %}
-                    <img src="{{ url_for('static', filename='images/default_team.svg') }}" alt="Default Team Picture">
+                <img src="{{ url_for('static', filename='images/default_team.svg') }}" alt="Default Team Picture">
                 {% endif %}
             </div>
         </div>
@@ -26,9 +26,9 @@
                 <div class="member">
                     <div class="member-avatar">
                         {% if member.avatar %}
-                            <img src="{{ url_for('static', filename=member.avatar) }}" alt="{{ member.name }} Avatar">
+                        <img src="{{ url_for('static', filename=member.avatar) }}" alt="{{ member.name }} Avatar">
                         {% else %}
-                            <img src="{{ url_for('static', filename='images/default_avatar.svg') }}" alt="Default Avatar">
+                        <img src="{{ url_for('static', filename='images/default_avatar.svg') }}" alt="Default Avatar">
                         {% endif %}
                     </div>
                     <span class="member-name">{{ member.name }}</span>

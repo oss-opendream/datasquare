@@ -9,9 +9,9 @@
         <div class="profile-image">
             <div class="image-container">
                 {% if user.profile_image %}
-                    <img src="{{ url_for('static', filename=user.profile_image) }}" alt="Profile Picture">
+                <img src="{{ url_for('static', filename=user.profile_image) }}" alt="Profile Picture">
                 {% else %}
-                    <img src="{{ url_for('static', filename='images/default_profile.svg') }}" alt="Default Profile Picture">
+                <img src="{{ url_for('static', filename='images/default_profile.svg') }}" alt="Default Profile Picture">
                 {% endif %}
             </div>
         </div>

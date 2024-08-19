@@ -1,61 +1,55 @@
 {% extends "base.html" %}
-
 {% block title %}팀 설정 - DataSquare{% endblock %}
-
 {% block content %}
-<div class="page-content">
-    <h1 class="headline">Settings</h1>
-
-    <div class="content">
-        <div class="menu">
-            <a href="{{ url_for('personal_settings') }}" class="menu-item">Personal</a>
-            <a href="{{ url_for('team_settings') }}" class="menu-item active">Team</a>
-            <a href="{{ url_for('admin_settings') }}" class="menu-item">Admin</a>
-        </div>
-
-        <div class="right-column">
-            <div class="box">
-                <h2 class="description-top">Team Settings</h2>
-                <form method="POST" action="{{ url_for('team_settings_update') }}"
-                    class="form-5-fields-checkbox-button">
-                    <div class="text-field">
-                        <label class="label" for="team_name">Team Name</label>
-                        <input type="text" id="team_name" name="team_name" class="field" value="{{ team.name }}"
-                            required>
+<div class="team-profile-edit">
+    <h1 class="team-profile-edit__title">Settings</h1>
+    <div class="team-profile-edit__content">
+        <nav class="team-profile-edit__nav">
+            <a href="{{ url_for('personal_settings') }}" class="team-profile-edit__nav-item">Personal</a>
+            <a href="{{ url_for('team_settings') }}"
+                class="team-profile-edit__nav-item team-profile-edit__nav-item--active">Team</a>
+            <a href="{{ url_for('admin_settings') }}" class="team-profile-edit__nav-item">Admin</a>
+        </nav>
+        <div class="team-profile-edit__main">
+            <section class="team-profile-edit__section">
+                <h2 class="team-profile-edit__section-title">Team Settings</h2>
+                <form class="team-profile-edit__form" method="POST" action="{{ url_for('team_settings_update') }}">
+                    <div class="team-profile-edit__field">
+                        <label class="team-profile-edit__label" for="team_name">Team Name</label>
+                        <input type="text" id="team_name" name="team_name" class="team-profile-edit__input"
+                            value="{{ team.name }}" required>
                     </div>
-
-                    <div class="text-field">
-                        <label class="label" for="members">Members</label>
-                        <select id="members" name="members" class="field" multiple required>
+                    <div class="team-profile-edit__field">
+                        <label class="team-profile-edit__label" for="members">Members</label>
+                        <select id="members" name="members" class="team-profile-edit__input" multiple required>
                             {% for user in all_users %}
-                            <option value="{{ user.id }}" {% if user in team.members %}selected{% endif %}>
-                                {{ user.name }}
-                            </option>
+                            <option value="{{ user.id }}" {% if user in team.members %}selected{% endif %}>{{ user.name
+                                }}</option>
                             {% endfor %}
                         </select>
                     </div>
-
-                    <div class="text-field">
-                        <label class="label" for="introduction">Introduction</label>
-                        <textarea id="introduction" name="introduction" class="field"
+                    <div class="team-profile-edit__field">
+                        <label class="team-profile-edit__label" for="introduction">Introduction</label>
+                        <textarea id="introduction" name="introduction" class="team-profile-edit__textarea"
                             rows="4">{{ team.introduction }}</textarea>
                     </div>
-
-                    <button type="submit" class="button save">Save</button>
+                    <div class="team-profile-edit__submit">
+                        <button type="submit" class="team-profile-edit__save-button">Save</button>
+                    </div>
                 </form>
-            </div>
-
+            </section>
             {% if message %}
-            <div class="notification">
-                <div class="icon">
-                    <img src="{{ url_for('static', filename='images/success_icon.svg') }}" alt="Success" class="vector">
+            <div class="team-profile-edit__notification">
+                <div class="team-profile-edit__notification-icon">
+                    <img src="{{ url_for('static', filename='images/success_icon.svg') }}" alt="Success"
+                        class="team-profile-edit__notification-image">
                 </div>
-                <div class="content">
-                    <span class="title">{{ message }}</span>
+                <div class="team-profile-edit__notification-content">
+                    <span class="team-profile-edit__notification-message">{{ message }}</span>
                 </div>
-                <div class="right">
-                    <img src="{{ url_for('static', filename='images/close_icon.svg') }}" alt="Close" class="vector"
-                        onclick="closeNotification()">
+                <div class="team-profile-edit__notification-close">
+                    <img src="{{ url_for('static', filename='images/close_icon.svg') }}" alt="Close"
+                        class="team-profile-edit__notification-close-icon" onclick="closeNotification()">
                 </div>
             </div>
             {% endif %}

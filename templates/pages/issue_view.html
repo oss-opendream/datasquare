@@ -3,98 +3,52 @@
 {% block title %}데이터 요청 - DataSquare{% endblock %}
 
 {% block content %}
-<main class="page-content">
-    <h1 class="headline secondary-headline">데이터 요청</h1>
-    <div class="frame-2300">
-        <section class="section-1">
-            <div class="data-requirements">
-                <div class="complete-your-profile">
-                    <div class="progress-indicator">
-                        <div class="icon-1"></div>
-                        <div class="content">
-                            <span class="title">요청사항</span>
-                        </div>
-                    </div>
+<div class="issue-view">
+    <h1 class="issue-view__title">데이터 요청</h1>
+    <div class="issue-view__content">
+        <section class="issue-view__main-section">
+            <div class="issue-view__data-requirements">
+                <h2 class="issue-view__section-title">요청사항</h2>
+                <div class="issue-view__field">
+                    <label class="issue-view__label">제목</label>
+                    <div class="issue-view__value">{{ issue.title }}</div>
                 </div>
-                <!-- Form fields -->
-                <div class="form-5-fields-checkbox-button">
-                    <!-- Title field -->
-                    <div class="text-field">
-                        <label class="label" for="title">제목</label>
-                        <div class="field">{{ issue.title }}</div>
-                    </div>
-                    <!-- Request details field -->
-                    <div class="container">
-                        <label class="label" for="request-details">요청 사항</label>
-                        <div class="field">{{ issue.content }}</div>
-                    </div>
-                    <!-- Data usage purpose field -->
-                    <div class="text-field">
-                        <label class="label" for="data-purpose">데이터 활용 목적</label>
-                        <input type="text" id="data-purpose" class="field" placeholder="데이터 활용 목적">
-                    </div>
-                    <!-- Data format field -->
-                    <div class="container-1">
-                        <label class="label-1" for="data-format">제공 데이터 형식</label>
-                        <select id="data-format" class="field-1">
-                            <option value="csv">CSV 파일(*.csv)</option>
-                        </select>
-                    </div>
-                    <!-- Date range fields -->
-                    <div class="text-field-1">
-                        <div class="text-field-2">
-                            <label class="label-2" for="start-date">요청 데이터 기간 범위</label>
-                            <input type="date" id="start-date" class="field-2" placeholder="시작일">
-                        </div>
-                        <div class="text-field-3">
-                            <input type="date" id="end-date" class="field-3" placeholder="종료일">
-                        </div>
-                    </div>
+                <div class="issue-view__field">
+                    <label class="issue-view__label">요청 사항</label>
+                    <div class="issue-view__value">{{ issue.content }}</div>
                 </div>
+                <!-- 기타 필드들... -->
             </div>
-            <!-- Comment section -->
-            <div class="issue_views_comments">
+            <div class="issue-view__comments">
                 {% for comment in comments %}
-                <div class="comment">
-                    <p>{{ comment.content }}</p>
-                    <p>{{ comment.publisher_id }}</p>
-                    <hr>
+                <div class="issue-view__comment">
+                    <p class="issue-view__comment-content">{{ comment.content }}</p>
+                    <p class="issue-view__comment-author">{{ comment.publisher_id }}</p>
+                    <hr class="issue-view__comment-divider">
                 </div>
                 {% endfor %}
             </div>
-            <div class="write-comment">
-                <div class="container-2">
-                    <label class="label-4" for="comment">댓글</label>
-                    <textarea id="comment" class="field-5" placeholder="댓글 본문"></textarea>
-                </div>
-                <button class="button" id="submit-comment">
-                    <div class="icon-jam-icons-outline-logos-plus"></div>
-                    <span class="button-text">등록</span>
+            <div class="issue-view__write-comment">
+                <label for="issue-view__comment" class="issue-view__comment-label">댓글</label>
+                <textarea id="issue-view__comment" class="issue-view__comment-textarea" placeholder="댓글 본문"></textarea>
+                <button id="issue-view__submit-comment" class="issue-view__submit-comment">
+                    <span class="issue-view__submit-icon"></span>
+                    <span class="issue-view__submit-text">등록</span>
                 </button>
             </div>
         </section>
-        <aside class="section-2">
-            <div class="complete-your-profile-1">
-                <div class="progress-indicator-1">
-                    <div class="icon-2"></div>
-                    <div class="content-1">
-                        <span class="title-1">담당 부서 및 공개범위</span>
-                    </div>
-                </div>
-            </div>
-            <div class="frame-2295">
-                <label class="label-3" for="department">제공 부서</label>
-                <div class="field-4">
-                    <div class="container">
-                        <div class="icon-jam-icons-outline-logos-search"></div>
-                        <span class="text-10">제공 부서</span>
-                    </div>
-                    <div class="icon-jam-icons-outline-logos-chevron-down"></div>
-                </div>
+        <aside class="issue-view__sidebar">
+            <h2 class="issue-view__sidebar-title">담당 부서 및 공개범위</h2>
+            <div class="issue-view__department-select">
+                <label for="issue-view__department" class="issue-view__department-label">제공 부서</label>
+                <select id="issue-view__department" class="issue-view__department-dropdown">
+                    <option value="">제공 부서</option>
+                    <!-- 부서 옵션들... -->
+                </select>
             </div>
         </aside>
     </div>
-</main>
+</div>
 {% endblock %}
 
 {% block extra_js %}

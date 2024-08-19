@@ -1,9 +1,10 @@
-<footer>
-    <div class='footer-content'>
-        <div class='logo'>
-            <img src='{{ url_for("static", path="/images/logo_withouttext.svg") }}' alt='DataSquare Logo'>
-            <span>DataSquare for {{ company_name }}</span>
+<footer class="footer">
+    <div class='footer__content'>
+        <div class='footer__logo'>
+            <img src='{{ url_for("static", path="/images/logo_withouttext.svg") }}' alt='DataSquare Logo'
+                class="footer__logo-image">
+            <span class="footer__logo-text">DataSquare for {{ company_name }}</span>
         </div>
-        <p class='copyright'>{{ company_name }} @ {{ current_year }}. All rights reserved.</p>
+        <p class='footer__copyright'>{{ company_name }} @ {{ current_year }}. All rights reserved.</p>
     </div>
 </footer>

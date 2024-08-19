@@ -3,12 +3,15 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pathlib import Path
 from datetime import datetime
+from fastapi import HTTPException
+
 
 app = FastAPI()
 
 BASE_DIR = Path(__file__).resolve().parent
-templates = Jinja2Templates(directory=str(BASE_DIR / 'templates'))
-app.mount('/static', StaticFiles(directory=str(BASE_DIR / 'static')), name='static')
+templates = Jinja2Templates(directory=BASE_DIR / 'templates')
+app.mount("/static", StaticFiles(directory= "static"), name="static")
+
 
 def get_notification_count(user_id):
     return 5  # 임시로 5개의 알림이 있다고 가정
@@ -21,18 +24,21 @@ def get_notifications(user_id: int):
         {"message": "데이터베이스가 업데이트되었습니다."}
     ]
 
-@app.get('/', name='home')
+@app.get('/')
 async def home(request: Request):
-    user_id = 1  # 예시 사용자 ID
-    notifications = get_notifications(user_id)
-    notification_count = len(notifications)
-    return templates.TemplateResponse('pages/home.html', {
-        'request': request,
-        'company_name': 'Your Company',
-        'current_year': datetime.now().year,
-        'notification_count': notification_count,
-        'notifications': notifications
-    })
+    try:
+        user_id = 1  # 예시 사용자 ID
+        notifications = get_notifications(user_id)
+        notification_count = len(notifications)
+        return templates.TemplateResponse('pages/home.html', {
+            'request': request,
+            'company_name': 'Your Company',
+            'current_year': datetime.now().year,
+            'notification_count': notification_count,
+            'notifications': notifications
+        })
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.get('/data-request', name='data_request')
