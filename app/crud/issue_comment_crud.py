@@ -1,6 +1,4 @@
-'''
-issue_comment 데이터를 curd 하기 위한 파일입니다.
-'''
+'''issue_comment 데이터를 curd 하기 위한 파일입니다.'''
 
 
 from functools import singledispatch

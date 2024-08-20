@@ -39,7 +39,8 @@ class IssueData():
             requested_team=requested_team,
             is_private=is_private,
             created_at=now,
-            modified_at=now)
+            modified_at=now
+            )
 
         with next(self.db.get_db()) as db_session:
             db_session.add(new_issue)

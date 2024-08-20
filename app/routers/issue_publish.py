@@ -49,8 +49,6 @@ async def create_issue(title: str = Form(...),
 async def issue_pulish(request: Request,
                        current_user: User = Depends(get_current_user)
                        ):
-    '''
-    이슈 발행 페이지 함수입니다.
-    '''
+    '''이슈 발행 페이지 함수입니다.'''
 
     return templates.TemplateResponse('issue_publish.html', {'request': request})

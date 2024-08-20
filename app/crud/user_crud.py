@@ -9,13 +9,11 @@ from app.models.database import datasquare_db
 
 
 class UserData:
-    '''
-    User Data에 관련된 Tabel에 대한 CRUD 작업 class
-    '''
+    '''User Data에 관련된 Tabel에 대한 CRUD 작업 class'''
 
     def __init__(self, db: Session = datasquare_db):
         self.db = db
-        self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+        self.pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
     def create_user(self, user_create: UserCreate) -> None:
         '''회원 가입 정보를 DB에 적재.'''

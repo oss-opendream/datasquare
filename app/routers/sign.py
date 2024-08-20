@@ -20,7 +20,7 @@ from app.schemas import user_schema
 
 
 router = APIRouter()
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(directory='app/templates')
 
 load_dotenv()
 
@@ -49,8 +49,8 @@ async def signin_post(request: Request,
         return RedirectResponse(url='/signin?error=비밀번호가 일치하지 않습니다.', status_code=status.HTTP_302_FOUND)
 
     data = {
-        "sub": user.email,  # 사용자 식별
-        "exp": datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)  # token 유효기간
+        'sub': user.email,  # 사용자 식별
+        'exp': datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)  # token 유효기간
     }
     access_token = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
 
@@ -58,7 +58,7 @@ async def signin_post(request: Request,
     response = RedirectResponse(
         url='/feed', status_code=status.HTTP_302_FOUND)
     response.set_cookie(
-        key="access_token", value=access_token, httponly=True, secure=True, samesite="Lax"
+        key='access_token', value=access_token, httponly=True, secure=True, samesite='Lax'
     )
 
     return response
@@ -66,40 +66,40 @@ async def signin_post(request: Request,
 
 def get_current_user(access_token: str = Cookie(None)):
     if not access_token:
-        raise HTTPException(status_code=401, detail="Not authenticated")
+        raise HTTPException(status_code=401, detail='Not authenticated')
 
     try:
         payload = jwt.decode(access_token, SECRET_KEY, algorithms=ALGORITHM)
-        user_id: str = payload.get("sub")
-        print("userid ", user_id)
+        user_id: str = payload.get('sub')
+        print('userid ', user_id)
 
         if user_id is None:
             raise HTTPException(
-                status_code=401, detail="Invalid authentication credentials")
+                status_code=401, detail='Invalid authentication credentials')
 
         user = UserData().get_user(user_id, key='email')
-        print("user", user)
+        print('user', user)
         if user is None:
-            raise HTTPException(status_code=401, detail="User not found")
+            raise HTTPException(status_code=401, detail='User not found')
 
         return user
 
     except jwt.JWTError:
         raise HTTPException(
-            status_code=401, detail="Invalid authentication credentials")
+            status_code=401, detail='Invalid authentication credentials')
 
-@router.get("/signup")
+@router.get('/signup')
 async def signup_get(request: Request):
 
     departments = TeamData().get_team_name()
 
     return templates.TemplateResponse('sign_up.html',
                                       context={'request': request,
-                                               "departments": departments}
+                                               'departments': departments}
                                       )
 
 
-@router.post("/signup")
+@router.post('/signup')
 async def signup_post(request: Request, name: Annotated[str, Form()], email: Annotated[str, Form()], password: Annotated[str, Form()], password2: Annotated[str, Form()], phone_number: Annotated[str, Form()], department: Annotated[str, Form()]
                       ):
 

@@ -1,6 +1,4 @@
-'''
-    Issue feed 관련 라우터 정의 모듈
-'''
+'''Issue feed 관련 라우터 정의 모듈'''
 
 
 from fastapi import APIRouter, Request, Depends
@@ -18,9 +16,7 @@ templates = Jinja2Templates(directory='app/templates')
 @router.get('/feed')
 async def read_dashboard(request: Request, 
                          current_user: User = Depends(get_current_user)):
-    '''
-    조직 내 공개된 전체 이슈 목록 출력 라우터
-    '''
+    '''조직 내 공개된 전체 이슈 목록 출력 라우터'''
 
     team = Team()
     teams_list = team.get_all()
@@ -42,9 +38,7 @@ async def read_dashboard(request: Request,
 @router.get('/feed/my_issues')
 async def read_my_issues(request: Request, 
                          current_user: User = Depends(get_current_user)):
-    '''
-    현재 접속자가 작성한 이슈 목록 출력 라우터
-    '''
+    '''현재 접속자가 작성한 이슈 목록 출력 라우터'''
 
     team = Team()
     teams_list = team.get_all()
@@ -68,9 +62,7 @@ async def search_issues(request: Request,
                         keyword: str, 
                         team=str, 
                         current_user: User = Depends(get_current_user)):
-    '''
-    제목 또는 팀으로 검색된 이슈 목록 출력 함수
-    '''
+    '''제목 또는 팀으로 검색된 이슈 목록 출력 함수'''
 
     team_data = Team()
     teams_list = team_data.get_all()
