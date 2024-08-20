@@ -15,15 +15,18 @@ from starlette import status
 from app.crud.user_crud import UserData
 from app.crud.team_crud import TeamData
 from app.schemas import user_schema
+from app.schemas.user_schema import User
+from app.routers.sign import get_current_user
 from app.crud.noti import get_notification_count
 
 router = APIRouter()
 templates = Jinja2Templates(directory='app/templates')
 
 @router.get('/databases', name='databases')
-async def databases(request: Request):
+async def databases(request: Request, current_user: User = Depends(get_current_user)):
     return templates.TemplateResponse('pages/success.html', {
         'request': request,
         'company_name': 'Your Company',
-        'current_year': datetime.now().year
+        'current_year': datetime.now().year,
+        'notification_count': get_notification_count(current_user.profile_id)
     })
