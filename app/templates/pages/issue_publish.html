@@ -18,10 +18,14 @@
                     <textarea id="issue_publish_content" name="content" placeholder="content" required></textarea>
                     <br>
                     requested_team
-                    <br>
-                    <input id="issue_publish_requested_team" name="requested_team" placeholder="requested_team"
-                        required></input>
-                    <br>
+                    <div class="field">
+                        <select id="issue_publish_requested_team" name="requested_team">
+                            <option value="">--select_team--</option>
+                            {% for department in departments %}
+                            <option value="{{ department }}">{{ department }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                     <label>
                         <input type="radio" name="is_private" value="1">
                         PRIVATE
