@@ -10,14 +10,14 @@ from fastapi import APIRouter, Request, Depends, Form, HTTPException
 from fastapi.templating import Jinja2Templates
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from fastapi.responses import JSONResponse
-from fastapi import Cookie
+from fastapi import Cookie, Response
 from jose import jwt
 from starlette import status
 
 from app.crud.user_crud import UserData
 from app.crud.team_crud import TeamData
 from app.schemas import user_schema
-
+from app.crud.noti import get_notification_count
 
 router = APIRouter()
 templates = Jinja2Templates(directory='app/templates')
@@ -30,14 +30,18 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 ALGORITHM = os.getenv('ALGORITHM')
 
 
-@router.get('/signin', response_class=HTMLResponse)
+@router.get('/signin', response_class=HTMLResponse , name='auth.signin')
 async def singin_get(request: Request):
     return templates.TemplateResponse(request=request,
-                                      name='sign_in.html',
+                                      name='pages/sign_in.html',
                                       )
 
 
-@router.post('/signin/post', response_class=HTMLResponse, response_model=user_schema.Token)
+@router.post('/signin/post',
+            response_class=HTMLResponse, 
+            response_model=user_schema.Token,
+            name = 'sign_post'
+             )
 async def signin_post(request: Request,
                       form_data: OAuth2PasswordRequestForm = Depends(),):
 
@@ -71,14 +75,13 @@ def get_current_user(access_token: str = Cookie(None)):
     try:
         payload = jwt.decode(access_token, SECRET_KEY, algorithms=ALGORITHM)
         user_id: str = payload.get('sub')
-        print('userid ', user_id)
 
         if user_id is None:
             raise HTTPException(
                 status_code=401, detail='Invalid authentication credentials')
 
         user = UserData().get_user(user_id, key='email')
-        print('user', user)
+
         if user is None:
             raise HTTPException(status_code=401, detail='User not found')
 
@@ -88,19 +91,25 @@ def get_current_user(access_token: str = Cookie(None)):
         raise HTTPException(
             status_code=401, detail='Invalid authentication credentials')
 
-@router.get('/signup')
+@router.get('/signup', name='auth.signup')
 async def signup_get(request: Request):
 
     departments = TeamData().get_team_name()
 
-    return templates.TemplateResponse('sign_up.html',
+    return templates.TemplateResponse('pages/sign_up.html',
                                       context={'request': request,
                                                'departments': departments}
                                       )
 
 
 @router.post('/signup')
-async def signup_post(request: Request, name: Annotated[str, Form()], email: Annotated[str, Form()], password: Annotated[str, Form()], password2: Annotated[str, Form()], phone_number: Annotated[str, Form()], department: Annotated[str, Form()]
+async def signup_post(request: Request
+                      , name: Annotated[str, Form()]
+                      , email: Annotated[str, Form()]
+                      , password: Annotated[str, Form()]
+                      , password2: Annotated[str, Form()]
+                      , phone_number: Annotated[str, Form()]
+                      , department: Annotated[str, Form()]
                       ):
 
     try:
@@ -123,5 +132,13 @@ async def signup_post(request: Request, name: Annotated[str, Form()], email: Ann
     else:
         userdata_obj.create_user(user_create=user_create)
 
-        return templates.TemplateResponse('success.html',
-                                          context={'request': request})
+        return RedirectResponse(url='/signin' , status_code=status.HTTP_302_FOUND)
+
+
+@router.get('/logout', response_class=HTMLResponse)
+def logout(response: Response):
+
+    response = RedirectResponse(url = '/signin')
+    response.delete_cookie("access_token")
+
+    return response
