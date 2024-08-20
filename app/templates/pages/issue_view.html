@@ -33,16 +33,20 @@
                 <h2 class="issue-view__section-title">댓글</h2>
                 {% for comment in comments %}
                 <div class="issue-view__comment">
+                    <span class="issue-view__comment-author">{{ comment.publisher }}</span>
                     <p class="issue-view__comment-content">{{ comment.content }}</p>
-                    <span class="issue-view__comment-author">{{ comment.author }}</span>
                 </div>
                 {% endfor %}
             </div>
-            <div class="issue-view__write-comment">
-                <textarea id="comment-content" class="form-textarea issue-view__comment-textarea"
-                    placeholder="댓글 작성..."></textarea>
-                <button id="submit-comment" class="btn btn--primary issue-view__submit-comment">등록</button>
+            <div class="write-comment">
+                <br>
+                <form action="/issue/view/create_comment" method="post">
+                    <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
+                    <textarea name="comment" required></textarea>
+                    <button class="btn btn--primary issue-view__submit-comment" type="submit">댓글 등록</button>
+                </form>
             </div>
+
         </div>
         <div class="issue-view__sidebar">
             <h2 class="issue-view__sidebar-title">담당 부서 및 공개범위</h2>
