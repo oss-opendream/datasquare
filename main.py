@@ -9,7 +9,7 @@ app = FastAPI()
 
 BASE_DIR = Path(__file__).resolve().parent
 app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+templates = Jinja2Templates(directory=str(BASE_DIR / "templates" ))
 
 def get_notification_count(user_id):
     return 5  # 임시로 5개의 알림이 있다고 가정
@@ -34,6 +34,7 @@ async def home(request: Request):
             'notifications': notifications
         })
     except Exception as e:
+        print(f"Error rendering template: {str(e)}")  # 상세한 오류 메시지 출력
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get('/data-request', name='data_request')
