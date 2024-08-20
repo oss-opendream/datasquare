@@ -1,28 +1,31 @@
 <header class="header">
-    <div class="header__logo">
-        <img src="{{ url_for('static', path='/images/logo_withouttext.svg') }}" alt="DataSquare Logo"
-            class="header__logo-image">
-        <div class="header__logo-text">
-            <span class="header__logo-brand">DataSquare</span>
-            <span class="header__logo-company">for {{ company_name }}</span>
+    <div class="header__content">
+        <div class="header__logo">
+            <img src="{{ url_for('static', path='/images/logo_withouttext.svg') }}" alt="DataSquare Logo"
+                class="header__logo-image">
+            <div class="header__logo-text">
+                <span class="header__logo-brand">DataSquare</span>
+                <br>
+                <span class="header__logo-company">for {{ company_name }}</span>
+            </div>
         </div>
-    </div>
-    <nav class="header__nav">
-        <a href="{{ url_for('data_request') }}" class="header__nav-item">Data Request</a>
-        <a href="{{ url_for('databases') }}" class="header__nav-item">Databases</a>
-    </nav>
-    <div class="header__user-actions">
-        <div id="header__notification-button" class="header__notification-container">
-            <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications">
-            {% if notification_count > 0 %}
-            <span class="header__notification-badge">{{ notification_count }}</span>
-            {% endif %}
+        <nav class="header__nav">
+            <a href="{{ url_for('data_request') }}" class="header__nav-item">Data Request</a>
+            <a href="{{ url_for('databases') }}" class="header__nav-item">Databases</a>
+        </nav>
+        <div class="header__user-actions">
+            <div id="header__notification-button" class="header__notification-container">
+                <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications">
+                {% if notification_count > 0 %}
+                <span class="header__notification-badge">{{ notification_count }}</span>
+                {% endif %}
+            </div>
+            <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings"
+                class="header__settings-icon">
+            <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile"
+                class="header__user-icon">
+            <img src="{{ url_for('static', path='/images/logout-icon.svg') }}" alt="Logout" class="header__logout-icon">
         </div>
-        <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings"
-            class="header__settings-icon">
-        <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile" class="header__user-icon">
-        <img src="{{ url_for('static', path='/images/logout-icon.svg') }}" alt="Logout" class="header__logout-icon">
-    </div>
 </header>
 
 <div id="header__notification-popup" class="header__notification-popup">

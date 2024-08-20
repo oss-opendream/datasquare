@@ -11,7 +11,7 @@
 
 <body>
     {% if not hide_header %}
-    {% include 'header.html' %}
+    {% include 'pages/header.html' %}
     {% endif %}
 
     <div class="layout__main" role="main">
@@ -19,7 +19,7 @@
     </div>
 
     {% if not hide_footer %}
-    {% include 'footer.html' %}
+    {% include 'pages/footer.html' %}
     {% endif %}
 
     <script src="{{ url_for('static', path='js/main.js') }}"></script>

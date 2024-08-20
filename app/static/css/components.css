@@ -6,14 +6,14 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000;
+    z-index: 2000;
 }
 
 .header__content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 0;
+    padding: 1.5rem 1rem;
 }
 
 .header__logo {
@@ -22,8 +22,8 @@
 }
 
 .header__logo-image {
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
     margin-right: 0.5rem;
 }
 
@@ -33,19 +33,49 @@
     color: #333333;
 }
 
+.header__logo-brand {
+    font-size: 1.5rem;
+    /* 글씨 크기를 키우기 */
+    font-weight: bold;
+    /* 글씨를 두껍게 설정 */
+}
+
+.header__logo-company {
+    font-size: 1rem;
+    /* 글씨 크기를 줄이기 */
+    color: gray;
+    /* 필요에 따라 색상 조정 */
+}
+
+
 .header__nav {
     display: flex;
 }
 
 .header__nav-item {
-    margin-left: 1.5rem;
-    color: #0000FF;
+    margin-left: 2.5rem;
+    color: #020202;
     text-decoration: none;
 }
 
 .header__user-actions {
     display: flex;
     align-items: center;
+}
+
+.header__icon {
+    width: 1.6rem;
+    /* 아이콘 크기 */
+    height: 1.5rem;
+    /* 아이콘 크기 */
+    margin-left: 3rem;
+    /* 간격 조정 */
+    cursor: pointer;
+}
+
+.header__notification-container {
+    position: relative;
+    /* 배지가 벨 아이콘에 상대적으로 위치하도록 설정 */
 }
 
 .header__notification {
@@ -56,19 +86,53 @@
 .header__icon {
     width: 1.5rem;
     height: 1.5rem;
-    margin-left: 1rem;
+    margin-left: 2rem;
     cursor: pointer;
 }
 
 .header__notification-badge {
-    position: absolute;
-    top: -0.5rem;
-    right: -0.5rem;
-    background-color: #FF0000;
-    color: #FFFFFF;
+    position: relative;
+    /* 상대 위치로 변경 */
+    display: inline-block;
+    /* inline-block으로 설정하여 배지가 아이콘 옆에 위치하도록 함 */
+    margin-left: -1.00rem;
+    /* 벨 아이콘의 위치에 따라 조정 (10px ≈ 0.625rem) */
+    margin-top: -2.625rem;
+    /* 벨 아이콘의 위치에 따라 조정 (10px ≈ 0.625rem) */
+    background-color: rgb(219, 67, 67);
+    /* 배지 배경 색상 */
+    color: white;
+    /* 배지 텍스트 색상 */
     border-radius: 50%;
-    padding: 0.2rem 0.4rem;
+    /* 둥근 모양으로 설정 */
+    padding: 0.125rem 0.3125rem;
+    /* 패딩 설정 (2px ≈ 0.125rem, 5px ≈ 0.3125rem) */
     font-size: 0.75rem;
+    /* 폰트 크기 설정 (12px ≈ 0.75rem) */
+    white-space: nowrap;
+    /* 배지가 줄 바꿈되지 않도록 설정 */
+}
+
+.header__nav-item:hover {
+    color: #325ab7;
+    /* 호버 시 색상 변경 */
+    text-decoration: underline;
+    /* 밑줄 효과 */
+}
+
+
+
+/* 미디어 쿼리 */
+@media (max-width: 768px) {
+    .header__nav {
+        display: none;
+        /* 작은 화면에서 네비게이션 숨기기 */
+    }
+}
+
+.header__notification-popup--visible {
+    display: block;
+    /* 또는 원하는 스타일로 변경 */
 }
 
 /* 푸터 */
