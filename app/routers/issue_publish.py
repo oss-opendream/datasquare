@@ -7,7 +7,6 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 
 from app.crud.issue_crud import IssueData
 from app.crud.issue_comment_crud import IssueCommentData
-from app.crud.noti import get_notification_count
 from app.crud.team_crud import TeamData
 from app.schemas.user_schema import User
 from app.routers.sign import get_current_user
@@ -17,7 +16,7 @@ router = APIRouter()
 templates = Jinja2Templates(directory='app/templates')
 
 
-@router.post('/issue/publish', name='data_request')
+@router.post('/issue/publish')
 async def create_issue(title: str = Form(...),
                        content: str = Form(...),
                        requested_team: str = Form(...),
@@ -49,7 +48,7 @@ async def create_issue(title: str = Form(...),
     return ret
 
 
-@router.get('/issue/publish', response_class=HTMLResponse, name='data_request')
+@router.get('/issue/publish', response_class=HTMLResponse)
 async def issue_pulish(request: Request,
                        current_user: User = Depends(get_current_user)
                        ):
@@ -63,8 +62,7 @@ async def issue_pulish(request: Request,
         'issue_publish.html',
         {
             'request': request,
-            'departments': departments,
-            'notification_count': get_notification_count(current_user.profile_id)
+            'departments': departments
         }
     )
 
