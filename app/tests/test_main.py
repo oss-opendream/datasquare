@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from app.models.database import Base, datasquare_db
-from app.routers import feed, issue_publish, issue_view, sign
+from app.routers import feed, issue_publish, issue_view, sign, database_router
 
 
 def create_app() -> None:
@@ -24,6 +24,7 @@ def create_app() -> None:
         feed.router,
         issue_publish.router,
         issue_view.router,
+        database_router.router,
     ]
 
     for router in routers:

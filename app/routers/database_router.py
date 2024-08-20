@@ -15,7 +15,7 @@ from starlette import status
 from app.crud.user_crud import UserData
 from app.crud.team_crud import TeamData
 from app.schemas import user_schema
-
+from app.crud.noti import get_notification_count
 
 router = APIRouter()
 templates = Jinja2Templates(directory='app/templates')
