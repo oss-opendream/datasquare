@@ -14,7 +14,7 @@ templates = Jinja2Templates(directory='app/templates')
 
 
 @router.get('/feed')
-async def read_dashboard(request: Request, 
+async def read_dashboard(request: Request,
                          current_user: User = Depends(get_current_user)):
     '''조직 내 공개된 전체 이슈 목록 출력 라우터'''
 
@@ -26,7 +26,7 @@ async def read_dashboard(request: Request,
     issue_data = issue.get_all()
 
     return templates.TemplateResponse(
-        'feed.html',
+        'pages/feed.html',
         {
             'request': request,
             'teams': teams_list,
@@ -36,7 +36,7 @@ async def read_dashboard(request: Request,
 
 
 @router.get('/feed/my_issues')
-async def read_my_issues(request: Request, 
+async def read_my_issues(request: Request,
                          current_user: User = Depends(get_current_user)):
     '''현재 접속자가 작성한 이슈 목록 출력 라우터'''
 
@@ -48,7 +48,7 @@ async def read_my_issues(request: Request,
     issue_data = issue.get_current_users()
 
     return templates.TemplateResponse(
-        'feed.html',
+        'pages/feed.html',
         {
             'request': request,
             'teams': teams_list,
@@ -59,8 +59,8 @@ async def read_my_issues(request: Request,
 
 @ router.get('/feed/search')
 async def search_issues(request: Request,
-                        keyword: str, 
-                        team=str, 
+                        keyword="",
+                        team="",
                         current_user: User = Depends(get_current_user)):
     '''제목 또는 팀으로 검색된 이슈 목록 출력 함수'''
 
@@ -72,11 +72,10 @@ async def search_issues(request: Request,
     result_data = issue.search(keyword=keyword, team=team)
 
     return templates.TemplateResponse(
-        'feed.html', 
+        'pages/feed.html',
         {
             'request': request,
-            'teams' : teams_list,
-            'issues' : result_data
+            'teams': teams_list,
+            'issues': result_data
         }
     )
-

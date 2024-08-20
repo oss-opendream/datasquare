@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Issue feed - DataSquare{% endblock %}
+{% block content %}
+
+<script type="text/javascript" src="{{ url_for('static', path='/js/feed.js') }}"></script>
+
+<div class="feed">
+    <div class="feed__left-column">
+        <div class="feed__search">
+            <input type="text" class="form-input feed__search-input" placeholder="Search">
+        </div>
+        <div class="feed__recent-searches" id="feed__recent-searches">
+            <ul id="recent-searches">
+                <!-- Recent searches will be populated here -->
+            </ul>
+        </div>
+        <div class="feed__teams">
+            <h3 class="feed__teams-title">Teams</h3>
+            {% for team in teams %}
+            <li>
+                <a href="/feed/search?team={{ team.team_name }}">{{ team.team_name }}</a>
+            </li>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="feed__right-column">
+        <div class="feed__controls">
+            <button class="btn feed__control-btn" onclick="filterMyIssues()">My Issues</button>
+            <button class="btn feed__control-btn" onclick="sortIssues('newest')">Newest</button>
+            <button class="btn feed__control-btn" onclick="sortIssues('oldest')">Oldest</button>
+        </div>
+        <div class="feed__issues">
+            {% for issue in issues %}
+            <div class="issue-card" onclick="view_issue({{ issue.id }})" style="cursor:pointer;">
+                <img src="data:image;base64,{{ issue.profile_pic | safe }}" alt="Profile Picture">
+                <div class="feed__issue-content">
+                    <h3 class="feed__issue-title">{{ issue.title }}</h3>
+                    <p class="feed__issue-description">{{ issue.content }}</p>
+                    <div class="feed__issue-meta">
+                        <span class="feed__issue-author">{{ issue.author_name }}</span>
+                        <span class="feed__issue-team">{{ issue.team }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

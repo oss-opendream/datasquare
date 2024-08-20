@@ -17,8 +17,10 @@ class Issue(Base):
     issue_id = Column(Integer, primary_key=True, unique=True, nullable=False)
     title = Column(String, nullable=False)
     content = Column(Text, nullable=False)
-    publisher = Column(Integer, ForeignKey('personal_profile.profile_id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
-    requested_team = Column(Integer, ForeignKey('team_profile.profile_id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
+    publisher = Column(Integer, ForeignKey('personal_profile.profile_id',
+                       onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
+    requested_team = Column(Integer, ForeignKey(
+        'team_profile.profile_id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
     is_private = Column(Integer, nullable=False)
     created_at = Column(Text, nullable=False)
     modified_at = Column(Text, nullable=False)
@@ -27,14 +29,18 @@ class Issue(Base):
     publisher_re = relationship('PersonalProfile', back_populates='issues_re')
     comments_re = relationship('IssueComment', back_populates='issue_re')
 
+
 class IssueComment(Base):
     __tablename__ = 'issue_comment'
 
     comment_id = Column(Integer, primary_key=True, unique=True, nullable=False)
-    publisher = Column(Integer, ForeignKey('personal_profile.profile_id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
-    within = Column(Integer, ForeignKey('issue.issue_id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
+    publisher = Column(Integer, ForeignKey('personal_profile.profile_id',
+                       onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
+    within = Column(Integer, ForeignKey('issue.issue_id',
+                    onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
     content = Column(Text, nullable=False)
 
     # Relationships
-    publisher_re = relationship('PersonalProfile', back_populates='comments_re')
+    publisher_re = relationship(
+        'PersonalProfile', back_populates='comments_re')
     issue_re = relationship('Issue', back_populates='comments_re')

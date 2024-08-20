@@ -50,7 +50,8 @@ class IssueData:
                     'content': issue.content,
                     'author_name': personal_profile.name,
                     'team': team_profile.team_name,
-                    'profile_pic': base64.b64encode(profile_picture_bin).decode('utf-8')
+                    'profile_pic': base64.b64encode(profile_picture_bin).decode('utf-8'),
+                    'created_at': issue.created_at,
                 }
             )
 

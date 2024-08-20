@@ -1,0 +1,21 @@
+@media (max-width: 768px) {
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+
+    .hidden-mobile {
+        display: none;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hidden-tablet {
+        display: none;
+    }
+}
+
+@media (min-width: 1025px) {
+    .hidden-desktop {
+        display: none;
+    }
+}
