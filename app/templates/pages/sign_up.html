@@ -1,149 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up Page</title>
-    <link rel="stylesheet" href="../static/css/sgin_up.css" />
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
+{% extends "base.html" %}
+{% set hide_header = true %}
+{% set hide_footer = true %}
+{% block title %}회원가입 - DataSquare{% endblock %}
+{% block content %}
 
-            // 쿼리 파라미터에서 오류 메시지 가져오기
-            const urlParams = new URLSearchParams(window.location.search);
-            const error = urlParams.get('error');
-            
-            if (error) {
-                alert(error); // 오류 메시지 팝업 표시
-            }
-
-             // 폼과 필드 가져오기
-            const form = document.querySelector('form');
-            const passwordField = form.querySelector('input[name="password"]');
-            const password2Field = form.querySelector('input[name="password2"]');
-            
-            //error 요소
-            const Error = document.createElement('div');
-            Error.style.color = 'red';
-            Error.style.marginTop = '5px';
-            Error.style.fontSize = '16px';
-            Error.style.width = '100%'; 
-
-            // 필드에 error 메시지 추가
-            password2Field.parentNode.appendChild(Error);
-    
-            form.addEventListener('submit', function(event) {
-
-                // 비밀번호와 비밀번호 확인이 일치하지 않으면 폼 제출을 막고 경고 표시
-                if (passwordField.value !== password2Field.value) {
-                    event.preventDefault(); // 폼 제출 막기
-                    Error.textContent = '비밀번호가 일치하지 않습니다.';
-
-                    // 페이지를 경고 메시지가 있는 위치로 스크롤
-                    password2Field.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else {
-                    errorDiv.textContent = ''; // 에러 메시지 지우기
-                }
-                
-                
-            });
-
-        });
-            
-    </script>
-
-</head>
-<body>
-    <form method="post">
-        <div class="container">
-            <div class="right-column">
-                <div class="section-text">
-                    <span class="secondary-headline">Sign Up</span>
-                </div>
-                <div class="form-5-fields-checkbox-button">
-                    <div class="text-field">
-                        <div class="label">Company Email</div>
-                        <div class="field">
-                            <input type="string" name="email" placeholder="Enter your Email Address" value="{{email}}" required/>
-                        </div>
-                    </div>
-                    <div class="text-field">
-                        <div class="label">Name</div>
-                        <div class="field">
-                            <input type="string" name="name" placeholder="Enter your Name" value="{{name}}" required/>
-                        </div>
-                    </div>
-                    <div class="container-1">
-                        <div class="text-field-1">
-                            <div class="password_group">
-                                <div class="label-2">Password</div>
-                                <div class="field">
-                                    <input type="password" name="password" placeholder="Enter your password" value="{{password}}" required/>
-                                </div>
-                                <div class="description">
-                                    <span class="description-3">Password must be at least 8 characters long <br />and include uppercase, lowercase, numbers, and special characters.</span>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="password_group">
-                                <div class="label-2">Check Password</div>
-                                <div class="field">
-                                    <input type="password" name="password2" placeholder="Check your password" value="{{password2}}" required/>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="fields-group">
-                                <div class="label">Phone_number</div>
-                                <div class="field">
-                                    <input type="tell" name = "phone_number" placeholder="000-0000-0000" value = "{{phone_number}}" required/>
-                                </div>
-                                
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div class="container-1">
-                        
-                        <div class="fields-group-2">
-                            <div></div>
-                            <div class="label">Department</div>
-                            <div class="field">
-                                <select id="department" name="department">
-                                    <option value="">--Department--</option>
-                                    {% for department in departments %}
-                                        <option value="{{ department }}">{{ department }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    
-                    <div class="fields-group-1">
-                        <div class="label-1">Profile Image</div>
-                        <div class="frame-2301">
-                            <div class="button">
-                                <span class="button-text">Upload</span>
-                            </div>
-                            <div class="img-inform">
-                                <div class="description">
-                                    <span class="description-4">Image size must be at least 400px by 400px.<br /></span>
-                                </div>
-                                <div class="description-1">
-                                    <span class="description-5">File size must be under 2MB.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="sep"></div>
-                    <div class="sign-up"><input type="submit" value = "Sign Up"> </div>
-                </form>
-                <div class="horizontal-line"></div>  
-                <a href="signin">Sign In</a>  
-            </div>
-                
-            </div>
+<div class="sign-up">
+    <h1 class="sign-up__title">Sign Up</h1>
+    <form class="sign-up__form" method="post">
+        <div class="form-group">
+            <label for="company_email" class="form-label">Company Email</label>
+            <input type="email" id="company_email" name="company_email" class="form-input" required>
         </div>
-    
-    
-</body>
-</html>
+        <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" name="name" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" name="password" class="form-input" required>
+            <p class="form-help">Password must be at least 8 characters long and include uppercase, lowercase, numbers,
+                and special characters.</p>
+        </div>
+        <div class="form-group">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="tel" id="phone" name="phone" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label for="department" class="form-label">Department</label>
+            <select id="department" name="department" class="form-select" required>
+                <option value="">--Department--</option>
+                {% for department in departments %}
+                <option value="{{ department.id }}">{{ department.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="profile_image" class="form-label">Profile Image</label>
+            <input type="file" id="profile_image" name="profile_image" class="form-input" accept="image/*">
+            <p class="form-help">Image size must be at least 400px by 400px. File size must be under 2MB.</p>
+        </div>
+        <button type="submit" class="btn btn--primary">Sign Up</button>
+    </form>
+    <p class="sign-up__signin-link">
+        이미 계정이 있으신가요? <a href="{{ url_for('auth.signin') }}">Sign In</a>
+    </p>
+</div>
+
+{% endblock %}

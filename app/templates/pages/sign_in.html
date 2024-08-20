@@ -1,60 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% set hide_header = true %}
+{% set hide_footer = true %}
+{% block title %}로그인 - DataSquare{% endblock %}
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/sign_in.css" />
-    <title>Login</title>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
+<div class="sign-in">
+    <h1 class="sign-in__title">Sign In</h1>
+    <form class="sign-in__form" method="post" action="{{ url_for('sign_post') }}">
+        <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="username" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" name="password" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" id="remember" name="remember" class="form-checkbox">
+            <label for="remember" class="form-label">Remember ID</label>
+        </div>
+        <button type="submit" class="btn btn--primary">Sign In</button>
+    </form>
+    <p class="sign-in__signup-link">
+        계정이 없으신가요? <a href="{{ url_for('auth.signup') }}">Sign Up</a>
+    </p>
+</div>
 
-            // 쿼리 파라미터에서 오류 메시지 가져오기
-            const urlParams = new URLSearchParams(window.location.search);
-            const error = urlParams.get('error');
-
-            if (error) {
-                alert(error); // 오류 메시지 팝업 표시
-            }
-        });
-
-    </script>
-</head>
-
-<body>
-
-    <div class="container">
-        <form action="/signin/post" method="post">
-            <div class="right-column">
-                <div class="section-text">
-                    <span class="secondary-headline">Sign In</span>
-                </div>
-                <div class="form-5-fields-checkbox-button">
-                    <div class="text-field">
-                        <div class="label">Email</div>
-                        <div class="field">
-                            <input type="string" name="username" placeholder="Enter your email" value="{{username}}"
-                                required />
-                        </div>
-                    </div>
-                    <div class="text-field">
-                        <div class="label">Password</div>
-                        <div class="field">
-                            <input type="password" name="password" placeholder="Enter your password"
-                                value="{{password}}" required />
-                        </div>
-                    </div>
-
-                </div>
-                <div class="sep"></div>
-                <div class="sign-in"><input type="submit" value="Sign In"> </div>
-        </form>
-        <div class="horizontal-line"></div>
-        <a href="signup">Sign up</a>
-    </div>
-
-
-
-</body>
-
-</html>
+{% endblock %}
