@@ -2,18 +2,21 @@
 {% block title %}Databases - DataSquare{% endblock %}
 {% block content %}
 
-<div class="db-info">
-    <h1 class="db-info__title">Databases</h1>
-    <div class="db-info__filters">
-        <button class="db-info__filter-btn db-info__filter-btn--active">All</button>
-        {% for team in teams %}
-        <button class="db-info__filter-btn">{{ team.name }}</button>
-        {% endfor %}
+<div class="databases">
+    <h1 class="databases__title">Databases</h1>
+    <div class="databases__controls">
+        <div class="databases__filters">
+            <button class="databases__filter-btn databases__filter-btn--active">All</button>
+            {% for team in teams %}
+            <button class="databases__filter-btn">{{ team.name }}</button>
+            {% endfor %}
+        </div>
+        <hr class="databases__separator">
+        <div class="databases__search">
+            <input type="text" class="databases__search-input" placeholder="검색">
+        </div>
     </div>
-    <div class="db-info__search">
-        <input type="text" class="form-input db-info__search-input" placeholder="검색">
-    </div>
-    <table class="db-info__table">
+    <table class="databases__table">
         <thead>
             <tr>
                 <th>DB명 / 테이블명</th>

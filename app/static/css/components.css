@@ -165,7 +165,7 @@
     border-radius: var(--border-radius);
     padding: var(--spacing-md);
     margin-bottom: var(--spacing-md);
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.120rem 0.25rem rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 768px) {
@@ -177,7 +177,7 @@
 .footer {
     background-color: #697077;
     color: #fff;
-    padding: 1.5% 0;
+    padding: 1% 0;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -188,8 +188,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    max-width: 1200px;
+    width: 95%;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 0 2%;
 }
@@ -224,16 +224,18 @@
 }
 
 .footer__logo-company {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     /* 글씨 크기를 조정 */
     color: rgb(255, 255, 255);
     /* 필요에 따라 색상 조정 */
-    margin-top: -1.5rem;
+    margin-top: -2.0rem;
     /* 위쪽 여백 조정 */
 }
 
 .footer__copyright {
     font-size: 0.8rem;
+    padding: 2rem;
+    align-items: center;
 }
 
 @media (max-width: 768px) {
@@ -249,52 +251,4 @@
     .footer__copyright {
         margin-top: 0.5rem;
     }
-}
-
-.home {
-    max-width: 800px;
-    /* 최대 너비 설정 */
-    margin: 0 auto;
-    /* 중앙 정렬 */
-    padding: 1rem;
-    /* 내부 여백 추가 */
-}
-
-.home__title {
-    font-size: 2.5rem;
-    /* 제목 크기 조정 */
-    margin-bottom: 1rem;
-    /* 제목 아래 여백 추가 */
-}
-
-.home__description {
-    font-size: 1.2rem;
-    /* 설명 크기 조정 */
-    margin-bottom: 2rem;
-    /* 설명 아래 여백 추가 */
-}
-
-.home__section {
-    margin-bottom: 1.5rem;
-    /* 섹션 간격 추가 */
-}
-
-.home__section-title {
-    font-size: 1.5rem;
-    /* 섹션 제목 크기 조정 */
-    margin-bottom: 0.5rem;
-    /* 섹션 제목 아래 여백 추가 */
-}
-
-.home__section-link {
-    font-size: 1rem;
-    /* 링크 크기 조정 */
-    color: #007bff;
-    /* 링크 색상 설정 */
-    text-decoration: underline;
-    /* 밑줄 추가 */
-    margin-top: 1rem;
-    /* 링크 위쪽 여백 추가 */
-    display: inline-block;
-    /* 블록 요소로 만들어 여백 적용 */
 }

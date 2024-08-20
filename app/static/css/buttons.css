@@ -11,9 +11,38 @@
 }
 
 .btn:hover {
-    background-color: darken(var(--primary-color), 10%);
+    background-color: #0056b3;
+    /* 예시로 어두운 파란색을 직접 지정 */
 }
 
 .btn--secondary {
     background-color: var(--secondary-color);
+}
+
+.btn--error {
+    background-color: transparent !important;
+    /* 배경을 투명하게 설정 */
+    border: 2px solid rgb(25, 0, 255) !important;
+    /* 파란색 테두리 */
+    color: rgb(0, 0, 255) !important;
+    /* 버튼 텍스트 색상을 파란색으로 설정 */
+    padding: 10px 20px !important;
+    /* 버튼의 패딩 조정 */
+    border-radius: 5px !important;
+    /* 버튼 모서리 둥글게 */
+    text-align: center !important;
+    /* 텍스트 중앙 정렬 */
+    text-decoration: none !important;
+    /* 링크의 기본 밑줄 제거 */
+    display: inline-block !important;
+    /* 버튼 크기 조정 */
+    font-size: 16px !important;
+    /* 글자 크기 조정 */
+}
+
+.btn--error:hover {
+    background-color: rgba(0, 0, 255, 0.1) !important;
+    /* 호버 시 배경색 추가 */
+    color: darkblue !important;
+    /* 호버 시 텍스트 색상 변경 */
 }
