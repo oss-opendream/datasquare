@@ -3,7 +3,11 @@
         <div class="footer__logo">
             <img src="{{ url_for('static', path='/images/logo_withouttext.svg') }}" alt="DataSquare Logo"
                 class="footer__logo-image">
-            <span class="footer__logo-text">DataSquare for {{ company_name }}</span>
+            <div class="footer__logo-text">
+                <span class="footer__logo-brand">DataSquare</span>
+                <br>
+                <span class="footer__logo-company">for {{ company_name }}</span>
+            </div>
         </div>
         <div class="footer__copyright">
             {{ company_name }} @ {{ current_year }}. All rights reserved.

@@ -54,9 +54,15 @@
 
 .header__nav-item {
     margin-left: 2.5rem;
+    /* 기존 간격 유지 */
     color: #020202;
+    /* 텍스트 색상 */
     text-decoration: none;
+    /* 기본 텍스트 장식 제거 */
+    font-size: 1.4rem;
+    /* 글씨 크기 조정 (원하는 크기로 변경) */
 }
+
 
 .header__user-actions {
     display: flex;
@@ -66,12 +72,30 @@
 .header__icon {
     width: 1.6rem;
     /* 아이콘 크기 */
-    height: 1.5rem;
+    height: 1.6rem;
     /* 아이콘 크기 */
-    margin-left: 3rem;
+    margin-left: 2rem;
     /* 간격 조정 */
     cursor: pointer;
 }
+
+.header__settings-icon,
+.header__user-icon,
+.header__logout-icon {
+    width: 2rem;
+    /* 아이콘 크기 */
+    height: 2rem;
+    /* 아이콘 크기 */
+    margin-left: 1rem;
+    /* 왼쪽 간격 조정 */
+    cursor: pointer;
+}
+
+/* 첫 번째 아이콘에는 margin-left를 주지 않음 */
+.header__settings-icon {
+    margin-left: 1rem;
+}
+
 
 .header__notification-container {
     position: relative;
@@ -84,9 +108,9 @@
 }
 
 .header__icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-left: 2rem;
+    width: 2rem;
+    height: 2rem;
+    margin-left: 5rem;
     cursor: pointer;
 }
 
@@ -136,18 +160,6 @@
 }
 
 /* 푸터 */
-.footer {
-    background-color: var(--secondary-color);
-    color: #fff;
-    padding: var(--spacing-lg) 0;
-}
-
-.footer__content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .card {
     background-color: #fff;
     border-radius: var(--border-radius);
@@ -188,13 +200,36 @@
 }
 
 .footer__logo-image {
-    width: 10%;
+    width: 25%;
     max-width: 40px;
     margin-right: 2%;
 }
 
-.footer__company-name {
-    font-size: 0.9rem;
+.footer__logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* 좌측 정렬 */
+    margin: 1rem;
+    /* 기본 margin 제거 */
+    padding: 0;
+    /* 기본 padding 제거 */
+}
+
+.footer__logo-brand {
+    font-size: 1.4em;
+    /* 글씨 크기를 키우기 */
+    font-weight: bold;
+    /* 글씨를 두껍게 설정 */
+}
+
+.footer__logo-company {
+    font-size: 0.8rem;
+    /* 글씨 크기를 조정 */
+    color: rgb(255, 255, 255);
+    /* 필요에 따라 색상 조정 */
+    margin-top: -1.5rem;
+    /* 위쪽 여백 조정 */
 }
 
 .footer__copyright {
@@ -214,4 +249,52 @@
     .footer__copyright {
         margin-top: 0.5rem;
     }
+}
+
+.home {
+    max-width: 800px;
+    /* 최대 너비 설정 */
+    margin: 0 auto;
+    /* 중앙 정렬 */
+    padding: 1rem;
+    /* 내부 여백 추가 */
+}
+
+.home__title {
+    font-size: 2.5rem;
+    /* 제목 크기 조정 */
+    margin-bottom: 1rem;
+    /* 제목 아래 여백 추가 */
+}
+
+.home__description {
+    font-size: 1.2rem;
+    /* 설명 크기 조정 */
+    margin-bottom: 2rem;
+    /* 설명 아래 여백 추가 */
+}
+
+.home__section {
+    margin-bottom: 1.5rem;
+    /* 섹션 간격 추가 */
+}
+
+.home__section-title {
+    font-size: 1.5rem;
+    /* 섹션 제목 크기 조정 */
+    margin-bottom: 0.5rem;
+    /* 섹션 제목 아래 여백 추가 */
+}
+
+.home__section-link {
+    font-size: 1rem;
+    /* 링크 크기 조정 */
+    color: #007bff;
+    /* 링크 색상 설정 */
+    text-decoration: underline;
+    /* 밑줄 추가 */
+    margin-top: 1rem;
+    /* 링크 위쪽 여백 추가 */
+    display: inline-block;
+    /* 블록 요소로 만들어 여백 적용 */
 }
