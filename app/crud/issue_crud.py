@@ -1,8 +1,6 @@
 '''issue 데이터를 curd 하기 위한 파일입니다.'''
 
 
-from functools import singledispatch
-
 from fastapi import Form
 from sqlalchemy.orm import Session
 
@@ -31,7 +29,7 @@ class IssueData():
         '''issue 데이터를 생성, 저장합니다.'''
 
         now = current_time()
-        
+
         new_issue = Issue(
             title=title,
             content=content,
@@ -40,7 +38,7 @@ class IssueData():
             is_private=is_private,
             created_at=now,
             modified_at=now
-            )
+        )
 
         with next(self.db.get_db()) as db_session:
             db_session.add(new_issue)

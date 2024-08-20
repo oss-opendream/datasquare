@@ -13,28 +13,26 @@ from app.crud.issue_crud import IssueData
 from app.crud.issue_comment_crud import IssueCommentData
 from app.schemas.user_schema import User
 from app.routers.sign import get_current_user
+from app.crud.noti import get_notification_count
 
 
 router = APIRouter()
 templates = Jinja2Templates(directory='app/templates')
 
 
-# @router.post('/issue/view/create_issue_comment', response_class=HTMLResponse)
-# async def create_issue_comment(issue_id: int,
-#                                content: str = Form(...),
-#                                current_user: User = Depends(get_current_user)):
-#     '''
-#     issue_commnet 생성 함수 입니다.
-#     '''
+@router.post('/issue/view/create_comment')
+async def create_issue_comment(issue_id: int = Form(...),
+                               comment: str = Form(...),
+                               current_user: User = Depends(get_current_user)):
+    '''issue_commnet 생성 함수 입니다.'''
 
-#     ###
-#     user_id = 1
-#     ###
-#     print(issue_id)
-#     print(content)
-#     IssueCommentData(user_id).create_issue_comment(issue_id, content)
+    IssueCommentData(current_user.profile_id).create_issue_comment(
+        issue_id, comment)
 
-#     return RedirectResponse(url=f'/issue/view/issue_id={issue_id}', status_code=303)
+    ret = RedirectResponse(
+        url=f'/issue/view?issue_id={issue_id}', status_code=303)
+
+    return ret
 
 
 @router.get('/issue/view', response_class=HTMLResponse)
@@ -59,10 +57,14 @@ async def issue_views(request: Request,
     if not comments:
         raise HTTPException(status_code=404, detail='Issue_Comments not found')
 
-    return templates.TemplateResponse('issue_view.html',
-                                      {
-                                          'request': request, 
-                                          'issue': issue, 
-                                          'comments': comments,
-                                      }
+    ret = templates.TemplateResponse(
+        'pages/issue_view.html',
+        {
+            'request': request,
+            'issue': issue,
+            'comments': comments,
+            'notification_count': get_notification_count(current_user.profile_id)
+        }
     )
+
+    return ret
