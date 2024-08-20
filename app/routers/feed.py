@@ -10,7 +10,7 @@ from app.crud.feed_crud import IssueData, Team
 
 
 router = APIRouter()
-templates = Jinja2Templates(directory='app/templates')
+templates = Jinja2Templates(directory='app/templates/pages')
 
 
 @router.get('/feed')

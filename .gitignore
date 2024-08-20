@@ -7,3 +7,10 @@ __pycache__/
 
 # SQLite
 *.sqlite3
+*.db
+
+# venv
+.venv
+
+# env
+.env

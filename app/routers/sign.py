@@ -20,7 +20,7 @@ from app.schemas import user_schema
 
 
 router = APIRouter()
-templates = Jinja2Templates(directory='app/templates')
+templates = Jinja2Templates(directory='app/templates/pages')
 
 load_dotenv()
 
