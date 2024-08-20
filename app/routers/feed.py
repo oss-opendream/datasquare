@@ -14,7 +14,7 @@ templates = Jinja2Templates(directory='app/templates')
 
 
 # @router.get('/feed')
-@router.get('/feed' , name='feed') 
+@router.get('/feed', name='feed')
 async def read_dashboard(request: Request,
                          current_user: User = Depends(get_current_user)):
     '''조직 내 공개된 전체 이슈 목록 출력 라우터'''
@@ -32,7 +32,7 @@ async def read_dashboard(request: Request,
             'request': request,
             'teams': teams_list,
             'issues': issue_data,
-            'notification_count' : get_notification_count(current_user.profile_id)
+            'notification_count': get_notification_count(current_user.profile_id)
         }
     )
 
@@ -54,7 +54,8 @@ async def read_my_issues(request: Request,
         {
             'request': request,
             'teams': teams_list,
-            'issues': issue_data
+            'issues': issue_data,
+            'notification_count': get_notification_count(current_user.profile_id)
         }
     )
 
@@ -78,6 +79,7 @@ async def search_issues(request: Request,
         {
             'request': request,
             'teams': teams_list,
-            'issues': result_data
+            'issues': result_data,
+            'notification_count': get_notification_count(current_user.profile_id)
         }
     )
