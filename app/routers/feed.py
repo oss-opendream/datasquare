@@ -7,10 +7,11 @@ from fastapi.templating import Jinja2Templates
 from app.routers.sign import get_current_user
 from app.schemas.user_schema import User
 from app.crud.feed_crud import IssueData, Team
+from app.crud.noti import get_notification_count
 
 
 router = APIRouter()
-templates = Jinja2Templates(directory='app/templates/pages')
+templates = Jinja2Templates(directory='app/templates')
 
 
 @router.get('/feed')

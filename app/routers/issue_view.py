@@ -16,7 +16,7 @@ from app.routers.sign import get_current_user
 
 
 router = APIRouter()
-templates = Jinja2Templates(directory='app/templates/pages')
+templates = Jinja2Templates(directory='app/templates')
 
 
 # @router.post('/issue/view/create_issue_comment', response_class=HTMLResponse)
