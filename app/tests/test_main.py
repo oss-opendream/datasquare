@@ -2,12 +2,9 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
-from app.routers import feed, issue_publish, issue_view, sign
 from app.models.database import Base, datasquare_db
-from app.models.profile import *
+from app.routers import feed, issue_publish, issue_view, sign
 
-
-Base.metadata.create_all(bind=datasquare_db.engine)
 
 def create_app() -> None:
     '''
@@ -22,10 +19,15 @@ def create_app() -> None:
     created_app.mount(
         '/static', StaticFiles(directory='app/static'), name='static')
 
-    created_app.include_router(sign.router)
-    created_app.include_router(feed.router)
-    created_app.include_router(issue_publish.router)
-    created_app.include_router(issue_view.router)
+    routers = [
+        sign.router,
+        feed.router,
+        issue_publish.router,
+        issue_view.router,
+    ]
+
+    for router in routers:
+        created_app.include_router(router)
 
     return created_app
 
@@ -41,8 +43,12 @@ def read_root():
     return {'hello': 'world'}
 
 
-if __name__ == '__main__':
+@app.get('/databases')
+def databases_test():
+    return {'hello': 'world'}
 
-    
-    uvicorn.run('app.tests.test_feed:app',
-                host='0.0.0.0', port=8000, reload=True)
+
+if __name__ == '__main__':
+    Base.metadata.create_all(bind=datasquare_db.engine, checkfirst=True)
+    uvicorn.run('app.tests.test_main:app',
+                host='0.0.0.0', port=8001, reload=True)

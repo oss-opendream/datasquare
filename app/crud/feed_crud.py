@@ -38,13 +38,14 @@ class IssueData:
             profile_picture_bin = None
 
             if personal_profile.profile_image is None:
-                with open(file='app/static/img/default_user_thumb.png', mode='rb') as f:
+                with open(file='app/static/images/default_user_thumb.png', mode='rb') as f:
                     profile_picture_bin = f.read()
             else:
                 profile_picture_bin = personal_profile.profile_image
 
             formatted_data.append(
                 {
+                    'id': issue.issue_id,
                     'title': issue.title,
                     'content': issue.content,
                     'author_name': personal_profile.name,
@@ -122,5 +123,5 @@ class Team:
                     TeamProfile.profile_id
                 ) \
                 .all()
-            
+
         return teams
