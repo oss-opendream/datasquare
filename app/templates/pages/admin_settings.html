@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}관리자 설정 - DataSquare{% endblock %}
+{% block content %}
+
+<div class="admin-settings">
+    <h1 class="admin-settings__title">Settings</h1>
+    <div class="admin-settings__content">
+        <nav class="admin-settings__nav">
+            <a href="{{ url_for('personal_settings') }}" class="admin-settings__nav-item">Personal</a>
+            <a href="{{ url_for('team_settings') }}" class="admin-settings__nav-item">Team</a>
+            <a href="{{ url_for('admin_settings') }}"
+                class="admin-settings__nav-item admin-settings__nav-item--active">Admin</a>
+        </nav>
+        <div class="admin-settings__main">
+            <h2 class="admin-settings__section-title">Admin Settings</h2>
+            <div class="admin-settings__teams">
+                <h3 class="admin-settings__subsection-title">Teams</h3>
+                <div id="teamList" class="admin-settings__team-list">
+                    {% for team in teams %}
+                    <div class="admin-settings__team-item">
+                        <span class="admin-settings__team-name">{{ team.name }}</span>
+                        <span class="admin-settings__team-admin">{{ team.admin.name }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="btn btn--secondary admin-settings__add-team">+ Add Team</button>
+            </div>
+            <button type="submit" class="btn btn--primary admin-settings__save">Save</button>
+        </div>
+    </div>
+</div>
+
+{% if message %}
+<div class="notification notification--success">
+    <p class="notification__message">{{ message }}</p>
+    <button class="notification__close">&times;</button>
+</div>
+{% endif %}
+
+{% endblock %}

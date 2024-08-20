@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}프로필 조회 - DataSquare{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1 class="page-title">Profile</h1>
+    <div class="profile-content">
+        <div class="profile-image">
+            <div class="image-container">
+                {% if user.profile_image %}
+                <img src="{{ url_for('static', path=user.profile_image) }}" alt="Profile Picture">
+                {% else %}
+                <img src="{{ url_for('static', path='/images/default_profile.svg') }}" alt="Default Profile Picture">
+                {% endif %}
+            </div>
+        </div>
+        <div class="profile-details">
+            <div class="detail-item">
+                <h2>Name</h2>
+                <span>{{ user.name }}</span>
+            </div>
+            <div class="detail-item">
+                <h2>Department</h2>
+                <span>{{ user.department }}</span>
+            </div>
+            <div class="detail-item">
+                <h2>Phone</h2>
+                <span>{{ user.phone }}</span>
+            </div>
+            <div class="detail-item">
+                <h2>Email</h2>
+                <span>{{ user.email }}</span>
+            </div>
+        </div>
+    </div>
+    <a href="{{ url_for('profile_edit') }}" class="btn-primary">프로필 수정</a>
+</div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}설정 - DataSquare{% endblock %}
+
+{% block content %}
+<div class="profile-edit">
+    <h1 class="profile-edit__title">Settings</h1>
+    <div class="profile-edit__content">
+        <nav class="profile-edit__nav">
+            <a href="{{ url_for('personal_settings') }}"
+                class="profile-edit__nav-item profile-edit__nav-item--active">Personal</a>
+            <a href="{{ url_for('team_settings') }}" class="profile-edit__nav-item">Team</a>
+            <a href="{{ url_for('admin_settings') }}" class="profile-edit__nav-item">Admin</a>
+        </nav>
+        <div class="profile-edit__main">
+            <section class="profile-edit__section profile-edit__image-section">
+                <h2 class="profile-edit__section-title">Profile Image</h2>
+                <div class="profile-edit__image-container">
+                    <div class="profile-edit__user-thumb">
+                        {% if user.profile_image %}
+                        <img src="{{ url_for('static', path=user.profile_image) }}" alt="User"
+                            class="profile-edit__user-image">
+                        {% else %}
+                        <img src="{{ url_for('static', path='images/default_avatar.svg') }}" alt="Default User"
+                            class="profile-edit__user-image">
+                        {% endif %}
+                    </div>
+                    <div class="profile-edit__image-actions">
+                        <label for="profile-edit__file-input" class="profile-edit__upload-button">Upload</label>
+                        <input type="file" id="profile-edit__file-input" class="profile-edit__file-input"
+                            name="profile_image" style="display: none;">
+                        <button class="profile-edit__delete-button">Delete</button>
+                    </div>
+                </div>
+                <p class="profile-edit__image-info">Image size must be at least 400px by 400px.<br>File size must be
+                    under 2MB.</p>
+            </section>
+            <section class="profile-edit__section profile-edit__form-section">
+                <h2 class="profile-edit__section-title">Profile</h2>
+                <form class="profile-edit__form" method="POST" action="{{ url_for('profile_update') }}">
+                    <div class="profile-edit__field">
+                        <label class="profile-edit__label" for="email">Company Email</label>
+                        <input type="email" id="email" name="email" class="profile-edit__input" value="{{ user.email }}"
+                            readonly>
+                    </div>
+                    <div class="profile-edit__field">
+                        <label class="profile-edit__label" for="name">Name</label>
+                        <input type="text" id="name" name="name" class="profile-edit__input" value="{{ user.name }}"
+                            required>
+                    </div>
+                    <div class="profile-edit__field">
+                        <label class="profile-edit__label" for="password">Password</label>
+                        <input type="password" id="password" name="password" class="profile-edit__input"
+                            placeholder="Leave blank to keep current password">
+                    </div>
+                    <div class="profile-edit__field">
+                        <label class="profile-edit__label" for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" class="profile-edit__input" value="{{ user.phone }}"
+                            required>
+                    </div>
+                    <div class="profile-edit__field">
+                        <label class="profile-edit__label" for="department">Department</label>
+                        <select id="department" name="department" class="profile-edit__input" required>
+                            <option value="">--Select Department--</option>
+                            {% for dept in departments %}
+                            <option value="{{ dept.id }}" {% if dept.id==user.department_id %}selected{% endif %}>{{
+                                dept.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="profile-edit__submit">
+                        <button type="submit" class="profile-edit__submit-button">Save</button>
+                    </div>
+                </form>
+            </section>
+            {% if message %}
+            <div class="profile-edit__notification">
+                <div class="profile-edit__notification-icon">
+                    <img src="{{ url_for('static', filename='images/success_icon.svg') }}" alt="Success"
+                        class="profile-edit__notification-image">
+                </div>
+                <div class="profile-edit__notification-content">
+                    <span class="profile-edit__notification-message">{{ message }}</span>
+                </div>
+                <div class="profile-edit__notification-close">
+                    <img src="{{ url_for('static', filename='images/close_icon.svg') }}" alt="Close"
+                        class="profile-edit__notification-close-icon" onclick="closeNotification()">
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/profile_edit.js') }}"></script>
+{% endblock %}

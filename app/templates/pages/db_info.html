@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Databases - DataSquare{% endblock %}
+{% block content %}
+
+<div class="db-info">
+    <h1 class="db-info__title">Databases</h1>
+    <div class="db-info__filters">
+        <button class="db-info__filter-btn db-info__filter-btn--active">All</button>
+        {% for team in teams %}
+        <button class="db-info__filter-btn">{{ team.name }}</button>
+        {% endfor %}
+    </div>
+    <div class="db-info__search">
+        <input type="text" class="form-input db-info__search-input" placeholder="검색">
+    </div>
+    <table class="db-info__table">
+        <thead>
+            <tr>
+                <th>DB명 / 테이블명</th>
+                <th>설명</th>
+                <th>Row 수</th>
+                <th>최초 데이터 Timestamp</th>
+                <th>마지막 데이터 Timestamp</th>
+                <th>Tag</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for db in databases %}
+            <tr>
+                <td>{{ db.name }}</td>
+                <td>{{ db.description }}</td>
+                <td>{{ db.row_count }}</td>
+                <td>{{ db.first_timestamp }}</td>
+                <td>{{ db.last_timestamp }}</td>
+                <td>{{ db.tag }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
