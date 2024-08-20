@@ -102,23 +102,20 @@
                     <div class="issue_views_comments">
                         {% for comment in comments %}
                         <tr>
+                            <td>{{ comment.publisher}}</td>
+                            <br>
                             <td>{{ comment.content }}</td>
-                            <td>{{ comment.publisher_id}}</td>
                             <hr>
                         </tr>
                         {% endfor %}
                     </div>
                     <div class="write-comment">
                         <br>
-                        <div class="container-2">
-                            <label class="label-4" for="comment">댓글</label>
-                            <textarea id="comment" class="field-5" placeholder="댓글 본문"></textarea>
-                        </div>
-                        <button class="button">
-                            <div class="icon-jam-icons-outline-logos-plus">
-                            </div>
-                            <span class="button-text">등록</span>
-                        </button>
+                        <form action="/issue/view/create_comment" method="post">
+                            <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
+                            <textarea name="comment" required></textarea>
+                            <button type="submit">댓글 등록</button>
+                        </form>
                     </div>
                 </section>
                 <aside class="section-2">
