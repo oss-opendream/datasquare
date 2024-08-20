@@ -8,7 +8,7 @@ from app.models.database import Base, datasquare_db
 from app.models.issue import *
 
 
-Base.metadata.create_all(bind=datasquare_db.engine)
+# Base.metadata.create_all(bind=datasquare_db.engine)
 
 
 class PersonalProfile(Base):

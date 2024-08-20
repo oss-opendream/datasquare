@@ -3,7 +3,11 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from app.routers import feed, issue_publish, issue_view, sign
+from app.models.database import Base, datasquare_db
+from app.models.profile import *
 
+
+Base.metadata.create_all(bind=datasquare_db.engine)
 
 def create_app() -> None:
     '''
@@ -38,5 +42,7 @@ def read_root():
 
 
 if __name__ == '__main__':
+
+    
     uvicorn.run('app.tests.test_feed:app',
                 host='0.0.0.0', port=8000, reload=True)
