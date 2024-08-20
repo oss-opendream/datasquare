@@ -7,15 +7,17 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 
 from app.crud.issue_crud import IssueData
 from app.crud.issue_comment_crud import IssueCommentData
+from app.crud.team_crud import TeamData
 from app.schemas.user_schema import User
 from app.routers.sign import get_current_user
+from app.crud.noti import get_notification_count
 
 
 router = APIRouter()
 templates = Jinja2Templates(directory='app/templates')
 
 
-@router.post('/issue/publish')
+@router.post('/issue/publish', name='data_request')
 async def create_issue(title: str = Form(...),
                        content: str = Form(...),
                        requested_team: str = Form(...),
@@ -37,18 +39,33 @@ async def create_issue(title: str = Form(...),
     )
 
     IssueCommentData(current_user.profile_id).create_issue_comment(
-        new_issue.issue_id)
+        new_issue.issue_id, 'Init new issue!!!!')
 
-    return RedirectResponse(
+    ret = RedirectResponse(
         url=f'/issue/view?issue_id={new_issue.issue_id}',
         status_code=303
     )
 
+    return ret
 
-@router.get('/issue/publish', response_class=HTMLResponse)
+
+@router.get('/issue/publish', response_class=HTMLResponse, name='data_request')
 async def issue_pulish(request: Request,
                        current_user: User = Depends(get_current_user)
                        ):
-    '''이슈 발행 페이지 함수입니다.'''
+    '''
+    이슈 발행 페이지 함수입니다.
+    team 종류 데이터를 받아서 html로 보냅니다.
+    '''
 
-    return templates.TemplateResponse('issue_publish.html', {'request': request})
+    departments = TeamData().get_team_name()
+    ret = templates.TemplateResponse(
+        'pages/issue_publish.html',
+        {
+            'request': request,
+            'departments': departments,
+            'notification_count': get_notification_count(current_user.profile_id)
+        }
+    )
+
+    return ret

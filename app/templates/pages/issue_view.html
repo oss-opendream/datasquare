@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}데이터 요청 - DataSquare{% endblock %}
+{% block content %}
+
+<div class="issue-view">
+    <h1 class="issue-view__title">데이터 요청</h1>
+    <div class="issue-view__content">
+        <div class="issue-view__main-section">
+            <div class="issue-view__data-requirements">
+                <h2 class="issue-view__section-title">요청사항</h2>
+                <div class="issue-view__field">
+                    <label class="issue-view__label">제목</label>
+                    <div class="issue-view__value">{{ issue.title }}</div>
+                </div>
+                <div class="issue-view__field">
+                    <label class="issue-view__label">요청 사항</label>
+                    <div class="issue-view__value">{{ issue.content }}</div>
+                </div>
+                <div class="issue-view__field">
+                    <label class="issue-view__label">데이터 활용 목적</label>
+                    <div class="issue-view__value">{{ issue.purpose }}</div>
+                </div>
+                <div class="issue-view__field">
+                    <label class="issue-view__label">제공 데이터 형식</label>
+                    <div class="issue-view__value">{{ issue.data_format }}</div>
+                </div>
+                <div class="issue-view__field">
+                    <label class="issue-view__label">요청 데이터 기간 범위</label>
+                    <div class="issue-view__value">{{ issue.start_date }} - {{ issue.end_date }}</div>
+                </div>
+            </div>
+            <div class="issue-view__comments">
+                <h2 class="issue-view__section-title">댓글</h2>
+                {% for comment in comments %}
+                <div class="issue-view__comment">
+                    <p class="issue-view__comment-content">{{ comment.content }}</p>
+                    <span class="issue-view__comment-author">{{ comment.author }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="issue-view__write-comment">
+                <textarea id="comment-content" class="form-textarea issue-view__comment-textarea"
+                    placeholder="댓글 작성..."></textarea>
+                <button id="submit-comment" class="btn btn--primary issue-view__submit-comment">등록</button>
+            </div>
+        </div>
+        <div class="issue-view__sidebar">
+            <h2 class="issue-view__sidebar-title">담당 부서 및 공개범위</h2>
+            <div class="issue-view__department-select">
+                <label for="department" class="form-label">제공 부서</label>
+                <select id="department" name="department" class="form-select">
+                    {% for dept in departments %}
+                    <option value="{{ dept.id }}" {% if dept.id==issue.department_id %}selected{% endif %}>{{ dept.name
+                        }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
