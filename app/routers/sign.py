@@ -151,3 +151,15 @@ def logout(response: Response):
     response.delete_cookie("access_token")
 
     return response
+
+
+@router.get("/profile")
+def proflie(request: Request, current_user: user_schema.User = Depends(get_current_user)):
+
+    return templates.TemplateResponse(
+        'pages/profile.html',
+        {
+            'request': request,
+            'notification_count': get_notification_count(current_user.profile_id)
+        }
+    )

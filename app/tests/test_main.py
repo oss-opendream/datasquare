@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 
 from app.models.database import Base, datasquare_db
 from app.crud.user_crud import UserData
-from app.routers import feed, issue_publish, issue_view, sign, database_router
+from app.routers import feed, issue_publish, issue_view, sign, database_router, profile
 
 templates = Jinja2Templates(directory='app/templates')
 
@@ -43,6 +43,7 @@ def create_app() -> None:
         issue_publish.router,
         issue_view.router,
         database_router.router,
+        profile.router
     ]
 
     for router in routers:

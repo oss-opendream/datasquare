@@ -8,6 +8,7 @@
 @import 'tables.css';
 @import 'utilities.css';
 @import 'responsive.css';
+@import 'profile.css';
 
 body {
     padding-bottom: 60px;

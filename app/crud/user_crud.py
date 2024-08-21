@@ -2,6 +2,7 @@
 
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
+from sqlalchemy.orm import joinedload
 
 from app.schemas.user_schema import UserCreate
 from app.models.profile import PersonalProfile, TeamProfile, TeamMembership
@@ -41,7 +42,7 @@ class UserData:
             db_session.add(team_db)
             db_session.commit()
 
-    def get_user(self, data: str, key: str) -> list:
+    def get_user(self, data: str, key: str):
         '''주어진 사용자 정보로 데이터베이스에서 사용자의 존재 여부를 확인.'''
 
         with next(self.db.get_db()) as db_session:
