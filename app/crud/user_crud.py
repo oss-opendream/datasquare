@@ -51,3 +51,18 @@ class UserData:
                 .one_or_none()
 
         return personal_data
+
+    def create_admin(self):
+
+        with next(self.db.get_db()) as db_session:
+            admin_db = PersonalProfile(name='admin',
+                                       email='admin@admin.com',
+                                       password=self.pwd_context.hash(
+                                           'admin'),
+                                       phone_number=0,
+                                       profile_image=None
+                                       )
+
+            db_session.add(admin_db)
+            db_session.commit()
+            db_session.refresh(admin_db)
