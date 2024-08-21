@@ -19,11 +19,11 @@ Relevant Dataset: {dataset_1}
 To: (format: Dataset owner)
 From: (format: User name, Team name)
 Subject:
-Request detail:
-Data usage purpose:
-Data file format (eg. .csv, .jpeg, .py, .json, etc.):
-Data period: (format: YYYY-MM-DD)
-Data example:
+Request Detail:
+Data Usage Purpose:
+Data File Format (eg. .csv, .jpeg, .py, .json, etc.):
+Data Period: (format: YYYY-MM-DD)
+Data Example:
 
 ### Response:
 '''

@@ -160,22 +160,22 @@ def extract_answer(response: str) -> dict:
         '\nFrom:')+len('\nFrom:'):response_final.rfind('\nSubject:')].strip('\n')
 
     subject_ = response_final[response_final.find(
-        '\nSubject:')+len('\nSubject:'):response_final.rfind('\nRequest detail:')].strip('\n')
+        '\nSubject:')+len('\nSubject:'):response_final.rfind('\nRequest Detail:')].strip('\n')
 
-    request_detail_ = response_final[response_final.find('\nRequest detail:')+len(
-        '\nRequest detail:'):response_final.rfind('\nData usage purpose:')].strip('\n')
+    request_detail_ = response_final[response_final.find('\nRequest Detail:')+len(
+        '\nRequest Detail:'):response_final.rfind('\nData Usage Purpose:')].strip('\n')
 
-    usage_purposes_ = response_final[response_final.find('\nData usage purpose: ')+len(
-        '\nData usage purpose:'):response_final.rfind('\nData file format:')].strip('\n')
+    usage_purposes_ = response_final[response_final.find('\nData Usage Purpose: ')+len(
+        '\nData Usage Purpose:'):response_final.rfind('\nData File Format:')].strip('\n')
 
-    file_format_ = response_final[response_final.find('\nData file format:')+len(
-        '\nData file format:'):response_final.rfind('\nData period:')].strip('\n')
+    file_format_ = response_final[response_final.find('\nData File Format:')+len(
+        '\nData File Format:'):response_final.rfind('\nData Period:')].strip('\n')
 
-    data_preiod_ = response_final[response_final.find('\nData period:')+len(
-        '\nData period:'):response_final.rfind('\nData example:')].strip('\n')
+    data_preiod_ = response_final[response_final.find('\nData Period:')+len(
+        '\nData Period:'):response_final.rfind('\nData Example:')].strip('\n')
 
     data_example_ = response_final[response_final.find(
-        '\nData example:')+len('\nData example:'):].strip('\n')
+        '\nData Example:')+len('\nData Example:'):].strip('\n')
 
     extracted_response = {'to': to_, 'from': from_, 'subject': subject_, 'request_detail': request_detail_, 'usage_purposes': usage_purposes_,
                           'data format': file_format_, 'data period': data_preiod_, 'data example': data_example_, 'full response': response_final}
