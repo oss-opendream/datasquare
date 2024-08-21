@@ -6,7 +6,7 @@
 
 <div class="sign-up">
     <h1 class="sign-up__title">Sign Up</h1>
-    <form class="sign-up__form" method="post">
+    <form class="sign-up__form" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="company_email" class="form-label">Company Email</label>
             <input type="email" id="company_email" name="email" class="form-input" required>
@@ -40,7 +40,7 @@
         </div>
         <div class="form-group">
             <label for="profile_image" class="form-label">Profile Image</label>
-            <input type="file" id="profile_image" name="profile_image" class="form-input" accept="image/*">
+            <input type="file" id="profile_image" name="image" class="form-input" accept="image/*">
             <p class="form-help">Image size must be at least 400px by 400px. File size must be under 2MB.</p>
         </div>
         <button type="submit" class="btn btn--primary">Sign Up</button>

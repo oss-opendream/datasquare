@@ -9,6 +9,7 @@ class UserCreate(BaseModel):
     password2: str
     phone_number: str
     department: str
+    image: bytes
 
 
 class User(BaseModel):

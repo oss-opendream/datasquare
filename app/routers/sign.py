@@ -6,7 +6,7 @@ from datetime import timedelta, datetime
 from typing import Annotated
 
 from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi import APIRouter, Request, Depends, Form, HTTPException
+from fastapi import APIRouter, Request, Depends, Form, HTTPException, File, UploadFile
 from fastapi.templating import Jinja2Templates
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from fastapi.responses import JSONResponse
@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 ALGORITHM = os.getenv('ALGORITHM')
 
 
-@router.get('/signin', response_class=HTMLResponse , name='auth.signin')
+@router.get('/signin', response_class=HTMLResponse, name='auth.signin')
 async def singin_get(request: Request):
     return templates.TemplateResponse(request=request,
                                       name='pages/sign_in.html',
@@ -38,9 +38,9 @@ async def singin_get(request: Request):
 
 
 @router.post('/signin/post',
-            response_class=HTMLResponse, 
-            response_model=user_schema.Token,
-            name = 'sign_post'
+             response_class=HTMLResponse,
+             response_model=user_schema.Token,
+             name='sign_post'
              )
 async def signin_post(request: Request,
                       form_data: OAuth2PasswordRequestForm = Depends(),):
@@ -62,13 +62,15 @@ async def signin_post(request: Request,
     response = RedirectResponse(
         url='/feed', status_code=status.HTTP_302_FOUND)
     response.set_cookie(
-        key='access_token', value=access_token, httponly=True, secure=True, samesite='Lax'
+        key='access_token', value=access_token, httponly=True, secure=False, samesite='Lax'
     )
 
     return response
 
 
-def get_current_user(access_token: str = Cookie(None)):
+def get_current_user(request: Request):
+    access_token = request.cookies.get("access_token")
+    print(access_token)
     if not access_token:
         raise HTTPException(status_code=401, detail='Not authenticated')
 
@@ -91,6 +93,7 @@ def get_current_user(access_token: str = Cookie(None)):
         raise HTTPException(
             status_code=401, detail='Invalid authentication credentials')
 
+
 @router.get('/signup', name='auth.signup')
 async def signup_get(request: Request):
 
@@ -103,14 +106,19 @@ async def signup_get(request: Request):
 
 
 @router.post('/signup')
-async def signup_post(request: Request
-                      , name: Annotated[str, Form()]
-                      , email: Annotated[str, Form()]
-                      , password: Annotated[str, Form()]
-                      , password2: Annotated[str, Form()]
-                      , phone_number: Annotated[str, Form()]
-                      , department: Annotated[str, Form()]
-                      ):
+async def signup_post(
+    request: Request,
+    name: Annotated[str, Form()],
+    email: Annotated[str, Form()],
+    password: Annotated[str, Form()],
+    password2: Annotated[str, Form()],
+    phone_number: Annotated[str, Form()],
+    department: Annotated[str, Form()],
+    image: UploadFile = File(...)
+):
+
+    image_content = await image.read()
+    print(image_content)
 
     try:
         user_create = user_schema.UserCreate(
@@ -119,7 +127,8 @@ async def signup_post(request: Request
             password=password,
             password2=password2,
             phone_number=phone_number,
-            department=department
+            department=department,
+            image=image_content
         )
     except:
         return RedirectResponse(url='/signup?error=Email 형식이 유효하지 않습니다.', status_code=status.HTTP_302_FOUND)
@@ -132,13 +141,13 @@ async def signup_post(request: Request
     else:
         userdata_obj.create_user(user_create=user_create)
 
-        return RedirectResponse(url='/signin' , status_code=status.HTTP_302_FOUND)
+        return RedirectResponse(url='/signin', status_code=status.HTTP_302_FOUND)
 
 
 @router.get('/logout', response_class=HTMLResponse)
 def logout(response: Response):
 
-    response = RedirectResponse(url = '/signin')
+    response = RedirectResponse(url='/signin')
     response.delete_cookie("access_token")
 
     return response

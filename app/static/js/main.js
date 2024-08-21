@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (logoutButton) {
         logoutButton.addEventListener('click', function () {
             if (confirm('정말 로그아웃 하시겠습니까?')) {
-                alert('로그아웃 되었습니다.');
+                alert('로그아웃 되었습니다.')
+                window.location.href = '/logout';
             }
         });
     }

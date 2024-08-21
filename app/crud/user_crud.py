@@ -23,7 +23,8 @@ class UserData:
                                           email=user_create.email,
                                           password=self.pwd_context.hash(
                                               user_create.password),
-                                          phone_number=user_create.phone_number
+                                          phone_number=user_create.phone_number,
+                                          profile_image=user_create.image
                                           )
 
             db_session.add(personal_db)
