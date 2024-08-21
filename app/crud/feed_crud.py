@@ -17,13 +17,17 @@ class IssueData:
         self.db = db
         self.current_userid = current_userid
 
+    def __get_current_user_team_id(self, db_session: Session):
+        current_user_team_id = db_session \
+            .query(TeamMembership) \
+            .filter(TeamMembership.member_id == self.current_userid).one_or_none().team_id
+
+        return current_user_team_id
+
     def __create_base_query(self, db_session: Session):
         '''Base query 객체 생성 함수'''
 
-        current_user_info_query = db_session \
-            .query(PersonalProfile) \
-            .outerjoin(TeamMembership, PersonalProfile.profile_id == TeamMembership.member_id) \
-            .filter(PersonalProfile.profile_id == self.current_userid)
+        current_user_team_id = self.__get_current_user_team_id(db_session)
 
         base_query = db_session \
             .query(Issue, PersonalProfile, TeamProfile) \
@@ -32,7 +36,7 @@ class IssueData:
             .outerjoin(TeamProfile, TeamMembership.team_id == TeamProfile.profile_id) \
             .filter(or_(Issue.is_private == 0,
                         Issue.publisher == self.current_userid,
-                        # Issue.requested_team == current_user_info_query.one_or_none()
+                        Issue.requested_team == current_user_team_id
                         )
                     )
 
@@ -71,6 +75,7 @@ class IssueData:
 
         with next(self.db.get_db()) as db_session:
             base_query = self.__create_base_query(db_session)
+
             issues = base_query.all()
 
         result_data = self.__format_issue_data(issues)
@@ -81,10 +86,13 @@ class IssueData:
         '''현재 접속 유저의 전체 이슈 목록 출력 함수'''
 
         with next(self.db.get_db()) as db_session:
+            current_user_team_id = self.__get_current_user_team_id(db_session)
+
             base_query = self.__create_base_query(db_session)
 
             issues = base_query \
-                .filter(Issue.publisher == self.current_userid) \
+                .filter(or_(Issue.publisher == self.current_userid,
+                            Issue.requested_team == current_user_team_id)) \
                 .all()
 
         result_data = self.__format_issue_data(issues)
