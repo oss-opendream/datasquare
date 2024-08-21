@@ -2,12 +2,24 @@ import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from contextlib import asynccontextmanager
 
 from app.models.database import Base, datasquare_db
 from app.crud.user_crud import UserData
 from app.routers import feed, issue_publish, issue_view, sign, database_router
 
 templates = Jinja2Templates(directory='app/templates')
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # When service starts.
+
+    admin = UserData()
+    if not admin.get_user('admin@admin.com', key='email'):
+        admin.create_admin()
+
+    yield
 
 
 def create_app() -> None:
@@ -17,8 +29,10 @@ def create_app() -> None:
     - 모든 라우터를 app에 포함
     :return: FastAPI app 객체
     '''
+
     created_app = FastAPI(title='Datasquare',
-                          description='데이터 협업을 위한 조직 간 커뮤니케이션 플랫폼')
+                          description='데이터 협업을 위한 조직 간 커뮤니케이션 플랫폼',
+                          lifespan=lifespan)
 
     created_app.mount(
         '/static', StaticFiles(directory='app/static'), name='static')
@@ -59,13 +73,6 @@ def not_found_error(request: Request):
         'pages/404.html', {"request": request}
     )
 
-
-@app.on_event("startup")
-async def on_startup():
-
-    admin = UserData()
-    if not admin.get_user('admin@admin.com', key='email'):
-        admin.create_admin()
 
 if __name__ == '__main__':
     Base.metadata.create_all(bind=datasquare_db.engine, checkfirst=True)
