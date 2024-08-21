@@ -35,7 +35,7 @@ async def create_issue_comment(issue_id: int = Form(...),
     return ret
 
 
-@router.get('/issue/view', response_class=HTMLResponse)
+@router.get('/issue/view', response_class=HTMLResponse, name='issue_views')
 async def issue_views(request: Request,
                       issue_id: int,
                       current_user: User = Depends(get_current_user)

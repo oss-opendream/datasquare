@@ -1,10 +1,13 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from app.models.database import Base, datasquare_db
 from app.crud.user_crud import UserData
 from app.routers import feed, issue_publish, issue_view, sign, database_router
+
+templates = Jinja2Templates(directory='app/templates')
 
 
 def create_app() -> None:
@@ -48,6 +51,13 @@ def read_root():
 @app.get('/databases')
 def databases_test():
     return {'hello': 'world'}
+
+
+@app.get('/404')
+def not_found_error(request: Request):
+    return templates.TemplateResponse(
+        'pages/404.html', {"request": request}
+    )
 
 
 @app.on_event("startup")

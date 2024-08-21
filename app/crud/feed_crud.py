@@ -20,12 +20,21 @@ class IssueData:
     def __create_base_query(self, db_session: Session):
         '''Base query 객체 생성 함수'''
 
+        current_user_info_query = db_session \
+            .query(PersonalProfile) \
+            .outerjoin(TeamMembership, PersonalProfile.profile_id == TeamMembership.member_id) \
+            .filter(PersonalProfile.profile_id == self.current_userid)
+
         base_query = db_session \
             .query(Issue, PersonalProfile, TeamProfile) \
             .outerjoin(PersonalProfile, Issue.publisher == PersonalProfile.profile_id) \
             .outerjoin(TeamMembership, PersonalProfile.profile_id == TeamMembership.member_id) \
             .outerjoin(TeamProfile, TeamMembership.team_id == TeamProfile.profile_id) \
-            .filter(or_(Issue.is_private == 0, Issue.publisher == self.current_userid))
+            .filter(or_(Issue.is_private == 0,
+                        Issue.publisher == self.current_userid,
+                        # Issue.requested_team == current_user_info_query.one_or_none()
+                        )
+                    )
 
         return base_query
 

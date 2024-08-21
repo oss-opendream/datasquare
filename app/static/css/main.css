@@ -1,30 +1,614 @@
-@import 'layouts.css';
-@import 'header.css';
-@import 'footer.css';
-@import 'notifications.css';
+@import 'variables.css';
+@import 'reset.css';
+@import 'typography.css';
+@import 'layout.css';
 @import 'components.css';
+@import 'forms.css';
+@import 'buttons.css';
+@import 'tables.css';
+@import 'utilities.css';
+@import 'responsive.css';
 
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    padding-bottom: 60px;
+    /* 푸터 높이에 맞게 조정 */
 }
 
-main {
-    flex: 1;
-    padding: 20px;
+.layout__main {
+    min-height: calc(100vh - 60px);
+    /* 푸터 높이를 뺀 전체 높이 */
 }
 
-.badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: red;
-    color: white;
+.datasquare-logo {
+    font-weight: bold;
+    font-size: var(--font-size-large);
+    color: var(--primary-color);
+}
+
+.issue-card {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.profile-image {
+    width: 9.375rem;
+    height: 9.375rem;
     border-radius: 50%;
-    padding: 2px 5px;
-    font-size: 12px;
+    object-fit: cover;
+}
+
+.notification {
+    padding: var(--spacing-sm);
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* 인덱스(홈) 페이지 */
+.home {
+    max-width: 800px;
+    /* 최대 너비 설정 */
+    margin: 0 auto;
+    /* 중앙 정렬 */
+    padding: 1rem;
+    /* 내부 여백 추가 */
+}
+
+.home__title {
+    font-size: 2.5rem;
+    /* 제목 크기 조정 */
+    margin-bottom: 1rem;
+    /* 제목 아래 여백 추가 */
+}
+
+.home__description {
+    font-size: 1.2rem;
+    /* 설명 크기 조정 */
+    margin-bottom: 2rem;
+    /* 설명 아래 여백 추가 */
+}
+
+.home__section {
+    margin-bottom: 1.5rem;
+    /* 섹션 간격 추가 */
+}
+
+.home__section-title {
+    font-size: 1.5rem;
+    /* 섹션 제목 크기 조정 */
+    margin-bottom: 0.5rem;
+    /* 섹션 제목 아래 여백 추가 */
+}
+
+.home__section-link {
+    font-size: 1rem;
+    /* 링크 크기 조정 */
+    color: #007bff;
+    /* 링크 색상 설정 */
+    text-decoration: underline;
+    /* 밑줄 추가 */
+    margin-top: 1rem;
+    /* 링크 위쪽 여백 추가 */
+    display: inline-block;
+    /* 블록 요소로 만들어 여백 적용 */
+}
+
+/* 404 페이지 */
+.error-container {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100vh !important;
+    text-align: center !important;
+}
+
+
+.error-image {
+    max-width: 200px !important;
+    margin-bottom: 1rem !important;
+    /* 이미지 크기 조정 및 여백 추가 */
+}
+
+.error-title {
+    font-size: 3rem !important;
+    margin-bottom: 0.5rem !important;
+    /* 제목 크기 및 여백 조정 */
+}
+
+.error-subtitle {
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem !important;
+    /* 부제목 크기 및 여백 조정 */
+}
+
+.error-description {
+    font-size: 1rem !important;
+    margin-bottom: 1rem !important;
+    /* 설명 텍스트 크기 및 여백 조정 */
+}
+
+/* databases 페이지 */
+.databases {
+    padding: 3rem !important;
+    background-color: #f8f9fa !important;
+}
+
+.databases__title {
+    font-size: 2rem !important;
+    margin-bottom: 1.5rem !important;
+    color: #333 !important;
+}
+
+.databases__controls {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.databases__filters {
+    display: flex !important;
+    gap: 0.7rem !important;
+}
+
+.databases__filter-btn {
+    padding: 1rem 1rem !important;
+    background-color: #fff !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.databases__filter-btn--active {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+.databases_filter-count {
+    display: inline-block !important;
+    padding: 0.2rem 0.5rem !important;
+    background-color: #f8f9fa !important;
+    border-radius: 10px !important;
+    font-size: 0.8rem !important;
+    margin-left: 0.5rem !important;
+}
+
+.databases__search {
+    position: relative !important;
+    width: 300px !important;
+}
+
+.databases__search-btn {
+    position: absolute !important;
+    right: 0.5rem !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+}
+
+.databases__search-icon {
+    color: #6c757d !important;
+}
+
+.databases__table {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    background-color: #fff !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.databases__th {
+    padding: 1rem !important;
+    background-color: #f8f9fa !important;
+    /* 회색 배경 */
+    font-weight: normal !important;
+    /* 볼드 제거 */
+    text-align: left !important;
+    border-bottom: 2px solid #dee2e6 !important;
+}
+
+.databases__th--sortable {
+    cursor: pointer !important;
+}
+
+.databases__sort-icon {
+    vertical-align: middle !important;
+    margin-left: 0.5rem !important;
+}
+
+.databases__cell {
+    padding: 1rem !important;
+    border-bottom: 1px solid #dee2e6 !important;
+    background-color: #fff !important;
+    /* 흰색 배경 */
+}
+
+
+.databases__cell--name {
+    font-weight: 600 !important;
+}
+
+.databases__db-name {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.databases__table-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0.5rem 0 0 1rem !important;
+}
+
+.databases__table-item {
+    display: flex !important;
+    align-items: center !important;
+    margin-top: 0.25rem !important;
+    font-weight: normal !important;
+}
+
+.databases__table-icon {
+    margin-right: 0.5rem !important;
+}
+
+.databases__tag {
+    display: inline-block !important;
+    padding: 0.25rem 0.5rem !important;
+    background-color: #e9ecef !important;
+    border-radius: 4px !important;
+    font-size: 0.875rem !important;
+}
+
+.databases__search-input {
+    width: 85% !important;
+    padding: 0.5rem 2.5rem 0.45rem 2.1rem !important;
+    /* 오른쪽 여백을 이미지 크기만큼 조정 */
+    border: 1px solid #ddd !important;
+    border-radius: 5px !important;
+    background-image: url('/static/images/in_finder.png');
+    /* 정적 경로로 수정 */
+    background-repeat: no-repeat;
+    background-position: left 0.5rem top 0.45rem;
+    background-size: 1.2rem;
+    /* 적절한 크기로 수정 */
+}
+
+
+@media (max-width: 600px) {
+    .databases__search {
+        width: 100%;
+        /* 모바일에서는 전체 너비 사용 */
+    }
+}
+
+.databases__separator {
+    border: none !important;
+    height: 2px !important;
+    /* 고정된 두께로 설정 */
+    background-color: #000000 !important;
+    /* 검은색 */
+    margin: 1.5rem 0 !important;
+    /* 여백 조정 */
+}
+
+
+.databases__cell--actions {
+    text-align: right !important;
+}
+
+.databases__action-btn {
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0.3rem !important;
+}
+
+.databases__action-icon {
+    color: #6c757d !important;
+}
+
+/* feed */
+.feed {
+    display: flex !important;
+    /* 메인 컨테이너를 flexbox로 설정 */
+}
+
+.feed__left-column {
+    flex: 1 !important;
+    /* 왼쪽 열이 가능한 공간을 차지하도록 설정 */
+    padding: 1rem !important;
+    /* 내부 여백 */
+}
+
+.feed__right-column {
+    flex: 2 !important;
+    /* 오른쪽 열이 더 많은 공간을 차지하도록 설정 */
+    padding: 1rem !important;
+    /* 내부 여백 */
+}
+
+.feed__search {
+    margin-bottom: 1rem !important;
+    /* 검색창과 최근 검색 리스트 간의 여백 */
+}
+
+.feed__search-input {
+    width: 85% !important;
+    /* 너비 설정 */
+    padding: 0.5rem 2.5rem 0.45rem 2.1rem !important;
+    /* 패딩 조정 */
+    border: 1px solid #000000 !important;
+    /* 테두리 설정 */
+    border-radius: 5px !important;
+    /* 모서리 둥글게 */
+    background-image: url('/static/images/in_finder.png');
+    /* 배경 이미지 설정 */
+    background-repeat: no-repeat;
+    /* 배경 이미지 반복 방지 */
+    background-position: left 0.5rem top 0.45rem;
+    /* 배경 이미지 위치 설정 */
+    background-size: 1.2rem;
+    /* 배경 이미지 크기 설정 */
+}
+
+
+.feed__controls {
+    display: flex !important;
+    /* 버튼 컨테이너를 flexbox로 설정 */
+    justify-content: flex-end !important;
+    /* 버튼을 오른쪽 정렬 */
+    margin-bottom: 1rem !important;
+    /* 버튼과 이슈 카드 간의 여백 */
+}
+
+.feed__control-text {
+    color: #000;
+    /* 텍스트 색상 */
+    font-size: 16px !important;
+    /* 폰트 크기 */
+    text-decoration: none !important;
+    /* 밑줄 제거 */
+    cursor: pointer !important;
+    /* 커서 변경 */
+    margin-left: 0.5rem !important;
+    /* 버튼 간의 간격 */
+    padding: 5px 10px !important;
+    /* 패딩 설정 */
+    background-color: #ffffff !important;
+    /* 배경색 */
+    border-radius: 5px !important;
+    /* 모서리 둥글게 */
+    display: inline-block !important;
+    /* 블록으로 설정 */
+}
+
+.feed__control-btn {
+    padding: 0.5rem 1rem !important;
+    /* 내부 여백 */
+    background-color: #000 !important;
+    /* 검은색 배경 */
+    color: #fff !important;
+    /* 흰색 텍스트 */
+    border: none !important;
+    /* 테두리 제거 */
+    border-radius: 4px !important;
+    /* 모서리 둥글게 */
+    cursor: pointer !important;
+    /* 커서 변경 */
+    transition: background-color 0.3s ease !important;
+    /* 배경색 전환 효과 */
+    margin-left: 0.5rem !important;
+    /* 버튼 간의 간격 */
+    display: inline-block !important;
+    /* 인라인 블록으로 설정 */
+}
+
+.feed__control-btn:hover {
+    background-color: #333 !important;
+    /* 호버 시 어두운 검은색 */
+}
+
+
+.feed__issues {
+    display: flex !important;
+    /* 이슈 카드들을 flexbox로 배치 */
+    flex-direction: column !important;
+    /* 세로 방향으로 정렬 */
+}
+
+.feed__issue-card {
+    display: flex !important;
+    /* 이슈 카드 내부를 flexbox로 설정 */
+    margin-bottom: 1rem !important;
+    /* 카드 간의 여백 */
+    padding: 1rem !important;
+    /* 내부 여백 */
+    border: 1px solid #ddd !important;
+    /* 테두리 설정 */
+    border-radius: 4px !important;
+    /* 모서리 둥글게 */
+}
+
+.feed__issue-profile-pic {
+    width: 50px !important;
+    /* 프로필 사진 크기 */
+    height: 50px !important;
+    /* 프로필 사진 크기 */
+    border-radius: 50% !important;
+    /* 둥근 이미지 */
+    margin-right: 1rem !important;
+    /* 이미지와 텍스트 간의 여백 */
+}
+
+.feed__issue-content {
+    flex: 1 !important;
+    /* 텍스트 내용이 가능한 공간을 차지하도록 설정 */
+}
+
+.feed__issue-title {
+    font-size: 1.2rem !important;
+    /* 제목 크기 */
+    margin: 0 !important;
+    /* 기본 여백 제거 */
+}
+
+.feed__issue-description {
+    margin: 0.5rem 0 !important;
+    /* 설명 간의 여백 */
+}
+
+.feed__issue-meta {
+    font-size: 1.5rem !important;
+    /* 메타 정보 크기 변경 */
+    color: #666 !important;
+    /* 메타 정보 색상 */
+}
+
+
+.feed__teams-title {
+    font-size: 1.5rem !important;
+    /* teams 제목 크기 */
+}
+
+.feed__keywords-title {
+    font-size: 1.5rem !important;
+    /* 타이틀 크기 조정 */
+
+}
+
+.feed__keyword-link {
+    display: inline-block !important;
+    color: #007BFF !important;
+    /* 링크 색상 */
+
+}
+
+/* 데이터 요청 페이지 스타일 */
+.data-request {
+    padding: 2rem !important;
+}
+
+.data-request__title {
+    font-size: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+.data-request__content {
+    display: flex !important;
+    gap: 2rem !important;
+}
+
+.data-request__main-section {
+    flex: 2 !important;
+}
+
+.data-request__sidebar {
+    flex: 1 !important;
+}
+
+.data-request__form .form-group {
+    margin-bottom: 1.5rem !important;
+}
+
+.data-request__form .form-label {
+    display: block !important;
+    margin-bottom: 0.5rem !important;
+    font-weight: bold !important;
+}
+
+.data-request__form .form-input,
+.data-request__form .form-textarea,
+.data-request__form .form-select {
+    width: 90% !important;
+    padding: 0.5rem !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+}
+
+.data-request__form .form-textarea {
+    min-height: 130px !important;
+}
+
+.date-range {
+    display: flex !important;
+    gap: 1rem !important;
+}
+
+.date-input {
+    flex: 1 !important;
+}
+
+.form-actions {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 1rem !important;
+    margin-top: 2rem !important;
+}
+
+.data-request__sidebar-title {
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.data-request__comments {
+    margin-top: 3rem !important;
+}
+
+.data-request__comments-title {
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.data-request__comment-form {
+    display: flex !important;
+    gap: 1rem !important;
+    margin-top: 1rem !important;
+    max-width: 50% !important;
+    margin-left: 0 !important;
+    /* 오른쪽 정렬을 위해 왼쪽 마진을 자동으로 설정 */
+    margin-right: auto !important;
+    /* 오른쪽 마진을 0으로 설정 */
+}
+
+.data-request__comment-form .btn {
+    flex-shrink: 0 !important;
+    /* 버튼이 줄어들지 않도록 설정 */
+}
+
+.data-request__comment-form .form-textarea {
+    flex: 1 !important;
+    width: 60% !important;
+    /* 텍스트 영역이 컨테이너의 전체 너비를 차지하도록 설정 */
+}
+
+.checkbox-group {
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 1rem !important;
+}
+
+.form-checkbox {
+    margin-right: 0.3rem !important;
+}
+
+.form-checkbox+.form-label {
+    font-weight: normal !important;
+}
+
+.data-request__form .btn.btn--delete {
+    background-color: #ed0d24 !important;
+    color: white !important;
+}
+
+.data-request__form .btn.btn--delete:hover {
+    background-color: #b62231 !important;
 }

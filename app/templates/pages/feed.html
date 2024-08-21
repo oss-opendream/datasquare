@@ -15,6 +15,12 @@
                 <!-- Recent searches will be populated here -->
             </ul>
         </div>
+        <div class="feed__keywords">
+            <h3 class="feed__keywords-title">Keywords</h3>
+            {% for keyword in keywords %}
+            <a href="{{ url_for('feed', keyword=keyword) }}" class="feed__keyword-link">{{ keyword }}</a>
+            {% endfor %}
+        </div>
         <div class="feed__teams">
             <h3 class="feed__teams-title">Teams</h3>
             {% for team in teams %}
@@ -26,14 +32,16 @@
     </div>
     <div class="feed__right-column">
         <div class="feed__controls">
-            <button class="btn feed__control-btn" onclick="filterMyIssues()">My Issues</button>
+            <a href="javascript:void(0);" class="feed__control-text" onclick="filterMyIssues()">My Issues</a>
             <button class="btn feed__control-btn" onclick="sortIssues('newest')">Newest</button>
             <button class="btn feed__control-btn" onclick="sortIssues('oldest')">Oldest</button>
         </div>
-        <div class="feed__issues">
-            {% for issue in issues %}
-            <div class="issue-card" onclick="view_issue({{ issue.id }})" style="cursor:pointer;">
-                <img src="data:image;base64,{{ issue.profile_pic | safe }}" alt="Profile Picture">
+    </div>
+    <div class="feed__issues">
+        {% for issue in issues %}
+        <a href="/issue/view?issue_id={{ issue.id }}">
+            <div class="feed__issue-card">
+                <img src="{{ issue.author_avatar }}" alt="{{ issue.author_name }}" class="feed__issue-profile-pic">
                 <div class="feed__issue-content">
                     <h3 class="feed__issue-title">{{ issue.title }}</h3>
                     <p class="feed__issue-description">{{ issue.content }}</p>
@@ -43,9 +51,12 @@
                     </div>
                 </div>
             </div>
-            {% endfor %}
-        </div>
+        </a>
+        {% endfor %}
     </div>
+
+</div>
+</div>
 </div>
 
 {% endblock %}

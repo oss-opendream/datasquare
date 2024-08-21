@@ -1,25 +1,254 @@
-/* 공통 컴포넌트 스타일 */
-.icon-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
+/* 헤더 */
+.header {
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2000;
 }
 
-.badge {
-    background-color: red;
+.header__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1rem;
+}
+
+.header__logo {
+    display: flex;
+    align-items: center;
+}
+
+.header__logo-image {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 0.5rem;
+}
+
+.header__logo-text {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333333;
+}
+
+.header__logo-brand {
+    font-size: 1.5rem;
+    /* 글씨 크기를 키우기 */
+    font-weight: bold;
+    /* 글씨를 두껍게 설정 */
+}
+
+.header__logo-company {
+    font-size: 1rem;
+    /* 글씨 크기를 줄이기 */
+    color: gray;
+    /* 필요에 따라 색상 조정 */
+}
+
+
+.header__nav {
+    display: flex;
+}
+
+.header__nav-item {
+    margin-left: 2.5rem;
+    /* 기존 간격 유지 */
+    color: #020202;
+    /* 텍스트 색상 */
+    text-decoration: none;
+    /* 기본 텍스트 장식 제거 */
+    font-size: 1.4rem;
+    /* 글씨 크기 조정 (원하는 크기로 변경) */
+}
+
+
+.header__user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.header__icon {
+    width: 1.6rem;
+    /* 아이콘 크기 */
+    height: 1.6rem;
+    /* 아이콘 크기 */
+    margin-left: 2rem;
+    /* 간격 조정 */
+    cursor: pointer;
+}
+
+.header__settings-icon,
+.header__user-icon,
+.header__logout-icon {
+    width: 2rem;
+    /* 아이콘 크기 */
+    height: 2rem;
+    /* 아이콘 크기 */
+    margin-left: 1rem;
+    /* 왼쪽 간격 조정 */
+    cursor: pointer;
+}
+
+/* 첫 번째 아이콘에는 margin-left를 주지 않음 */
+.header__settings-icon {
+    margin-left: 1rem;
+}
+
+
+.header__notification-container {
+    position: relative;
+    /* 배지가 벨 아이콘에 상대적으로 위치하도록 설정 */
+}
+
+.header__notification {
+    position: relative;
+    margin-right: 1rem;
+}
+
+.header__icon {
+    width: 2rem;
+    height: 2rem;
+    margin-left: 5rem;
+    cursor: pointer;
+}
+
+.header__notification-badge {
+    position: relative;
+    /* 상대 위치로 변경 */
+    display: inline-block;
+    /* inline-block으로 설정하여 배지가 아이콘 옆에 위치하도록 함 */
+    margin-left: -1.00rem;
+    /* 벨 아이콘의 위치에 따라 조정 (10px ≈ 0.625rem) */
+    margin-top: -2.625rem;
+    /* 벨 아이콘의 위치에 따라 조정 (10px ≈ 0.625rem) */
+    background-color: rgb(219, 67, 67);
+    /* 배지 배경 색상 */
     color: white;
+    /* 배지 텍스트 색상 */
     border-radius: 50%;
-    padding: 2px 5px;
-    font-size: 12px;
-    position: absolute;
-    top: -5px;
-    right: -5px;
+    /* 둥근 모양으로 설정 */
+    padding: 0.125rem 0.3125rem;
+    /* 패딩 설정 (2px ≈ 0.125rem, 5px ≈ 0.3125rem) */
+    font-size: 0.75rem;
+    /* 폰트 크기 설정 (12px ≈ 0.75rem) */
+    white-space: nowrap;
+    /* 배지가 줄 바꿈되지 않도록 설정 */
 }
 
-.close-notification {
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
+.header__nav-item:hover {
+    color: #325ab7;
+    /* 호버 시 색상 변경 */
+    text-decoration: underline;
+    /* 밑줄 효과 */
+}
+
+
+
+/* 미디어 쿼리 */
+@media (max-width: 768px) {
+    .header__nav {
+        display: none;
+        /* 작은 화면에서 네비게이션 숨기기 */
+    }
+}
+
+.header__notification-popup--visible {
+    display: block;
+    /* 또는 원하는 스타일로 변경 */
+}
+
+/* 푸터 */
+.card {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    box-shadow: 0 0.120rem 0.25rem rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .header__nav {
+        display: none;
+    }
+}
+
+.footer {
+    background-color: #697077;
+    color: #fff;
+    padding: 1% 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.footer__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 2%;
+}
+
+.footer__logo {
+    display: flex;
+    align-items: center;
+}
+
+.footer__logo-image {
+    width: 25%;
+    max-width: 40px;
+    margin-right: 2%;
+}
+
+.footer__logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* 좌측 정렬 */
+    margin: 1rem;
+    /* 기본 margin 제거 */
+    padding: 0;
+    /* 기본 padding 제거 */
+}
+
+.footer__logo-brand {
+    font-size: 1.4em;
+    /* 글씨 크기를 키우기 */
+    font-weight: bold;
+    /* 글씨를 두껍게 설정 */
+}
+
+.footer__logo-company {
+    font-size: 0.7rem;
+    /* 글씨 크기를 조정 */
+    color: rgb(255, 255, 255);
+    /* 필요에 따라 색상 조정 */
+    margin-top: -2.0rem;
+    /* 위쪽 여백 조정 */
+}
+
+.footer__copyright {
+    font-size: 0.8rem;
+    padding: 2rem;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .footer__content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer__logo {
+        margin-bottom: 1rem;
+    }
+
+    .footer__copyright {
+        margin-top: 0.5rem;
+    }
 }

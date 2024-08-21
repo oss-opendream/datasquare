@@ -60,7 +60,7 @@ async def read_my_issues(request: Request,
     )
 
 
-@ router.get('/feed/search')
+@router.get('/feed/search', name='search_feed')
 async def search_issues(request: Request,
                         keyword="",
                         team="",

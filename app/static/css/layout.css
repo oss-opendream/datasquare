@@ -6,7 +6,7 @@
 }
 
 .layout__main {
-    margin-top: 4rem;
+    margin-top: 3rem;
     /* Assuming header height */
 }
 
@@ -14,16 +14,4 @@
     .layout__main {
         margin-top: 3rem;
     }
-}
-
-.feed__left-column {
-    width: 20%;
-    min-width: 200px;
-    padding: 20px;
-    border-right: 1px solid var(--border-color);
-}
-
-.feed__right-column {
-    width: 80%;
-    padding: 20px;
 }

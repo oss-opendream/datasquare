@@ -6,10 +6,10 @@
 
 <div class="sign-up">
     <h1 class="sign-up__title">Sign Up</h1>
-    <form class="sign-up__form" method="post" enctype="multipart/form-data">
+    <form class="sign-up__form" method="post">
         <div class="form-group">
             <label for="company_email" class="form-label">Company Email</label>
-            <input type="email" id="company_email" name="email" class="form-input" required>
+            <input type="email" id="company_email" name="company_email" class="form-input" required>
         </div>
         <div class="form-group">
             <label for="name" class="form-label">Name</label>
@@ -22,25 +22,21 @@
                 and special characters.</p>
         </div>
         <div class="form-group">
-            <label for="password" class="form-label">check Password</label>
-            <input type="password" id="password" name="password2" class="form-input" required>
-        </div>
-        <div class="form-group">
             <label for="phone" class="form-label">Phone</label>
-            <input type="tel" id="phone" name="phone_number" class="form-input" required>
+            <input type="tel" id="phone" name="phone" class="form-input" required>
         </div>
         <div class="form-group">
             <label for="department" class="form-label">Department</label>
             <select id="department" name="department" class="form-select" required>
                 <option value="">--Department--</option>
                 {% for department in departments %}
-                <option value="{{ department}}">{{ department }}</option>
+                <option value="{{ department.id }}">{{ department.name }}</option>
                 {% endfor %}
             </select>
         </div>
         <div class="form-group">
             <label for="profile_image" class="form-label">Profile Image</label>
-            <input type="file" id="profile_image" name="image" class="form-input" accept="image/*">
+            <input type="file" id="profile_image" name="profile_image" class="form-input" accept="image/*">
             <p class="form-help">Image size must be at least 400px by 400px. File size must be under 2MB.</p>
         </div>
         <button type="submit" class="btn btn--primary">Sign Up</button>
