@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from app.models.database import Base, datasquare_db
+from app.crud.user_crud import UserData
 from app.routers import feed, issue_publish, issue_view, sign, database_router
 
 
@@ -49,7 +50,15 @@ def databases_test():
     return {'hello': 'world'}
 
 
+@app.on_event("startup")
+async def on_startup():
+
+    admin = UserData()
+    if not admin.get_user('admin@admin.com', key='email'):
+        admin.create_admin()
+
 if __name__ == '__main__':
     Base.metadata.create_all(bind=datasquare_db.engine, checkfirst=True)
+
     uvicorn.run('app.tests.test_main:app',
                 host='0.0.0.0', port=8001, reload=True)
