@@ -4,6 +4,7 @@
 from fastapi import Form
 from sqlalchemy.orm import Session
 
+from app.crud.issue_comment_crud import IssueCommentData
 from app.models.issue import Issue
 from app.models.database import datasquare_db
 from app.utils.time import current_time
@@ -72,3 +73,57 @@ class IssueData():
                 .one_or_none()
 
         return issue
+
+    def modified_issue(self,
+                       issue_id: int,
+                       title: str = Form(...),
+                       content: str = Form(...),
+                       requested_team: str = Form(...),
+                       is_private: int = Form(...)
+                       ):
+        '''
+        issue 내용을 수정하는 함수입니다.
+        issue_id를 받아서 해당 이슈를 수정합니다.
+        '''
+
+        with next(self.db.get_db()) as db_session:
+            issue = self.read_issue(issue_id=issue_id)
+
+            if issue is None:
+                return None  # 또는 적절한 예외 처리
+
+            # 수정할 필드 업데이트
+            issue.title = title
+            issue.content = content
+            issue.requested_team = requested_team
+            issue.is_private = is_private
+            issue.modified_at = current_time()
+
+            db_session.commit()
+            db_session.refresh(issue)
+
+        return issue
+
+    def delete_issue(self,
+                     issue_id: int):
+        '''
+        issue를 삭제하는 함수입니다.
+        issue_id를 받아서 해당 이슈를 삭제합니다.
+        '''
+
+        with next(self.db.get_db()) as db_session:
+            issue = self.read_issue(issue_id=issue_id)
+            comments = IssueCommentData(
+                self.current_userid).read_issue_comments(issue_id=issue_id)
+
+            if issue is None:
+                return False  # 삭제할 이슈가 없음
+
+            if comments:
+                for comment in comments:
+                    db_session.delete(comment)
+
+            db_session.delete(issue)
+            db_session.commit()
+
+        return True  # 성공적으로 삭제됨

@@ -3,7 +3,7 @@
 
 from sqlalchemy.orm import Session
 
-from app.models.issue import Issue, IssueComment
+from app.models.issue import IssueComment
 from app.models.database import datasquare_db
 
 
@@ -39,6 +39,16 @@ class IssueCommentData():
             db_session.commit()
             db_session.refresh(new_comment)
 
+    def read_issue_comment(self,
+                           comment_id: int):
+        '''특정 comment_id에 해당하는 댓글을 조회합니다.'''
+
+        with next(self.db.get_db()) as db_session:
+            comment = db_session.query(IssueComment).filter(
+                IssueComment.id == comment_id).one_or_none()
+
+        return comment
+
     def read_issue_comments(self,
                             issue_id: int
                             ):
@@ -53,3 +63,46 @@ class IssueCommentData():
                 .all()
 
         return comments
+
+    def modified_issue_comment(self,
+                               comment_id: int,
+                               content: str):
+        '''
+        comment를 수정하는 함수입니다.
+        comment_id를 받고 데이터를 수정합니다.
+        '''
+
+        with next(self.db.get_db()) as db_session:
+            comment = self.read_issue_comment(comment_id=comment_id)
+
+            if comment is None:
+                return None
+
+            if comment.publisher != self.current_userid:
+                raise PermissionError(
+                    "You don't have permission to modify this comment.")
+
+            comment.content = content
+            db_session.commit()
+            db_session.refresh(comment)
+
+        return comment
+
+    def delete_issue_comment(self,
+                             comment_id: int):
+        '''특정 comment_id에 해당하는 댓글을 삭제합니다.'''
+
+        with next(self.db.get_db()) as db_session:
+            comment = self.read_issue_comment(comment_id=comment_id)
+
+            if comment is None:
+                return False
+
+            if comment.publisher != self.current_userid:
+                raise PermissionError(
+                    "You don't have permission to delete this comment.")
+
+            db_session.delete(comment)
+            db_session.commit()
+
+        return True
