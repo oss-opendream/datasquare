@@ -422,13 +422,15 @@ body {
 .feed__issues {
     display: flex !important;
     /* 이슈 카드들을 flexbox로 배치 */
-    flex-direction: column !important;
-    /* 세로 방향으로 정렬 */
+    flex-wrap: wrap !important;
+    /* 가로 방향으로 정렬 */
+    gap: 20px;
 }
 
 .feed__issue-card {
     display: flex !important;
     /* 이슈 카드 내부를 flexbox로 설정 */
+    max-width: 350px;
     margin-bottom: 1rem !important;
     /* 카드 간의 여백 */
     padding: 1rem !important;
