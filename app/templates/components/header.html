@@ -1,14 +1,16 @@
 <header class="header">
     <div class="header__content">
-        <div class="header__logo">
-            <img src="{{ url_for('static', path='/images/logo_withouttext.svg') }}" alt="DataSquare Logo"
-                class="header__logo-image">
-            <div class="header__logo-text">
-                <span class="header__logo-brand">DataSquare</span>
-                <br>
-                <span class="header__logo-company">for {{ company_name }}</span>
+        <a href="{{ url_for('feed') }}">
+            <div class="header__logo">
+                <img src="{{ url_for('static', path='/images/logo_withouttext.svg') }}" alt="DataSquare Logo"
+                    class="header__logo-image">
+                <div class="header__logo-text">
+                    <span class="header__logo-brand">DataSquare</span>
+                    <br>
+                    <span class="header__logo-company">for {{ company_name }}</span>
+                </div>
             </div>
-        </div>
+        </a>
         <nav class="header__nav">
             <a href="{{ url_for('data_request') }}" class="header__nav-item">Data Request</a>
             <a href="{{ url_for('databases') }}" class="header__nav-item">Databases</a>
