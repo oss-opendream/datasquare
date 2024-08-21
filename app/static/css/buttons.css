@@ -46,3 +46,12 @@
     color: darkblue !important;
     /* 호버 시 텍스트 색상 변경 */
 }
+
+.btn--delete {
+    background-color: #ff0019 !important;
+    color: white !important;
+}
+
+.btn--delete:hover {
+    background-color: #c82333 !important;
+}

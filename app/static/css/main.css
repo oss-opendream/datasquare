@@ -491,3 +491,124 @@ body {
     /* 링크 색상 */
 
 }
+
+/* 데이터 요청 페이지 스타일 */
+.data-request {
+    padding: 2rem !important;
+}
+
+.data-request__title {
+    font-size: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+.data-request__content {
+    display: flex !important;
+    gap: 2rem !important;
+}
+
+.data-request__main-section {
+    flex: 2 !important;
+}
+
+.data-request__sidebar {
+    flex: 1 !important;
+}
+
+.data-request__form .form-group {
+    margin-bottom: 1.5rem !important;
+}
+
+.data-request__form .form-label {
+    display: block !important;
+    margin-bottom: 0.5rem !important;
+    font-weight: bold !important;
+}
+
+.data-request__form .form-input,
+.data-request__form .form-textarea,
+.data-request__form .form-select {
+    width: 90% !important;
+    padding: 0.5rem !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+}
+
+.data-request__form .form-textarea {
+    min-height: 130px !important;
+}
+
+.date-range {
+    display: flex !important;
+    gap: 1rem !important;
+}
+
+.date-input {
+    flex: 1 !important;
+}
+
+.form-actions {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 1rem !important;
+    margin-top: 2rem !important;
+}
+
+.data-request__sidebar-title {
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.data-request__comments {
+    margin-top: 3rem !important;
+}
+
+.data-request__comments-title {
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.data-request__comment-form {
+    display: flex !important;
+    gap: 1rem !important;
+    margin-top: 1rem !important;
+    max-width: 50% !important;
+    margin-left: 0 !important;
+    /* 오른쪽 정렬을 위해 왼쪽 마진을 자동으로 설정 */
+    margin-right: auto !important;
+    /* 오른쪽 마진을 0으로 설정 */
+}
+
+.data-request__comment-form .btn {
+    flex-shrink: 0 !important;
+    /* 버튼이 줄어들지 않도록 설정 */
+}
+
+.data-request__comment-form .form-textarea {
+    flex: 1 !important;
+    width: 60% !important;
+    /* 텍스트 영역이 컨테이너의 전체 너비를 차지하도록 설정 */
+}
+
+.checkbox-group {
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 1rem !important;
+}
+
+.form-checkbox {
+    margin-right: 0.3rem !important;
+}
+
+.form-checkbox+.form-label {
+    font-weight: normal !important;
+}
+
+.data-request__form .btn.btn--delete {
+    background-color: #ed0d24 !important;
+    color: white !important;
+}
+
+.data-request__form .btn.btn--delete:hover {
+    background-color: #b62231 !important;
+}

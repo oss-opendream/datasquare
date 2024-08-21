@@ -120,6 +120,11 @@ async def databases(request: Request):
     dummy_data = get_dummy_data()
     return app.templates.TemplateResponse('pages/databases.html', {"request": request, **dummy_data})
 
+@app.get('/data-request', name='data_request')
+async def data_request(request: Request):
+    dummy_data = get_dummy_data()
+    return app.templates.TemplateResponse('pages/data_request.html', {"request": request, **dummy_data})
+
 if __name__ == '__main__':
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
