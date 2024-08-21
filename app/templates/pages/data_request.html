@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}데이터 요청 - DataSquare{% endblock %}
+{% block content %}
+
+<div class="data-request">
+    <h1 class="data-request__title">데이터 요청</h1>
+
+    <div class="data-request__content">
+        <div class="data-request__main-section">
+            <form class="data-request__form">
+                <div class="form-group">
+                    <label for="title" class="form-label">제목</label>
+                    <input type="text" id="title" name="title" class="form-input" placeholder="제목">
+                </div>
+
+                <div class="form-group">
+                    <label for="content" class="form-label">요청 사항</label>
+                    <textarea id="content" name="content" class="form-textarea" placeholder="요청 사항"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="purpose" class="form-label">데이터 활용 목적</label>
+                    <input type="text" id="purpose" name="purpose" class="form-input" placeholder="데이터 활용 목적">
+                </div>
+
+                <div class="form-group">
+                    <label for="data-format" class="form-label">제공 데이터 형식</label>
+                    <input type="text" id="data-format" name="data-format" class="form-input" value="CSV 파일(*.csv)"
+                        readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">요청 데이터 기간 범위</label>
+                    <div class="date-range">
+                        <input type="date" id="start-date" name="start-date" class="form-input date-input">
+                        <input type="date" id="end-date" name="end-date" class="form-input date-input">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn--delete">삭제</button>
+                    <button type="submit" class="btn">수정</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="data-request__sidebar">
+            <h2 class="data-request__sidebar-title">담당 부서 및 공개범위</h2>
+            <div class="form-group">
+                <label for="department" class="form-label">제공 부서</label>
+                <select id="department" name="department" class="form-select">
+                    <option value="">제공 부서</option>
+                    <!-- Add more options here -->
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="data-request__comments">
+        <h2 class="data-request__comments-title">댓글</h2>
+        <div class="data-request__comments-list">
+            <!-- Add comments here -->
+        </div>
+        <div class="data-request__comment-form">
+            <textarea id="comment" name="comment" class="form-textarea" placeholder="댓글 본문"></textarea>
+            <button type="button" class="btn btn--primary">등록</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

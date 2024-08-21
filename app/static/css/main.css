@@ -1,51 +1,30 @@
-@import 'variables.css';
-@import 'reset.css';
-@import 'typography.css';
-@import 'layout.css';
+@import 'layouts.css';
+@import 'header.css';
+@import 'footer.css';
+@import 'notifications.css';
 @import 'components.css';
-@import 'forms.css';
-@import 'buttons.css';
-@import 'tables.css';
-@import 'utilities.css';
-@import 'responsive.css';
 
 body {
-    padding-bottom: 60px;
-    /* 푸터 높이에 맞게 조정 */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-.layout__main {
-    min-height: calc(100vh - 60px);
-    /* 푸터 높이를 뺀 전체 높이 */
+main {
+    flex: 1;
+    padding: 20px;
 }
 
-.datasquare-logo {
-    font-weight: bold;
-    font-size: var(--font-size-large);
-    color: var(--primary-color);
-}
-
-.feed__issues {}
-
-.issue-card {
-    max-width: 350px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-}
-
-.profile-image {
-    width: 9.375rem;
-    height: 9.375rem;
+.badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
     border-radius: 50%;
-    object-fit: cover;
-}
-
-.notification {
-    padding: var(--spacing-sm);
-    background-color: var(--primary-color);
-    color: #fff;
-    border-radius: var(--border-radius);
-    margin-bottom: var(--spacing-sm);
+    padding: 2px 5px;
+    font-size: 12px;
 }

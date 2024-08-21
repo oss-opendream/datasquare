@@ -1,0 +1,36 @@
+footer {
+    background-color: #666666;
+    color: #ffffff;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content .logo {
+    display: flex;
+    align-items: center;
+}
+
+.footer-content .logo img {
+    height: 24px;
+    width: auto;
+    margin-right: 10px;
+}
+
+.footer-content .logo span {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.copyright {
+    font-size: 14px;
+    color: #ffffff;
+}

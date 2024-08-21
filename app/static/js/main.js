@@ -1,17 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
     // 알림 버튼 기능
-    const notificationButton = document.querySelector('.header__notification-button');
+    const notificationButton = document.querySelector('.notifications-container');
     if (notificationButton) {
         notificationButton.addEventListener('click', function () {
-            const notificationPopup = document.getElementById('header__notification-popup');
+            const notificationPopup = document.getElementById('notificationPopup');
             if (notificationPopup) {
-                notificationPopup.classList.toggle('header__notification-popup--visible');
+                notificationPopup.style.display = notificationPopup.style.display === 'none' ? 'block' : 'none';
             }
         });
     }
 
     // 설정 버튼 기능
-    const settingsButton = document.querySelector('.header__settings-button');
+    const settingsButton = document.querySelector('.user-actions img[alt="Settings"]');
     if (settingsButton) {
         settingsButton.addEventListener('click', function () {
             alert('설정 페이지로 이동합니다.');
@@ -19,12 +19,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 로그아웃 버튼 기능
-    const logoutButton = document.querySelector('.header__logout-button');
+    const logoutButton = document.querySelector('.user-actions img[alt="Logout"]');
     if (logoutButton) {
         logoutButton.addEventListener('click', function () {
             if (confirm('정말 로그아웃 하시겠습니까?')) {
-                alert('로그아웃 되었습니다.')
-                window.location.href = '/logout';
+                alert('로그아웃 되었습니다.');
             }
         });
     }
