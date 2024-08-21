@@ -28,6 +28,10 @@
                     <label class="issue-view__label">요청 데이터 기간 범위</label>
                     <div class="issue-view__value">{{ issue.start_date }} - {{ issue.end_date }}</div>
                 </div>
+                <form action="/issue/modified" method="get">
+                    <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
+                    <button class="btn btn--primary issue-view__submit-comment" type="submit">요청 수정</button>
+                </form>
             </div>
             <div class="issue-view__comments">
                 <h2 class="issue-view__section-title">댓글</h2>

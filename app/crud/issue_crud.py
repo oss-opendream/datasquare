@@ -4,6 +4,7 @@
 from fastapi import Form
 from sqlalchemy.orm import Session
 
+
 from app.crud.issue_comment_crud import IssueCommentData
 from app.models.issue import Issue
 from app.models.database import datasquare_db
@@ -72,7 +73,7 @@ class IssueData():
                 .filter(Issue.issue_id == issue_id) \
                 .one_or_none()
 
-        return issue
+            return issue
 
     def modified_issue(self,
                        issue_id: int,
@@ -87,12 +88,13 @@ class IssueData():
         '''
 
         with next(self.db.get_db()) as db_session:
-            issue = self.read_issue(issue_id=issue_id)
-
+            issue = db_session.query(Issue) \
+                .filter(Issue.issue_id == issue_id) \
+                .one_or_none()
             if issue is None:
-                return None  # 또는 적절한 예외 처리
+                return False
 
-            # 수정할 필드 업데이트
+        # 수정할 필드 업데이트
             issue.title = title
             issue.content = content
             issue.requested_team = requested_team
