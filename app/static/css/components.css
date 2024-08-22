@@ -252,3 +252,91 @@
         margin-top: 0.5rem;
     }
 }
+
+/* Wrapper 스타일 */
+.wrapper {
+    display: flex !important;
+    gap: 2rem !important;
+    background-color: #fff !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1) !important;
+    padding: 2rem !important;
+}
+
+/* Sidebar 스타일 */
+.sidebar {
+    flex: 1 !important;
+    max-width: 200px !important;
+    background-color: #f8f9fa !important;
+    padding: 1rem !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05) !important;
+}
+
+.sidebar-header {
+    margin-bottom: 1.5rem !important;
+    font-size: 1.5rem !important;
+    color: #212529 !important;
+    font-weight: bold !important;
+}
+
+.sidebar-nav {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.sidebar-nav li {
+    margin-bottom: 0.5rem !important;
+}
+
+.sidebar-nav a {
+    display: block !important;
+    padding: 0.75rem 1rem !important;
+    color: #495057 !important;
+    text-decoration: none !important;
+    border-radius: 0.25rem !important;
+    transition: background-color 0.2s ease-in-out !important;
+}
+
+.sidebar-nav a.active,
+.sidebar-nav a:hover {
+    background-color: #e9ecef !important;
+    color: #212529 !important;
+    font-weight: bold !important;
+}
+
+/* Sidebar 내부에서 동작하는 스크립트 관련 요소를 위한 추가 스타일 */
+.sidebar-nav a {
+    display: block !important;
+    padding: 0.75rem 1rem !important;
+    color: #495057 !important;
+    text-decoration: none !important;
+    border-radius: 0.25rem !important;
+    transition: background-color 0.2s ease-in-out !important;
+}
+
+.sidebar-nav a.active,
+.sidebar-nav a:hover {
+    background-color: #e9ecef !important;
+    color: #212529 !important;
+    font-weight: bold !important;
+}
+
+/* 메인 컨텐츠 영역 스타일 */
+.settings-content {
+    flex: 3 !important;
+    padding: 1rem !important;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column !important;
+    }
+
+    .sidebar {
+        max-width: 100% !important;
+        margin-bottom: 1rem !important;
+    }
+}

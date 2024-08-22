@@ -360,7 +360,6 @@ body {
 }
 
 .feed__search::after {
-    content: '▼' !important;
     position: absolute !important;
     right: 0.75rem !important;
     top: 50% !important;
