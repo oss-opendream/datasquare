@@ -63,8 +63,18 @@ async def issue_views(request: Request,
             'request': request,
             'issue': issue,
             'comments': comments,
+            'current_user': current_user,
             'notification_count': get_notification_count(current_user.profile_id)
         }
     )
 
     return ret
+
+
+# @router.get('/issue/view/delete_issue', response_class=HTMLResponse)
+# def logout(response: Response):
+
+#     response = RedirectResponse(url='/signin')
+#     response.delete_cookie("access_token")
+
+#     return response

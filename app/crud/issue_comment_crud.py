@@ -101,7 +101,7 @@ class IssueCommentData():
             comment = self.read_issue_comment(comment_id=comment_id)
 
             if comment is None:
-                return False
+                return ValueError("Comment is None")
             
             comment.is_deleted = 1
             db_session.commit()
@@ -118,11 +118,12 @@ class IssueCommentData():
             comment = self.read_issue_comment(comment_id=comment_id)
 
             if comment is None:
-                return False
+                raise ValueError("Issue Comment is None")
 
             if comment.publisher != self.current_userid:
                 raise PermissionError(
-                    "You don't have permission to delete this comment.")
+                    "You don't have permission to delete this comment."
+                    )
             
             comment.is_deleted = 1
             db_session.commit()

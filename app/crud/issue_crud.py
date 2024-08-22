@@ -119,27 +119,30 @@ class IssueData():
         '''
 
         with next(self.db.get_db()) as db_session:
-                issue = db_session.query(Issue) \
-                    .filter(Issue.issue_id == issue_id) \
-                    .one_or_none()
-                
-                comments = IssueCommentData(self.current_userid).read_issue_comments(issue_id=issue_id)
-                if comments:
-                    for comment in comments:
-                        if comment is None or comment.is_deleted == 1:
-                            pass
+            issue = db_session.query(Issue) \
+                .filter(Issue.issue_id == issue_id) \
+                .one_or_none()
+            comments = IssueCommentData(self.current_userid).read_issue_comments(issue_id=issue_id)
 
-                        comment.is_deleted = 1
-                        db_session.commit()
-                        # db_session.refresh(comment)
+            if comments:
+                for comment in comments:
+                    if comment is None or comment.is_deleted == 1:
+                        pass
 
-                if issue is None or issue.is_deleted == 1:
-                    return False
+                    comment.is_deleted = 1
+                    db_session.commit()
 
-                issue.is_deleted = 1
-                issue.modified_at = current_time()
+            if issue is None or issue.is_deleted == 1:
+                raise ValueError("Issue is None")
 
-                db_session.commit()
-                db_session.refresh(issue)
+            if issue.publisher != self.current_userid:
+                raise PermissionError(
+                    "You don't have permission to delete this comment."
+                    )
+            issue.is_deleted = 1
+            issue.modified_at = current_time()
+
+            db_session.commit()
+            db_session.refresh(issue)
 
         return True

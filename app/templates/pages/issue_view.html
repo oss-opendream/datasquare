@@ -28,14 +28,17 @@
                     <label class="issue-view__label">요청 데이터 기간 범위</label>
                     <div class="issue-view__value">{{ issue.start_date }} - {{ issue.end_date }}</div>
                 </div>
+                {% if issue.publisher == current_user.profile_id %}
                 <form action="/issue/modified" method="get">
                     <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
                     <button class="btn btn--primary issue-view__submit-comment" type="submit">요청 수정</button>
                 </form>
                 <form action="/issue/deleted" method="post">
                     <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
-                    <button class="btn btn--primary issue-view__submit-comment" type="submit">요청 삭제</button>
+                    <button class="btn btn--primary issue-delete-button" type="submit">요청 삭제</button>
                 </form>
+                {}
+                {% endif %}
             </div>
             <div class="issue-view__comments">
                 <h2 class="issue-view__section-title">댓글</h2>
@@ -69,6 +72,7 @@
             </div>
         </div>
     </div>
+    <script src="{{ url_for('static', path='js/issue_delete.js') }}"></script>
 </div>
 
 {% endblock %}

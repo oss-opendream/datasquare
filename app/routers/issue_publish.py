@@ -143,14 +143,13 @@ async def deleted_issue(issue_id: int = Form(...),
     issue/view/issue_id={Issue.issue_id} 페이지로 Redirect합니다.
     '''
 
-    result = IssueData(
-        current_userid=current_user.profile_id).delete_issue(issue_id=issue_id)
-
-    if result == True:
-        print("delete sucess")
-    else:
-        print("delete fail")
-
-    ret = RedirectResponse(url='/feed', status_code=303)
+    try:
+        IssueData(current_userid=current_user.profile_id).delete_issue(issue_id=issue_id)
+        ret = RedirectResponse(url='/feed', status_code=303)
+    except PermissionError:
+        ret = RedirectResponse(
+            url=f'/issue/view?issue_id={issue_id}',
+            status_code=303
+            )
 
     return ret
