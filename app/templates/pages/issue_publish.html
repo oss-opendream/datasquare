@@ -19,7 +19,7 @@
                     <br>
                     requested_team
                     <div class="field">
-                        <select id="issue_publish_requested_team" name="requested_team">
+                        <select id="issue_publish_requested_team" name="requested_team" required>
                             <option value="">--select_team--</option>
                             {% for department in departments %}
                             <option value="{{ department }}">{{ department }}</option>
