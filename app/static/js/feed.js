@@ -14,15 +14,7 @@ function search() {
             sessionStorage.setItem('recentSearches', JSON.stringify(recentSearches));
         }
 
-        window.location.href = '/feed/search?team=&keyword=' + searchInput;
-    }
-}
-
-function view_issue(issue_id) {
-
-    if (issue_id) {
-
-        window.location.href = '/issue/view?issue_id=' + issue_id;
+        window.location.href = '/feed/search?keyword=' + searchInput;
     }
 }
 
@@ -36,18 +28,21 @@ function displayRecentSearches() {
         searchItem.setAttribute("style", "cursor:pointer;")
         searchItem.textContent = search;
         searchItem.onclick = function () {
-            window.location.href = '/feed/search?team=&keyword=' + search;
+            window.location.href = '/feed/search?keyword=' + search;
         };
         recentSearchesContainer.appendChild(searchItem);
     });
 }
 
-function filterMyIssues() {
-    window.location.href = '/feed/my_issues';
-}
-
 function sortIssues(order) {
-    // Implement sorting functionality
+    const url = new URL(window.location.href);
+    const urlParams = url.searchParams;
+
+    urlParams.set('order', order);
+
+    url.search = urlParams.toString();
+
+    window.location.href = url.pathname + url.search;
 }
 
 window.onload = function () {

@@ -7,7 +7,8 @@
 <div class="feed">
     <div class="feed__left-column">
         <div class="feed__search">
-            <input type="text" id="search_input" class="form-input feed__search-input" placeholder="Search">
+            <input type="text" id="search_input" class="form-input feed__search-input" placeholder="Search"
+                onkeydown="if(event.keyCode==13) search()">
             <button class="btn feed__control-btn" onclick="search()">Search</button>
         </div>
         <div class="feed__recent-searches" id="feed__recent-searches">
@@ -32,9 +33,9 @@
     </div>
     <div class="feed__right-column">
         <div class="feed__controls">
-            <a href="javascript:void(0);" class="feed__control-text" onclick="filterMyIssues()">My Issues</a>
-            <button class="btn feed__control-btn" onclick="sortIssues('newest')">Newest</button>
-            <button class="btn feed__control-btn" onclick="sortIssues('oldest')">Oldest</button>
+            <a href="{{ url_for('my_issues') }}" class="feed__control-text">My Issues</a>
+            <button class="btn feed__control-btn" onclick="sortIssues('desc')">Newest</button>
+            <button class="btn feed__control-btn" onclick="sortIssues('asc')">Oldest</button>
         </div>
         <div class="feed__issues">
             {% for issue in issues %}

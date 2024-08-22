@@ -14,12 +14,13 @@ from app.schemas.user_schema import User
 class IssueData:
     ''' "issue" 테이블에서 쿼리된 이슈 데이터에 대한 class'''
 
-    def __init__(self, current_user_profile: User, db: Session = datasquare_db) -> None:
+    def __init__(self, current_user_profile: User, order: str = "desc", db: Session = datasquare_db) -> None:
         self.db = db
         self.current_user_id = current_user_profile.profile_id
         self.current_user_name = current_user_profile.name
         self.current_user_team_id = current_user_profile.team_id
         self.current_user_team_name = current_user_profile.department
+        self.issue_order = order
 
     def __create_base_query(self, db_session: Session):
         '''Base query 객체 생성 함수'''
@@ -72,7 +73,10 @@ class IssueData:
         with next(self.db.get_db()) as db_session:
             base_query = self.__create_base_query(db_session)
 
-            issues = base_query.all()
+            if self.issue_order == "asc":
+                issues = base_query.order_by(Issue.created_at.asc()).all()
+            else:
+                issues = base_query.order_by(Issue.created_at.desc()).all()
 
         result_data = self.__format_issue_data(issues)
 
@@ -85,10 +89,18 @@ class IssueData:
 
             base_query = self.__create_base_query(db_session)
 
-            issues = base_query \
-                .filter(or_(Issue.publisher == self.current_user_id,
-                            Issue.requested_team == self.current_user_team_id)) \
-                .all()
+            if self.issue_order == "asc":
+                issues = base_query \
+                    .filter(or_(Issue.publisher == self.current_user_id,
+                                Issue.requested_team == self.current_user_team_id)) \
+                    .order_by(Issue.created_at.asc()) \
+                    .all()
+            else:
+                issues = base_query \
+                    .filter(or_(Issue.publisher == self.current_user_id,
+                                Issue.requested_team == self.current_user_team_id)) \
+                    .order_by(Issue.created_at.desc()) \
+                    .all()
 
         result_data = self.__format_issue_data(issues)
 
@@ -100,12 +112,22 @@ class IssueData:
         with next(self.db.get_db()) as db_session:
             base_query = self.__create_base_query(db_session)
 
-            search_result = base_query \
-                .filter(TeamProfile.team_name.contains(team)) \
-                .filter(or_(Issue.title.contains(keyword),
-                            Issue.content.contains(keyword)
-                            )) \
-                .all()
+            if self.issue_order == "asc":
+                search_result = base_query \
+                    .filter(TeamProfile.team_name.contains(team)) \
+                    .filter(or_(Issue.title.contains(keyword),
+                                Issue.content.contains(keyword)
+                                )) \
+                    .order_by(Issue.created_at.asc()) \
+                    .all()
+            else:
+                search_result = base_query \
+                    .filter(TeamProfile.team_name.contains(team)) \
+                    .filter(or_(Issue.title.contains(keyword),
+                                Issue.content.contains(keyword)
+                                )) \
+                    .order_by(Issue.created_at.desc()) \
+                    .all()
 
         result_data = self.__format_issue_data(search_result)
 
