@@ -24,6 +24,7 @@ class Issue(Base):
     is_private = Column(Integer, nullable=False)
     created_at = Column(Text, nullable=False)
     modified_at = Column(Text, nullable=False)
+    is_deleted = Column(Integer, nullable=False)
 
     # Relationships
     publisher_re = relationship('PersonalProfile', back_populates='issues_re')
@@ -39,6 +40,7 @@ class IssueComment(Base):
     within = Column(Integer, ForeignKey('issue.issue_id',
                     onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
     content = Column(Text, nullable=False)
+    is_deleted = Column(Integer, nullable=False)
 
     # Relationships
     publisher_re = relationship(
