@@ -70,7 +70,19 @@ async def issue_views(request: Request,
 
     return ret
 
+@router.post('/issue/view/delete_comment')
+async def create_issue_comment(issue_id: int = Form(...),
+                               comment: str = Form(...),
+                               current_user: User = Depends(get_current_user)):
+    '''issue_commnet 생성 함수 입니다.'''
 
+    IssueCommentData(current_user.profile_id).create_issue_comment(
+        issue_id, comment)
+
+    ret = RedirectResponse(
+        url=f'/issue/view?issue_id={issue_id}', status_code=303)
+
+    return ret
 # @router.get('/issue/view/delete_issue', response_class=HTMLResponse)
 # def logout(response: Response):
 
