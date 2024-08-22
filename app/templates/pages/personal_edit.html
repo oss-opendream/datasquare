@@ -12,24 +12,26 @@
     </div>
 
     <div class="content">
+        <form action="/profile" method="post" enctype="multipart/form-data">
             <h3 class="form-label">Image</h3>
             <img src="data:image/png;base64,{{ image }}" alt="Profile Image" id="profileThumb" width="200">
             <br>
+            <input type="file" id="profile_image" name="image" class="form-input" accept="image/*">
+            <br>
             <h3 class="form-label">Name</h3>
-            <p id="name">{{name}}</p>
+            <p id="name"><input type="text" name="name" id="nameInput" value="{{name}}" ></p>
             <br>
             <h3 class="form-label">Email</h3>
-            <p id="email">{{email}}</p>
+            <p id="email"><input type="email" name="email" id="emailInput" value="{{email}}" ></p>
             <br>
             <h3 class="form-label">Phone</h3>
-            <p id="phone">{{phone}}</p>
+            <p id="phone"><input type="text" name="phone_number" id="phoneInput" value="{{phone}}" ></p>
             <br>
             <h3 class="form-label">Department</h3>
             <p id="department">{{department}}</p> <!-- 변경 불가 -->
             <br>
-            <a href="/profile/profile_edit">
-                <button type="submit" id="editButton">Edit</button> 
-            </a>
+            <button type="submit" id="saveButton" >Save</button>
+        </form>
     </div>
 </div>
 

@@ -24,12 +24,14 @@
             </div>
             <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings"
                 class="header__settings-icon">
+            <a href="/profile">
             <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile"
                 class="header__user-icon">
-            <button type="submit" class="header__logout-button">
+            </a>
+            <a href ="/logout" class="header__logout-button">
                 <img src="{{ url_for('static', path='images/logout-icon.svg') }}" alt="Logout"
                     class="header__logout-icon">
-            </button>
+            </a>
         </div>
 </header>
 

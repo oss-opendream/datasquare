@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const sidebarNav = document.getElementById('sidebar-nav');
     const sidebarLinks = [
-        { url: '/profile/personal', text: 'Personal' },
+        { url: '/profile', text: 'Personal' },
         { url: '/profile/team', text: 'Team' },
         { url: '/profile/admin', text: 'Admin' },
 

@@ -91,10 +91,18 @@ class UserData:
             db_session.commit()
             db_session.refresh(admin_db)
 
-    def update_user_data(self, current_user):
+    def update_user_data(self, user_profile_id, update_date):
 
         with next(self.db.get_db()) as db_session:
-            pass
-            # db_session.query(PersonalProfile) \
-            # .filter()
+
+            user_data = db_session.query(PersonalProfile) \
+                .filter(PersonalProfile.profile_id == user_profile_id) \
+                .one_or_none()
+
+            user_data.name = update_date.name
+            user_data.email = update_date.email
+            user_data.phone_number = update_date.phone_number
+            user_data.profile_image = update_date.profile_image
+
+            db_session.commit()
             # db_session.update(update_data)
