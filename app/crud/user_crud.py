@@ -64,6 +64,9 @@ class UserData:
                 .join(TeamProfile, TeamMembership.team_id == TeamProfile.profile_id) \
                 .all()
 
+            if not personal_data:
+                return None
+
             for person, team in personal_data:
                 user_data = User(profile_id=person.profile_id,
                                  name=person.name,

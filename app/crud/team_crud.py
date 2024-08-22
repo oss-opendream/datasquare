@@ -33,3 +33,9 @@ class TeamData:
                 .one_or_none().team_name
 
         return current_user_team_name
+
+    # def get_team_member(self, team_id):
+
+    #     with next(self.db.get_db()) as db_session:
+
+    #         team_member = db

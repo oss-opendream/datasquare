@@ -20,6 +20,8 @@ from app.crud.team_crud import TeamData
 from app.schemas import user_schema
 from app.crud.noti import get_notification_count
 from app.utils.get_current_user import get_current_user
+from app.models import profile
+from app.schemas import user_schema
 
 router = APIRouter()
 templates = Jinja2Templates(directory='app/templates')
@@ -35,7 +37,8 @@ async def lifespan(app: FastAPI):
     admin = UserData()
 
     if not admin.is_admin_table():
-        app.redirect_flag = True  # 첫 요청에 리다이렉션 플래그 설정
+        app.redirect_flag = True
+        app.setting_tema = False  # 첫 요청에 리다이렉션 플래그 설정
     else:
         app.redirect_flag = False
 
@@ -65,9 +68,11 @@ async def create_admin_post(request: Request,
     return RedirectResponse(url="/signin",  status_code=status.HTTP_302_FOUND)
 
 
-# 우열오빠랑 합치기
-
-
 @router.get("/init")
-async def admin_setting():
-    return "우열오빠꺼"
+async def admin_setting(request: Request,
+                        current_user=Depends(get_current_user),
+                        ):
+
+    # 일반 계정인지 확인
+    if isinstance(current_user, user_schema.User):
+        return "error"
