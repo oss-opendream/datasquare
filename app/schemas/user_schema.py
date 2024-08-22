@@ -16,9 +16,10 @@ class User(BaseModel):
     profile_id: int
     name: str
     email: EmailStr
-    password: str
     phone_number: str
+    profile_image: bytes
     department: str
+    team_id: int
 
 
 class Token(BaseModel):

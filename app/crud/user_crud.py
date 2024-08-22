@@ -3,8 +3,9 @@
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from sqlalchemy.orm import joinedload
+from sqlalchemy import update
 
-from app.schemas.user_schema import UserCreate
+from app.schemas.user_schema import UserCreate, User
 from app.models.profile import PersonalProfile, TeamProfile, TeamMembership
 from app.models.database import datasquare_db
 
@@ -42,8 +43,7 @@ class UserData:
             db_session.add(team_db)
             db_session.commit()
 
-    def get_user(self, data: str, key: str):
-        '''주어진 사용자 정보로 데이터베이스에서 사용자의 존재 여부를 확인.'''
+    def get_admin_user(self, data: str, key: str):
 
         with next(self.db.get_db()) as db_session:
             column = getattr(PersonalProfile, key)
@@ -53,6 +53,29 @@ class UserData:
 
         return personal_data
 
+    def get_user(self, data: str, key: str) -> User:
+        '''주어진 사용자 정보로 데이터베이스에서 사용자의 정보.'''
+
+        with next(self.db.get_db()) as db_session:
+            column = getattr(PersonalProfile, key)
+            personal_data = db_session.query(PersonalProfile, TeamProfile) \
+                .filter(column == data) \
+                .join(TeamMembership, PersonalProfile.profile_id == TeamMembership.member_id) \
+                .join(TeamProfile, TeamMembership.team_id == TeamProfile.profile_id) \
+                .all()
+
+            for person, team in personal_data:
+                user_data = User(profile_id=person.profile_id,
+                                 name=person.name,
+                                 email=person.email,
+                                 phone_number=person.phone_number,
+                                 profile_image=person.profile_image,
+                                 department=team.team_name,
+                                 team_id=team.profile_id
+                                 )
+
+        return user_data
+
     def create_admin(self):
 
         with next(self.db.get_db()) as db_session:
@@ -60,10 +83,18 @@ class UserData:
                                        email='admin@admin.com',
                                        password=self.pwd_context.hash(
                                            'admin'),
-                                       phone_number=0,
+                                       phone_number='010-010010',
                                        profile_image=None
                                        )
 
             db_session.add(admin_db)
             db_session.commit()
             db_session.refresh(admin_db)
+
+    def update_user_data(self, ):
+
+        with next(self.db.get_db()) as db_session:
+            update_data = (
+                update(PersonalProfile)
+            )
+            db_session.update(update_data)
