@@ -12,7 +12,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from app.crud.issue_crud import IssueData
 from app.crud.issue_comment_crud import IssueCommentData
 from app.schemas.user_schema import User
-from app.routers.sign import get_current_user
+from app.utils.get_current_user import get_current_user
 from app.crud.noti import get_notification_count
 
 

@@ -17,7 +17,7 @@ from app.crud.user_crud import UserData
 from app.crud.team_crud import TeamData
 from app.schemas import user_schema
 from app.crud.noti import get_notification_count
-from app.routers.sign import get_current_user
+from app.utils.get_current_user import get_current_user
 
 router = APIRouter()
 templates = Jinja2Templates(directory='app/templates')
@@ -100,3 +100,8 @@ async def personal_post(request: Request,
             'department': current_user.department,
         }
     )
+
+
+# @router.get("/team")
+# async def team_profile(request : Request,
+#                        current_user : user_schema.User = Depends(get_current_user)):

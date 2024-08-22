@@ -2,6 +2,7 @@
 
 import os
 from dotenv import load_dotenv
+
 from datetime import timedelta, datetime
 from typing import Annotated
 
@@ -47,7 +48,13 @@ async def signin_post(request: Request,
 
     # check user and password
     userdata_obj = UserData()
-    user = userdata_obj.get_user_with_key(form_data.username, key='email')
+    user = userdata_obj.get_user_password(form_data.username, key='email')
+    url = '/feed'
+
+    # admin 계정일 때는 Page를 다르게 보이게 함.
+    if not user:
+        user = userdata_obj.get_admin_data(form_data.username)
+        url = '/admin/init'
 
     if not user or not userdata_obj.pwd_context.verify(form_data.password, user.password):
         return RedirectResponse(url='/signin?error=비밀번호가 일치하지 않습니다.', status_code=status.HTTP_302_FOUND)
@@ -60,38 +67,12 @@ async def signin_post(request: Request,
 
     # HTTPOnly 쿠키로 토큰 반환
     response = RedirectResponse(
-        url='/feed', status_code=status.HTTP_302_FOUND)
+        url=url, status_code=status.HTTP_302_FOUND)
     response.set_cookie(
         key='access_token', value=access_token, httponly=True, secure=False, samesite='Lax'
     )
 
     return response
-
-
-def get_current_user(request: Request):
-    access_token = request.cookies.get("access_token")
-
-    if not access_token:
-        raise HTTPException(status_code=401, detail='Not authenticated')
-
-    try:
-        payload = jwt.decode(access_token, SECRET_KEY, algorithms=ALGORITHM)
-        user_id: str = payload.get('sub')
-
-        if user_id is None:
-            raise HTTPException(
-                status_code=401, detail='Invalid authentication credentials')
-
-        user = UserData().get_user(user_id, key='email')
-
-        if user is None:
-            raise HTTPException(status_code=401, detail='User not found')
-
-        return user
-
-    except jwt.JWTError:
-        raise HTTPException(
-            status_code=401, detail='Invalid authentication credentials')
 
 
 @router.get('/signup', name='auth.signup')
@@ -136,7 +117,7 @@ async def signup_post(
     # 이미 회원가입이 되어있는지 확인
     userdata_obj = UserData()
 
-    if userdata_obj.get_user_with_key(email, key='email'):
+    if userdata_obj.get_user_password(email, key='email'):
         return RedirectResponse(url='/signup?error=이미 등록된 계정입니다. 로그인해주세요', status_code=status.HTTP_302_FOUND)
     else:
         userdata_obj.create_user(user_create=user_create)

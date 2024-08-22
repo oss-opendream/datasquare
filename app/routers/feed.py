@@ -4,7 +4,7 @@
 from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 
-from app.routers.sign import get_current_user
+from app.utils.get_current_user import get_current_user
 from app.schemas.user_schema import User
 from app.crud.feed_crud import IssueData, Team
 from app.crud.noti import get_notification_count
