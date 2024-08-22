@@ -6,7 +6,7 @@ from sqlalchemy.orm import joinedload
 from sqlalchemy import update
 
 from app.schemas.user_schema import UserCreate, User
-from app.models.profile import PersonalProfile, TeamProfile, TeamMembership
+from app.models.profile import PersonalProfile, TeamProfile, TeamMembership, Admin
 from app.models.database import datasquare_db
 
 
@@ -43,7 +43,7 @@ class UserData:
             db_session.add(team_db)
             db_session.commit()
 
-    def get_user_with_key(self, data: str, key: str):
+    def get_user_password(self, data: str, key: str):
 
         with next(self.db.get_db()) as db_session:
             column = getattr(PersonalProfile, key)
@@ -76,20 +76,28 @@ class UserData:
 
         return user_data
 
-    def create_admin(self):
+    def create_admin_re(self,
+                        name,
+                        email,
+                        password):
 
         with next(self.db.get_db()) as db_session:
-            admin_db = PersonalProfile(name='admin',
-                                       email='admin@admin.com',
-                                       password=self.pwd_context.hash(
-                                           'admin'),
-                                       phone_number='010-010010',
-                                       profile_image=None
-                                       )
+            admin_db = Admin(username=name,
+                             email=email,
+                             password=self.pwd_context.hash(
+                                 password),
+                             )
 
             db_session.add(admin_db)
             db_session.commit()
             db_session.refresh(admin_db)
+
+    def is_admin_table(self):
+
+        with next(self.db.get_db()) as db_session:
+            row = db_session.query(Admin).count()
+
+        return row
 
     def update_user_data(self, user_profile_id, update_date):
 
@@ -106,3 +114,12 @@ class UserData:
 
             db_session.commit()
             # db_session.update(update_data)
+
+    def get_admin_data(self, email):
+        with next(self.db.get_db()) as db_session:
+
+            admin_data = db_session.query(Admin) \
+                .filter(Admin.email == email) \
+                .one_or_none()
+
+        return admin_data

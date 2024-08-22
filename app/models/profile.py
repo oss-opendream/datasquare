@@ -54,3 +54,12 @@ class TeamMembership(Base):
     member_re = relationship(
         'PersonalProfile', back_populates='memberships_re')
     team_re = relationship('TeamProfile', back_populates='members_re')
+
+
+class Admin(Base):
+    __tablename__ = 'admin'
+
+    id = Column(Integer, primary_key=True, unique=True, nullable=False)
+    email = Column(String, unique=True,  nullable=False)
+    username = Column(String, nullable=False)
+    password = Column(String, nullable=False)

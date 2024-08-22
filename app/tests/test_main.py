@@ -2,25 +2,15 @@ import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from contextlib import asynccontextmanager
+from fastapi.responses import RedirectResponse
+
 
 from app.models.database import Base, datasquare_db
 from app.crud.user_crud import UserData
 from app.routers import feed, issue_publish, issue_view, sign, database_router, profile
+from app.routers import admin
 
 templates = Jinja2Templates(directory='app/templates')
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # When service starts.
-
-    admin = UserData()
-    if not admin.get_user_with_key('admin@admin.com', key="email"):
-
-        admin.create_admin()
-
-    yield
 
 
 def create_app() -> None:
@@ -33,7 +23,7 @@ def create_app() -> None:
 
     created_app = FastAPI(title='Datasquare',
                           description='데이터 협업을 위한 조직 간 커뮤니케이션 플랫폼',
-                          lifespan=lifespan)
+                          lifespan=admin.lifespan)
 
     created_app.mount(
         '/static', StaticFiles(directory='app/static'), name='static')
@@ -44,7 +34,8 @@ def create_app() -> None:
         issue_publish.router,
         issue_view.router,
         database_router.router,
-        profile.router
+        profile.router,
+        admin.router
     ]
 
     for router in routers:
@@ -54,6 +45,18 @@ def create_app() -> None:
 
 
 app = create_app()
+
+
+@app.middleware("http")
+async def admin_middleware(request: Request, call_next):
+
+    if getattr(app, 'redirect_flag', False):
+        app.redirect_flag = False
+        return RedirectResponse(url="/admin")
+
+    response = await call_next(request)
+
+    return response
 
 
 @app.get('/')
