@@ -2,6 +2,7 @@
 
 
 from fastapi import Form
+from sqlalchemy import and_
 from sqlalchemy.orm import Session
 
 
@@ -38,6 +39,7 @@ class IssueData():
             publisher=self.current_userid,
             requested_team=requested_team,
             is_private=is_private,
+            is_deleted=0,
             created_at=now,
             modified_at=now
         )
@@ -56,7 +58,8 @@ class IssueData():
         '''
 
         with next(self.db.get_db()) as db_session:
-            issues = db_session.query(Issue).all()
+            issues = db_session.query(Issue) \
+                .filter(Issue.is_deleted == 0).all()
 
         return issues
 
@@ -70,13 +73,14 @@ class IssueData():
 
         with next(self.db.get_db()) as db_session:
             issue = db_session.query(Issue) \
-                .filter(Issue.issue_id == issue_id) \
+                .filter(and_(Issue.issue_id == issue_id,
+                             Issue.is_deleted == 0)) \
                 .one_or_none()
 
-            return issue
+        return issue
 
     def modified_issue(self,
-                       issue_id: int,
+                       issue_id: int = Form(...),
                        title: str = Form(...),
                        content: str = Form(...),
                        requested_team: str = Form(...),
@@ -91,7 +95,8 @@ class IssueData():
             issue = db_session.query(Issue) \
                 .filter(Issue.issue_id == issue_id) \
                 .one_or_none()
-            if issue is None:
+
+            if issue is None or issue.is_deleted == 1:
                 return False
 
         # 수정할 필드 업데이트
@@ -114,18 +119,22 @@ class IssueData():
         '''
 
         with next(self.db.get_db()) as db_session:
-            issue = self.read_issue(issue_id=issue_id)
-            comments = IssueCommentData(
-                self.current_userid).read_issue_comments(issue_id=issue_id)
+                issue = db_session.query(Issue) \
+                    .filter(Issue.issue_id == issue_id) \
+                    .one_or_none()
+                
+                comments = IssueCommentData(self.current_userid).read_issue_comments(issue_id=issue_id)
+                if comments:
+                    for comment in comments:
+                        ...
+                
+                if issue is None or issue.is_deleted == 1:
+                    return False
 
-            if issue is None:
-                return False  # 삭제할 이슈가 없음
+                issue.is_delete = 1
+                issue.modified_at = current_time()
 
-            if comments:
-                for comment in comments:
-                    db_session.delete(comment)
+                db_session.commit()
+                db_session.refresh(issue)
 
-            db_session.delete(issue)
-            db_session.commit()
-
-        return True  # 성공적으로 삭제됨
+        return True

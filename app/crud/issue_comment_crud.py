@@ -2,6 +2,7 @@
 
 
 from sqlalchemy.orm import Session
+from sqlalchemy import and_
 
 from app.models.issue import IssueComment
 from app.models.database import datasquare_db
@@ -31,7 +32,8 @@ class IssueCommentData():
         new_comment = IssueComment(
             publisher=self.current_userid,
             within=issue_id,
-            content=content
+            content=content,
+            is_deleted=0
         )
 
         with next(self.db.get_db()) as db_session:
@@ -44,8 +46,10 @@ class IssueCommentData():
         '''특정 comment_id에 해당하는 댓글을 조회합니다.'''
 
         with next(self.db.get_db()) as db_session:
-            comment = db_session.query(IssueComment).filter(
-                IssueComment.id == comment_id).one_or_none()
+            comment = db_session.query(IssueComment) \
+                .filter(and_(IssueComment.id == comment_id,
+                             IssueComment.is_deleted == 0)) \
+                .one_or_none()
 
         return comment
 
@@ -59,7 +63,8 @@ class IssueCommentData():
 
         with next(self.db.get_db()) as db_session:
             comments = db_session.query(IssueComment) \
-                .filter(IssueComment.within == issue_id) \
+                .filter(and_(IssueComment.within == issue_id,
+                             IssueComment.is_deleted == 0)) \
                 .all()
 
         return comments
