@@ -43,7 +43,7 @@ class UserData:
             db_session.add(team_db)
             db_session.commit()
 
-    def get_admin_user(self, data: str, key: str):
+    def get_user_with_key(self, data: str, key: str):
 
         with next(self.db.get_db()) as db_session:
             column = getattr(PersonalProfile, key)
@@ -91,10 +91,10 @@ class UserData:
             db_session.commit()
             db_session.refresh(admin_db)
 
-    def update_user_data(self, ):
+    def update_user_data(self, current_user):
 
         with next(self.db.get_db()) as db_session:
-            update_data = (
-                update(PersonalProfile)
-            )
-            db_session.update(update_data)
+            pass
+            # db_session.query(PersonalProfile) \
+            # .filter()
+            # db_session.update(update_data)

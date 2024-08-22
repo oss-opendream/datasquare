@@ -47,7 +47,7 @@ async def signin_post(request: Request,
 
     # check user and password
     userdata_obj = UserData()
-    user = userdata_obj.get_user(form_data.username, key='email')
+    user = userdata_obj.get_user_with_key(form_data.username, key='email')
 
     if not user or not userdata_obj.pwd_context.verify(form_data.password, user.password):
         return RedirectResponse(url='/signin?error=비밀번호가 일치하지 않습니다.', status_code=status.HTTP_302_FOUND)
@@ -70,7 +70,7 @@ async def signin_post(request: Request,
 
 def get_current_user(request: Request):
     access_token = request.cookies.get("access_token")
-    print(access_token)
+
     if not access_token:
         raise HTTPException(status_code=401, detail='Not authenticated')
 
@@ -82,7 +82,7 @@ def get_current_user(request: Request):
             raise HTTPException(
                 status_code=401, detail='Invalid authentication credentials')
 
-        user = UserData().get_user(user_id, key='email')
+        user = UserData().get_user_with_key(user_id, key='email')
 
         if user is None:
             raise HTTPException(status_code=401, detail='User not found')
@@ -136,7 +136,7 @@ async def signup_post(
     # 이미 회원가입이 되어있는지 확인
     userdata_obj = UserData()
 
-    if userdata_obj.get_user(email, key='email'):
+    if userdata_obj.get_user_with_key(email, key='email'):
         return RedirectResponse(url='/signup?error=이미 등록된 계정입니다. 로그인해주세요', status_code=status.HTTP_302_FOUND)
     else:
         userdata_obj.create_user(user_create=user_create)

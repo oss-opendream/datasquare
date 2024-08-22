@@ -16,7 +16,7 @@ async def lifespan(app: FastAPI):
     # When service starts.
 
     admin = UserData()
-    if not admin.get_admin_user('admin@admin.com', key="email"):
+    if not admin.get_user_with_key('admin@admin.com', key="email"):
 
         admin.create_admin()
 
