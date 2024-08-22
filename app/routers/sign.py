@@ -82,7 +82,7 @@ def get_current_user(request: Request):
             raise HTTPException(
                 status_code=401, detail='Invalid authentication credentials')
 
-        user = UserData().get_user_with_key(user_id, key='email')
+        user = UserData().get_user(user_id, key='email')
 
         if user is None:
             raise HTTPException(status_code=401, detail='User not found')
