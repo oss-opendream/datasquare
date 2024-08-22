@@ -31,11 +31,11 @@ def get_current_user(request: Request):
 
         user_obj = UserData()
 
-        # admin 계정일때의 처리
-        user = user_obj.get_admin_data(user_id)
+        user = UserData().get_user(user_id, key='email')
 
+        # admin 계정일때의 처리
         if not user:
-            user = UserData().get_user(user_id, key='email')
+            user = user_obj.get_admin_data(user_id)
 
         if user is None:
             raise HTTPException(status_code=401, detail='User not found')
