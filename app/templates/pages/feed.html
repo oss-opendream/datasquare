@@ -40,7 +40,8 @@
             {% for issue in issues %}
             <a href="/issue/view?issue_id={{ issue.id }}">
                 <div class="feed__issue-card">
-                    <img src="{{ issue.author_avatar }}" alt="{{ issue.author_name }}" class="feed__issue-profile-pic">
+                    <img src="data:image;base64,{{ issue.profile_pic | safe }}" alt="{{ issue.author_name }}"
+                        class="feed__issue-profile-pic">
                     <div class="feed__issue-content">
                         <h3 class="feed__issue-title">{{ issue.title }}</h3>
                         <p class="feed__issue-description">{{ issue.content }}</p>
