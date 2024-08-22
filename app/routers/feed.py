@@ -22,8 +22,7 @@ async def read_dashboard(request: Request,
     team = Team()
     teams_list = team.get_all()
 
-    # current_userid: 현재 user의 personal_profile 테이블 중 profile_id
-    issue = IssueData(current_user.profile_id)
+    issue = IssueData(current_user)
     issue_data = issue.get_all()
 
     return templates.TemplateResponse(
@@ -45,8 +44,7 @@ async def read_my_issues(request: Request,
     team = Team()
     teams_list = team.get_all()
 
-    # current_userid: 현재 user의 personal_profile 테이블 중 profile_id
-    issue = IssueData(current_user.profile_id)
+    issue = IssueData(current_user)
     issue_data = issue.get_current_users()
 
     return templates.TemplateResponse(
@@ -70,8 +68,7 @@ async def search_issues(request: Request,
     team_data = Team()
     teams_list = team_data.get_all()
 
-    # current_userid: 현재 user의 personal_profile 테이블 중 profile_id
-    issue = IssueData(current_user.profile_id)
+    issue = IssueData(current_user)
     result_data = issue.search(keyword=keyword, team=team)
 
     return templates.TemplateResponse(
