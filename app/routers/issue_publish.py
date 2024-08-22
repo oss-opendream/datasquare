@@ -132,3 +132,26 @@ async def issue_modified_page(request: Request,
     )
 
     return ret
+
+
+@router.post('/issue/deleted', name='data_modified')
+async def deleted_issue(issue_id: int = Form(...),
+                         current_user: User = Depends(get_current_user)
+                         ):
+    '''
+    issue data 수정한 것을 반영하는 함수 입니다.
+    issue/view/issue_id={Issue.issue_id} 페이지로 Redirect합니다.
+    '''
+
+    result = IssueData(
+        current_userid=current_user.profile_id).delete_issue(issue_id=issue_id)
+
+    if result == True:
+        print("delete sucess")
+    else:
+        print("delete fail")
+
+
+    ret = RedirectResponse(url='/feed', status_code=303)
+
+    return ret

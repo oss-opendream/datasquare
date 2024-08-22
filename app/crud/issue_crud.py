@@ -126,12 +126,17 @@ class IssueData():
                 comments = IssueCommentData(self.current_userid).read_issue_comments(issue_id=issue_id)
                 if comments:
                     for comment in comments:
-                        ...
-                
+                        if comment is None or comment.is_deleted == 1:
+                            pass
+
+                        comment.is_deleted = 1
+                        db_session.commit()
+                        # db_session.refresh(comment)
+
                 if issue is None or issue.is_deleted == 1:
                     return False
 
-                issue.is_delete = 1
+                issue.is_deleted = 1
                 issue.modified_at = current_time()
 
                 db_session.commit()

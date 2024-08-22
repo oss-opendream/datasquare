@@ -93,8 +93,25 @@ class IssueCommentData():
 
         return comment
 
-    def delete_issue_comment(self,
+    def delete_all_issue_comment(self,
                              comment_id: int):
+        '''특정 comment_id에 해당하는 댓글을 삭제합니다.'''
+
+        with next(self.db.get_db()) as db_session:
+            comment = self.read_issue_comment(comment_id=comment_id)
+
+            if comment is None:
+                return False
+            
+            comment.is_deleted = 1
+            db_session.commit()
+            db_session.refresh(comment)
+
+        return True
+
+
+    def delete_issue_comment(self,
+                        comment_id: int):
         '''특정 comment_id에 해당하는 댓글을 삭제합니다.'''
 
         with next(self.db.get_db()) as db_session:
@@ -106,8 +123,9 @@ class IssueCommentData():
             if comment.publisher != self.current_userid:
                 raise PermissionError(
                     "You don't have permission to delete this comment.")
-
-            db_session.delete(comment)
+            
+            comment.is_deleted = 1
             db_session.commit()
+            db_session.refresh(comment)
 
         return True
