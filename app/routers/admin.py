@@ -107,4 +107,4 @@ async def set_teams_profile(request: Request,
         teamdata = TeamData()
         teamdata.create_teams(team_names=team_names)
 
-        return RedirectResponse('/signin')
+        return RedirectResponse('/admin/init', status_code=status.HTTP_302_FOUND)
