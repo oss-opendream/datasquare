@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 
-DATASQUARE_DATABASE_URI = 'sqlite:///app/models/dsdb.db'
+DATASQUARE_DATABASE_URI = 'sqlite:///models/dsdb.db'
 # ORG_DATABASE_URI = 'postgre://'
 
 

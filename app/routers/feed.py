@@ -10,7 +10,7 @@ from app.crud.feed_crud import IssueData, Team
 from app.crud.noti import get_notification_count
 
 router = APIRouter()
-templates = Jinja2Templates(directory='app/templates')
+templates = Jinja2Templates(directory='templates')
 
 
 # @router.get('/feed')

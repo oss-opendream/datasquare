@@ -24,7 +24,7 @@ from app.models import profile
 from app.schemas import user_schema
 
 router = APIRouter()
-templates = Jinja2Templates(directory='app/templates')
+templates = Jinja2Templates(directory='templates')
 router = APIRouter(prefix="/profile")
 
 router = APIRouter(prefix="/admin")
