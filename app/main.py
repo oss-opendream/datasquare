@@ -10,8 +10,13 @@ from fastapi.responses import RedirectResponse
 from app.models.database import Base, datasquare_db
 from app.crud.user_crud import UserData
 from app.routers import feed, issue_publish, issue_view, sign, database_router, profile, admin
+# from app.utils.errer_handlers import error_handlers
 
-templates = Jinja2Templates(directory='/templates')
+from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
+
+
+templates = Jinja2Templates(directory='app/templates')
 
 
 def create_app():
@@ -38,7 +43,7 @@ def create_app():
         issue_view.router,
         database_router.router,
         profile.router,
-        admin.router
+        admin.router,
     ]
 
     for router in routers:
@@ -75,14 +80,35 @@ def databases_test():
     return {'hello': 'world'}
 
 
-@app.get('/404')
-def not_found_error(request: Request):
-    return templates.TemplateResponse(
-        'pages/404.html', {"request": request}
-    )
+# 사용자 정의 HTTP 예외 핸들러
+@app.exception_handler(StarletteHTTPException)
+async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
+    return templates.TemplateResponse("pages/404.html", {"request": request, "message": "An HTTP error occurred: " + exc.detail}, status_code=exc.status_code)
+
+# 검증 오류 핸들러 (예: 잘못된 입력 데이터)
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return templates.TemplateResponse("pages/404.html", {"request": request, "message": "Validation error: " + str(exc)}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+# 일반 예외 핸들러 (모든 예외 처리)
+@app.exception_handler(RequestValidationError)
+async def custom_exception_handler(request: Request, exc: Exception):
+    return templates.TemplateResponse("pages/404.html", {"request": request, "message": "An unexpected error occurred: " + str(exc)}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@app.get("/cause_error/")
+async def cause_error():
+    raise RuntimeError("This is a test error!")
+
+# for status_code, handler in error_handlers.items():
+#     app.add_exception_handler(status_code, handler)
+
+
+
 
 
 if __name__ == '__main__':
 
     uvicorn.run('main:app',
                 host='0.0.0.0', port=8000, reload=True)
+
