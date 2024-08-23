@@ -2,7 +2,7 @@
 
 
 import uvicorn
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
@@ -15,6 +15,8 @@ from app.utils.errer_handlers import error_handlers
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from app.schemas.user_schema import User, AdminUser
+from app.utils.get_current_user import get_current_user
 
 templates = Jinja2Templates(directory='app/templates')
 
@@ -71,11 +73,20 @@ async def admin_middleware(request: Request, call_next):
 
 
 @app.get('/')
-def read_root():
+def root_redirect(request: Request):
     '''
     루트 라우터 함수
     '''
-    return {'hello': 'world'}
+    try:
+        current_user = get_current_user(request)
+
+    except:
+        return RedirectResponse('/signin')
+
+    if isinstance(current_user, User):
+        return RedirectResponse('/feed')
+    elif isinstance(current_user, AdminUser):
+        return RedirectResponse('/admin/init')
 
 
 @app.get('/databases')

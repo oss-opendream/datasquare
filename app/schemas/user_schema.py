@@ -22,6 +22,13 @@ class User(BaseModel):
     team_id: int
 
 
+class AdminUser(BaseModel):
+    id: int
+    name: str
+    email: EmailStr
+    password: str
+
+
 class Token(BaseModel):
     access_token: str
     token_type: str  # token 종류는 Bearer로 고정하여 사용

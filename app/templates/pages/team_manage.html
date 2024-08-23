@@ -1,0 +1,30 @@
+
+
+<div>
+    <h1>Team Management</h1>
+</div>
+<form action="/update" method="post">
+    <table>
+        <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>Team Manager</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="team-table-body">
+            {% for team in teams %}
+            <tr>
+                <td><input type="text" name="team_names" value="{{ team[1] }}"></td>
+                <td><input type="text" name="team_managers" value="{{ team[2] }}"></td>
+                <td>
+                    <button type="button" onclick="removeRow(this)">Remove</button>
+                    <input type="hidden" name="profile_ids" value="{{ team[0] }}">
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="button" onclick="addRow()">Add Row</button>
+    <button type="submit">Submit</button>
+</form>

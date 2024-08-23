@@ -39,3 +39,14 @@ class TeamData:
     #     with next(self.db.get_db()) as db_session:
 
     #         team_member = db
+
+    def create_teams(self, team_names: list[str]):
+        ''' 팀 프로필 생성 함수 '''
+
+        with next(self.db.get_db()) as db_session:
+            for team in team_names:
+                new_team = TeamProfile(team_name=team)
+                db_session.add(new_team)
+
+            db_session.commit()
+            db_session.refresh(new_team)

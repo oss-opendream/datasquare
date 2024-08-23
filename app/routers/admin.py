@@ -69,10 +69,35 @@ async def create_admin_post(request: Request,
 
 
 @router.get("/init")
-async def admin_setting(request: Request,
-                        current_user=Depends(get_current_user),
-                        ):
+async def admin_settings(request: Request,
+                         current_user=Depends(get_current_user),
+                         ):
 
     # 일반 계정인지 확인
     if isinstance(current_user, user_schema.User):
-        return "error"
+        return RedirectResponse(url="/signin")
+
+    else:
+        return templates.TemplateResponse(
+            'pages/team_create.html',
+            {
+                'request': request
+            }
+        )
+
+
+@router.post("/init/set_teams")
+async def set_teams_profile(request: Request,
+                            team_names: list[str] = Form(...),
+                            current_user=Depends(get_current_user),
+                            ):
+    print(team_names)
+    # 일반 계정인지 확인
+    if isinstance(current_user, user_schema.User):
+        return RedirectResponse(url="/signin")
+
+    else:
+        teamdata = TeamData()
+        teamdata.create_teams(team_names=team_names)
+
+        return RedirectResponse('/admin')

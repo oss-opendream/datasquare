@@ -2,10 +2,8 @@
 
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
-from sqlalchemy.orm import joinedload
-from sqlalchemy import update
 
-from app.schemas.user_schema import UserCreate, User
+from app.schemas.user_schema import UserCreate, User, AdminUser
 from app.models.profile import PersonalProfile, TeamProfile, TeamMembership, Admin
 from app.models.database import datasquare_db
 
@@ -120,9 +118,16 @@ class UserData:
 
     def get_admin_data(self, email):
         with next(self.db.get_db()) as db_session:
-
             admin_data = db_session.query(Admin) \
                 .filter(Admin.email == email) \
                 .one_or_none()
-
-        return admin_data
+            if admin_data:
+                admin_data = AdminUser(
+                    id=admin_data.id,
+                    email=admin_data.email,
+                    name=admin_data.username,
+                    password=admin_data.password
+                )
+                return admin_data
+            else:
+                return None
