@@ -317,23 +317,33 @@ body {
     color: #6c757d !important;
 }
 
-/* feed */
+/* feed 페이지 */
 .feed {
     display: flex !important;
-    gap: 2rem !important;
-    padding: 2rem !important;
-    background-color: #a2acb6 !important;
+    gap: -1rem !important;
+    padding: 3rem !important;
+    background-color: #dfe2e5 !important;
+    min-height: calc(100vh);
+    /* 헤더와 푸터의 높이를 고려하여 조정 */
 }
 
 .feed__left-column {
     flex: 1 !important;
-    padding: 1rem !important;
+    padding: 2rem !important;
     max-width: 300px !important;
+    background-color: #dfe2e5 !important;
 }
 
 .feed__right-column {
     flex: 3 !important;
-    padding: 1rem !important;
+    padding: 2rem !important;
+    background-color: #dfe2e5 !important;
+}
+
+.feed__content,
+.feed__container,
+.feed__wrapper {
+    background-color: #dfe2e5 !important;
 }
 
 .feed__search {
