@@ -33,9 +33,9 @@
                     <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
                     <button class="btn btn--primary issue-view__submit-comment" type="submit">요청 수정</button>
                 </form>
-                <form action="/issue/delete" method="post">
+                <form action="/issue/deleted" method="post">
                     <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
-                    <button class="btn btn--primary issue-delete-button" onclick="">요청 삭제</button>
+                    <button class="btn btn--primary issue-delete-button" type="submit">요청 삭제</button>
                 </form>
                 {% endif %}
             </div>
@@ -79,7 +79,7 @@
             </div>
         </div>
     </div>
-    <script src="{{ url_for('static', path='js/issue_delete.js') }}"></script>
+    <!-- <script src="{{ url_for('static', path='js/issue_delete.js') }}"></script> -->
     <script src="{{ url_for('static', path='js/issue_comment_edit.js') }}"></script>
 </div>
 

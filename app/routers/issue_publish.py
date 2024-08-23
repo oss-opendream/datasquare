@@ -134,7 +134,7 @@ async def issue_modified_page(request: Request,
     return ret
 
 
-@router.post('/issue/deleted', name='data_modified')
+@router.post('/issue/deleted', name='data_deleted')
 async def deleted_issue(issue_id: int = Form(...),
                         current_user: User = Depends(get_current_user)
                         ):
