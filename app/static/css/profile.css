@@ -1,12 +1,12 @@
 .wrapper {
     display: flex;
     background-color: #f8f9fa;
-    min-height: calc(100vh - 300px);
-    margin-top: 60px;
+    min-height: calc(100vh - 1000px);
+    margin-top: 100px;
 }
 
 .sidebar {
-    width: 10px;
+    width: 110px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -19,7 +19,7 @@
 
 .sidebar-nav {
     list-style-type: none;
-    padding: 0;
+    padding: 1;
 }
 
 .sidebar-nav li a {

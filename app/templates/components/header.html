@@ -17,16 +17,26 @@
         </nav>
         <div class="header__user-actions">
             <div id="header__notification-button" class="header__notification-container">
-                <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications">
-                {% if notification_count > 0 %}
-                <span class="header__notification-badge">{{ notification_count }}</span>
-                {% endif %}
+                <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications"
+                    class="header__notification-icon">
+                <span class="header__notification-badge" style="display: none;">0</span>
+            </div>
+            <div id="header__notification-popup" class="header__notification-popup">
+                <div class="header__notification-header">
+                    <h3 class="header__notification-title">Notifications</h3>
+                    <img src="{{ url_for('static', path='/images/trash-icon.svg') }}" alt="Delete All"
+                        class="header__notification-delete-all">
+                </div>
+                <ul class="header__notification-list"></ul>
+                <div class="header__notification-footer">
+                    <a href="/notifications" class="header__notification-show-all">Show All</a>
+                </div>
             </div>
             <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings"
                 class="header__settings-icon">
             <a href="/profile">
-            <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile"
-                class="header__user-icon">
+                <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile"
+                    class="header__user-icon">
             </a>
             <a class="header__logout-button">
                 <img src="{{ url_for('static', path='images/logout-icon.svg') }}" alt="Logout"
@@ -34,19 +44,3 @@
             </a>
         </div>
 </header>
-
-<div id="header__notification-popup" class="header__notification-popup">
-    <div class="header__notification-header">
-        <h3 class="header__notification-title">알림</h3>
-        <button class="header__notification-close">&times;</button>
-    </div>
-    <ul class="header__notification-list">
-        {% if notifications %}
-        {% for notification in notifications %}
-        <li class="header__notification-item">{{ notification.message }}</li>
-        {% endfor %}
-        {% else %}
-        <li class="header__notification-item header__notification-item--empty">새로운 알림이 없습니다.</li>
-        {% endif %}
-    </ul>
-</div>

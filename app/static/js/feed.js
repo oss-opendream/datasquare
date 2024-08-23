@@ -23,13 +23,15 @@ function displayRecentSearches() {
     const recentSearchesContainer = document.getElementById('recent-searches');
 
     recentSearchesContainer.innerHTML = '';
-    recentSearches.forEach(search => {
+    recentSearches.forEach((search, index) => {
         const searchItem = document.createElement('li');
-        searchItem.setAttribute("style", "cursor:pointer;")
-        searchItem.textContent = search;
-        searchItem.onclick = function () {
-            window.location.href = '/feed/search?keyword=' + search;
-        };
+        searchItem.className = 'feed__keywords-item';
+        searchItem.innerHTML = `
+            <a href="/feed/search?keyword=${encodeURIComponent(search)}" 
+               class="feed__keywords-link feed__keywords-link--${index % 5}">
+               ${search}
+            </a>
+        `;
         recentSearchesContainer.appendChild(searchItem);
     });
 }

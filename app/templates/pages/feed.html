@@ -18,6 +18,9 @@
         <div class="feed__keywords">
             <h3 class="feed__keywords-title">Keywords</h3>
             {% for keyword in keywords %}
+            <div id="recent-searches">
+                <!-- 키워드들이 여기에 동적으로 추가됩니다 -->
+            </div>
             <a href="{{ url_for('feed', keyword=keyword) }}" class="feed__keyword-link">{{ keyword }}</a>
             {% endfor %}
         </div>
