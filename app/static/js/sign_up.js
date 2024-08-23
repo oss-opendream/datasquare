@@ -57,28 +57,54 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // 폼 제출 핸들러
+    // form.addEventListener('submit', function(event) {
+    //     event.preventDefault(); // 폼 제출 기본 동작 방지
+
+    //     // 폼 데이터 생성
+    //     const formData = new FormData(event.target);
+
+    //     // 폼 데이터 제출
+    //     fetch('/signup', {
+    //         method: 'POST',
+    //         body: formData
+    //     })
+    //     .then(response => {
+    //         // JSON 형식으로 응답 읽기
+    //         return response.json();
+    //     })
+    //     .then(data => {
+    //         if (data.error) {
+    //             // 서버에서 에러 메시지가 반환되면 팝업창 표시
+    //             alert(data.error);
+    //         } else {
+    //             // 성공적으로 처리된 경우 리디렉션
+    //             window.location.href = '/signin';
+    //         }
+    //     })
+    //     .catch(error => console.error('Error:', error));
+    // });
     form.addEventListener('submit', function(event) {
         event.preventDefault(); // 폼 제출 기본 동작 방지
-
+    
         // 폼 데이터 생성
         const formData = new FormData(event.target);
-
+    
         // 폼 데이터 제출
         fetch('/signup', {
             method: 'POST',
             body: formData
         })
         .then(response => {
-            // JSON 형식으로 응답 읽기
-            return response.json();
-        })
-        .then(data => {
-            if (data.error) {
-                // 서버에서 에러 메시지가 반환되면 팝업창 표시
-                alert(data.error);
-            } else {
+            // 서버가 성공적으로 처리한 경우 JSON이 아니라 상태 코드만 반환할 수 있으므로
+            if (response.ok) {
                 // 성공적으로 처리된 경우 리디렉션
                 window.location.href = '/signin';
+            } else {
+                // 에러 상태 코드일 경우 JSON 형식으로 응답 읽기
+                return response.json().then(data => {
+                    // 서버에서 에러 메시지가 반환되면 팝업창 표시
+                    alert(data.error);
+                });
             }
         })
         .catch(error => console.error('Error:', error));
