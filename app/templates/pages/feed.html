@@ -11,15 +11,12 @@
                 onkeydown="if(event.keyCode==13) search()">
         </div>
         <div class="feed__recent-searches" id="feed__recent-searches">
-            <ul id="recent-searches">
-                <!-- Recent searches will be populated here -->
-            </ul>
-        </div>
-        <div class="feed__keywords">
             <h3 class="feed__keywords-title">Keywords</h3>
-            {% for keyword in keywords %}
-            <a href="{{ url_for('feed', keyword=keyword) }}" class="feed__keyword-link">{{ keyword }}</a>
-            {% endfor %}
+            <div id="recent-searches">
+                <ul id="recent-searches">
+                    <!-- 최근 검색어 목록 -->
+                </ul>
+            </div>
         </div>
         <div class="feed__teams">
             <h3 class="feed__teams-title">Teams</h3>

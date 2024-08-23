@@ -8,7 +8,7 @@ function search() {
         // 중복 검색어 제거
         if (!recentSearches.includes(searchInput)) {
             recentSearches.unshift(searchInput); // 최근 검색어를 맨 앞에 추가
-            if (recentSearches.length > 10) {
+            if (recentSearches.length > 5) {
                 recentSearches.pop(); // 최근 검색어는 최대 10개까지만 유지
             }
             sessionStorage.setItem('recentSearches', JSON.stringify(recentSearches));
@@ -23,13 +23,15 @@ function displayRecentSearches() {
     const recentSearchesContainer = document.getElementById('recent-searches');
 
     recentSearchesContainer.innerHTML = '';
-    recentSearches.forEach(search => {
+    recentSearches.forEach((search, index) => {
         const searchItem = document.createElement('li');
-        searchItem.setAttribute("style", "cursor:pointer;")
-        searchItem.textContent = search;
-        searchItem.onclick = function () {
-            window.location.href = '/feed/search?keyword=' + search;
-        };
+        searchItem.className = 'feed__keywords-item';
+        searchItem.innerHTML = `
+            <a href="/feed/search?keyword=${encodeURIComponent(search)}" 
+               class="feed__keywords-link feed__keywords-link--${index % 5}">
+               ${search}
+            </a>
+        `;
         recentSearchesContainer.appendChild(searchItem);
     });
 }
