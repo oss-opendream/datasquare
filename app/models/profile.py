@@ -29,7 +29,7 @@ class TeamProfile(Base):
 
     profile_id = Column(Integer, primary_key=True, unique=True, nullable=False)
     team_name = Column(String, unique=True, nullable=False)
-    team_introduction = Column(Text, nullable=False)
+    team_introduction = Column(Text, nullable=True)
     team_manager = Column(Integer, ForeignKey(
         'personal_profile.profile_id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=True)
     profile_image = Column(BLOB)
