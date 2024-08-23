@@ -78,11 +78,13 @@ class IssueCommentData():
         '''
 
         with next(self.db.get_db()) as db_session:
-            comment = self.read_issue_comment(comment_id=comment_id)
+            comment = db_session.query(IssueComment) \
+                    .filter(IssueComment.comment_id == comment_id) \
+                    .one_or_none()
 
             if comment is None:
                 return None
-
+            
             if comment.publisher != self.current_userid:
                 raise PermissionError(
                     "You don't have permission to modify this comment.")

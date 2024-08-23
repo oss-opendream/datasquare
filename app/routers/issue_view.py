@@ -20,7 +20,7 @@ router = APIRouter()
 templates = Jinja2Templates(directory='app/templates')
 
 
-@router.post('/issue/view/create_comment')
+@router.post('/issue_comment/create')
 async def create_issue_comment(issue_id: int = Form(...),
                                comment: str = Form(...),
                                current_user: User = Depends(get_current_user)):
@@ -70,13 +70,13 @@ async def issue_views(request: Request,
 
     return ret
 
-@router.post('/issue_comment/deleted')
-async def deleted_issue_comment(issue_id: int = Form(...),
+@router.post('/issue_comment/delete')
+async def delete_issue_comment(issue_id: int = Form(...),
                                 comment_id: int = Form(...),
                                 current_user: User = Depends(get_current_user)):
-    '''issue_commnet 생성 함수 입니다.'''
+    '''issue_commnet 삭제 함수 입니다.'''
 
-    IssueCommentData(current_user.profile_id).delete_issue_comment(comment_id)
+    IssueCommentData(current_userid=current_user.profile_id).delete_issue_comment(comment_id)
 
     ret = RedirectResponse(
         url=f'/issue/view?issue_id={issue_id}', status_code=303)
@@ -84,10 +84,17 @@ async def deleted_issue_comment(issue_id: int = Form(...),
     return ret
 
 
-# @router.get('/issue/view/delete_issue', response_class=HTMLResponse)
-# def logout(response: Response):
+@router.post('/issue_comment/modify')
+async def modify_issue_comment(comment_id: int = Form(...),
+                               content: str = Form(...),
+                               current_user: User = Depends(get_current_user)):
+    '''issue_comment 수정 함수입니다.'''
+    
+    comment = IssueCommentData(current_userid=current_user.profile_id).modified_issue_comment(comment_id=comment_id, content=content)
 
-#     response = RedirectResponse(url='/signin')
-#     response.delete_cookie("access_token")
+    issue_id = comment.within
 
-#     return response
+    ret = RedirectResponse(
+        url=f'/issue/view?issue_id={issue_id}', status_code=303)
+
+    return ret

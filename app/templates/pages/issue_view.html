@@ -33,37 +33,32 @@
                     <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
                     <button class="btn btn--primary issue-view__submit-comment" type="submit">요청 수정</button>
                 </form>
-                <form action="/issue/deleted" method="post">
+                <form action="/issue/delete" method="post">
                     <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
-                    <button class="btn btn--primary issue-delete-button" type="submit">요청 삭제</button>
+                    <button class="btn btn--primary issue-delete-button" onclick="">요청 삭제</button>
                 </form>
                 {% endif %}
             </div>
             <hr>
             <div class="issue-view__comments">
                 <h2 class="issue-view__section-title">댓글</h2>
-                {% for comment in comments %}
-                <div class="issue-view__comment">
-                    <span class="issue-view__comment-author">{{ comment.publisher }}</span>
-                    <p class="issue-view__comment-content">{{ comment.content }}</p>
-                    {% if comment.publisher == current_user.profile_id %}
-                    <form action="/issue_comment/modified" method="get">
-                        <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
-                        <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
-                        <button class="btn btn--primary issue-view__submit-comment" type="submit">수정</button>
-                    </form>
-                    <form action="/issue_comment/deleted" method="post">
-                        <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
-                        <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
-                        <button class="btn btn--primary issue-delete-button" type="submit">삭제</button>
-                    </form>
-                    {% endif %}
-                </div>
-                {% endfor %}
+                <ul id="comment-list">
+                    {% for comment in comments %}
+                    <li id="comment-{{ comment.comment_id }}">
+                        <span class="comment-publisher">{{ comment.publisher }}</span>
+                        <br>
+                        <span class="comment-text">{{ comment.content }}</span>
+                        {% if comment.publisher == current_user.profile_id %}
+                        <button onclick="editComment({{ comment.comment_id }})">Edit</button>
+                        <button onclick="deleteComment({{ comment.comment_id }})">Delete</button>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
             <div class="write-comment">
                 <br>
-                <form action="/issue/view/create_comment" method="post">
+                <form action="/issue_comment/create" method="post">
                     <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
                     <textarea name="comment" required></textarea>
                     <button class="btn btn--primary issue-view__submit-comment" type="submit">댓글 등록</button>
@@ -84,8 +79,8 @@
             </div>
         </div>
     </div>
-    <!-- <script src="{{ url_for('static', path='js/issue_edit.js') }}"></script> -->
     <script src="{{ url_for('static', path='js/issue_delete.js') }}"></script>
+    <script src="{{ url_for('static', path='js/issue_comment_edit.js') }}"></script>
 </div>
 
 {% endblock %}
