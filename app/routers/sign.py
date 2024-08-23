@@ -25,10 +25,9 @@ templates = Jinja2Templates(directory='app/templates')
 
 load_dotenv()
 
-ACCESS_TOKEN_EXPIRE_MINUTES = eval(
-    str(os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES')))
-SECRET_KEY = os.getenv('SECRET_KEY')
-ALGORITHM = os.getenv('ALGORITHM')
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES'))
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
+ALGORITHM = str(os.getenv('ALGORITHM'))
 
 
 @router.get('/signin', response_class=HTMLResponse, name='auth.signin')
@@ -62,7 +61,7 @@ async def signin_post(request: Request,
 
     data = {
         'sub': user.email,  # 사용자 식별
-        'exp': datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)  # token 유효기간
+        'exp': datetime.utcnow() + timedelta(hours=ACCESS_TOKEN_EXPIRE_MINUTES)  # token 유효기간
     }
     access_token = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
 
