@@ -97,12 +97,20 @@ class IssueCommentData():
                              comments_id_list: list):
         '''특정 comment_id에 해당하는 댓글을 삭제합니다.'''
 
-        for comment_id in comments_id_list:
-            self.delete_issue_comment(comment_id=comment_id, all_flag=1)
+        with next(self.db.get_db()) as db_session:
+            for comment_id in comments_id_list:
+                comment = db_session.query(IssueComment) \
+                    .filter(IssueComment.comment_id == comment_id) \
+                    .one_or_none()
+                
+                comment.is_deleted = 1
+                db_session.commit()
+                
+            db_session.refresh(comment)
 
     def delete_issue_comment(self,
-                        comment_id: int,
-                        all_flag=0):
+                        comment_id: int):
+        
         '''특정 comment_id에 해당하는 댓글을 삭제합니다.'''
 
         with next(self.db.get_db()) as db_session:
@@ -110,12 +118,10 @@ class IssueCommentData():
                 .filter(IssueComment.comment_id == comment_id) \
                 .one_or_none()
             
-            if all_flag:
-                if comment.publisher != self.current_userid:
-                    raise PermissionError(
-                        "You don't have permission to delete this comment."
-                        )
-            
+            if comment.publisher != self.current_userid:
+                raise PermissionError(
+                    "You don't have permission to delete this comment."
+                    )
             
             comment.is_deleted = 1
             db_session.commit()
