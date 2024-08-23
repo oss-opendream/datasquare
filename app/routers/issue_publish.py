@@ -14,7 +14,7 @@ from app.crud.noti import get_notification_count
 
 
 router = APIRouter()
-templates = Jinja2Templates(directory='templates')
+templates = Jinja2Templates(directory='app/templates')
 
 
 @router.post('/issue/publish', name='data_request')
@@ -144,12 +144,13 @@ async def deleted_issue(issue_id: int = Form(...),
     '''
 
     try:
-        IssueData(current_userid=current_user.profile_id).delete_issue(issue_id=issue_id)
+        IssueData(current_userid=current_user.profile_id).delete_issue(
+            issue_id=issue_id)
         ret = RedirectResponse(url='/feed', status_code=303)
     except PermissionError:
         ret = RedirectResponse(
             url=f'/issue/view?issue_id={issue_id}',
             status_code=303
-            )
+        )
 
     return ret

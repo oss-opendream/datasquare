@@ -21,7 +21,7 @@ from app.schemas import user_schema
 from app.crud.noti import get_notification_count
 
 router = APIRouter()
-templates = Jinja2Templates(directory='templates')
+templates = Jinja2Templates(directory='app/templates')
 
 load_dotenv()
 

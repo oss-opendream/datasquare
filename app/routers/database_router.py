@@ -20,7 +20,7 @@ from app.utils.get_current_user import get_current_user
 from app.crud.noti import get_notification_count
 
 router = APIRouter()
-templates = Jinja2Templates(directory='templates')
+templates = Jinja2Templates(directory='app/templates')
 
 
 @router.get('/databases', name='databases')

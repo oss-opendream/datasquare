@@ -27,7 +27,7 @@ def create_app():
                           lifespan=admin.lifespan)
 
     created_app.mount(
-        '/static', StaticFiles(directory='static'), name='static')
+        '/static', StaticFiles(directory='app/static'), name='static')
 
     routers = [
         sign.router,
