@@ -50,7 +50,7 @@ def create_app():
         created_app.include_router(router)
     
     for status_code, handler in error_handlers.items():
-        app.add_exception_handler(status_code, handler)
+        created_app.add_exception_handler(status_code, handler)
 
     return created_app
 
