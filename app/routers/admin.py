@@ -49,9 +49,16 @@ async def lifespan(app: FastAPI):
 
 @router.get("/")
 async def create_admin(request: Request):
+    if UserData().is_admin_table():
+        current_user = get_current_user(request)
+        if isinstance(current_user, user_schema.AdminUser):
+            return RedirectResponse(url="/admin",  status_code=status.HTTP_302_FOUND)
+        else:
+            raise HTTPException(status_code=401)
 
-    return templates.TemplateResponse("pages/admin_signup.html",
-                                      {'request': request})
+    else:
+        return templates.TemplateResponse("pages/admin_signup.html",
+                                          {'request': request})
 
 
 @router.post("/")
@@ -100,4 +107,4 @@ async def set_teams_profile(request: Request,
         teamdata = TeamData()
         teamdata.create_teams(team_names=team_names)
 
-        return RedirectResponse('/admin')
+        return RedirectResponse('/signin')

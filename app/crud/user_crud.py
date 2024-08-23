@@ -121,6 +121,7 @@ class UserData:
             admin_data = db_session.query(Admin) \
                 .filter(Admin.email == email) \
                 .one_or_none()
+
             if admin_data:
                 admin_data = AdminUser(
                     id=admin_data.id,

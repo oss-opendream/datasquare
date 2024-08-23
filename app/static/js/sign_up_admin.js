@@ -24,23 +24,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     form.addEventListener('submit', function(event) {
         // 비밀번호와 비밀번호 확인이 일치하지 않으면 폼 제출을 막고 경고 표시
-        // if (passwordField.value !== password2Field.value) {
-        //     event.preventDefault(); // 폼 제출 막기
-        //     errorDiv.textContent = '비밀번호가 일치하지 않습니다.';
+        if (passwordField.value !== password2Field.value) {
+            event.preventDefault(); // 폼 제출 막기
+            errorDiv.textContent = '비밀번호가 일치하지 않습니다.';
 
-        //     // 페이지를 경고 메시지가 있는 위치로 스크롤
-        //     password2Field.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // } else {
-        //     errorDiv.textContent = ''; // 에러 메시지 지우기
-        // }
+            // 페이지를 경고 메시지가 있는 위치로 스크롤
+            password2Field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            errorDiv.textContent = ''; // 에러 메시지 지우기
+        }
+        
+    });
 
+    form.addEventListener('submit', function(event) {
         event.preventDefault(); // 폼 제출 기본 동작 방지
     
         // 폼 데이터 생성
         const formData = new FormData(event.target);
     
         // 폼 데이터 제출
-        fetch('/signup', {
+        fetch('/admin', {
             method: 'POST',
             body: formData
         })
@@ -60,30 +63,3 @@ document.addEventListener("DOMContentLoaded", function() {
         .catch(error => console.error('Error:', error));
     });
 });
-
-        
-        // // 폼 데이터 제출
-        // fetch('/signup', {
-        //     method: 'POST',
-        //     body: formData
-        // })
-        // .then(response => {
-        //     // JSON 형식으로 응답 읽기
-        //     return response.json();
-        // })
-        // .then(data => {
-        //     if (data.error) {
-        //         // 서버에서 에러 메시지가 반환되면 팝업창 표시
-        //         alert(data.error);
-        //     } else {
-        //         // 성공적으로 처리된 경우 리디렉션
-        //         window.location.href = '/signin';
-        //     }
-        // })
-//         // .catch(error => console.error('Error:', error));
-
-//     });
-
-//     form.addEventListener('submit', function(event) {
-       
-// });
