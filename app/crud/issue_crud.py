@@ -122,15 +122,12 @@ class IssueData():
             issue = db_session.query(Issue) \
                 .filter(Issue.issue_id == issue_id) \
                 .one_or_none()
-            comments = IssueCommentData(self.current_userid).read_issue_comments(issue_id=issue_id)
+            
+            issue_comment_data = IssueCommentData(self.current_userid)
+            comments = issue_comment_data.read_issue_comments(issue_id=issue_id)
+            comments_id_list= [comment.comment_id for comment in comments]
+            issue_comment_data.delete_all_issue_comment(comments_id_list)
 
-            if comments:
-                for comment in comments:
-                    if comment is None or comment.is_deleted == 1:
-                        pass
-
-                    comment.is_deleted = 1
-                    db_session.commit()
 
             if issue is None or issue.is_deleted == 1:
                 raise ValueError("Issue is None")

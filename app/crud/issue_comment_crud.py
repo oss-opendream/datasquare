@@ -47,7 +47,7 @@ class IssueCommentData():
 
         with next(self.db.get_db()) as db_session:
             comment = db_session.query(IssueComment) \
-                .filter(and_(IssueComment.id == comment_id,
+                .filter(and_(IssueComment.comment_id == comment_id,
                              IssueComment.is_deleted == 0)) \
                 .one_or_none()
 
@@ -94,36 +94,28 @@ class IssueCommentData():
         return comment
 
     def delete_all_issue_comment(self,
-                             comment_id: int):
+                             comments_id_list: list):
         '''특정 comment_id에 해당하는 댓글을 삭제합니다.'''
 
-        with next(self.db.get_db()) as db_session:
-            comment = self.read_issue_comment(comment_id=comment_id)
-
-            if comment is None:
-                return ValueError("Comment is None")
-            
-            comment.is_deleted = 1
-            db_session.commit()
-            db_session.refresh(comment)
-
-        return True
-
+        for comment_id in comments_id_list:
+            self.delete_issue_comment(comment_id=comment_id, all_flag=1)
 
     def delete_issue_comment(self,
-                        comment_id: int):
+                        comment_id: int,
+                        all_flag=0):
         '''특정 comment_id에 해당하는 댓글을 삭제합니다.'''
 
         with next(self.db.get_db()) as db_session:
-            comment = self.read_issue_comment(comment_id=comment_id)
-
-            if comment is None:
-                raise ValueError("Issue Comment is None")
-
-            if comment.publisher != self.current_userid:
-                raise PermissionError(
-                    "You don't have permission to delete this comment."
-                    )
+            comment = db_session.query(IssueComment) \
+                .filter(IssueComment.comment_id == comment_id) \
+                .one_or_none()
+            
+            if all_flag:
+                if comment.publisher != self.current_userid:
+                    raise PermissionError(
+                        "You don't have permission to delete this comment."
+                        )
+            
             
             comment.is_deleted = 1
             db_session.commit()
