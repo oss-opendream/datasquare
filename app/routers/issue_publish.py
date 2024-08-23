@@ -84,26 +84,25 @@ async def modified_issue(issue_id: int = Form(...),
     issue/view/issue_id={Issue.issue_id} 페이지로 Redirect합니다.
     '''
 
-    new_issue = IssueData(
-        current_userid=current_user.profile_id).modified_issue(issue_id=issue_id,
+    IssueData(current_userid=current_user.profile_id).modified_issue(issue_id=issue_id,
                                                                title=title,
                                                                content=content,
                                                                requested_team=requested_team,
                                                                is_private=is_private
                                                                )
 
-    IssueCommentData(current_user.profile_id).create_issue_comment(
-        new_issue.issue_id, 'Modified issue!!!!')
+    IssueCommentData(current_userid=current_user.profile_id) \
+        .create_issue_comment(issue_id=issue_id, content='Modified issue!!!!')
 
     ret = RedirectResponse(
-        url=f'/issue/view?issue_id={new_issue.issue_id}',
+        url=f'/issue/view?issue_id={issue_id}',
         status_code=303
     )
 
     return ret
 
 
-@ router.get('/issue/modified', response_class=HTMLResponse, name='data_modified')
+@router.get('/issue/modified', response_class=HTMLResponse, name='data_modified')
 async def issue_modified_page(request: Request,
                               issue_id: int,
                               current_user: User = Depends(get_current_user)
