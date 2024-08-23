@@ -22,6 +22,8 @@ def create_app():
     :return: FastAPI app 객체
     '''
 
+    Base.metadata.create_all(bind=datasquare_db.engine, checkfirst=True)
+
     created_app = FastAPI(title='Datasquare',
                           description='데이터 협업을 위한 조직 간 커뮤니케이션 플랫폼',
                           lifespan=admin.lifespan)
@@ -81,7 +83,6 @@ def not_found_error(request: Request):
 
 
 if __name__ == '__main__':
-    Base.metadata.create_all(bind=datasquare_db.engine, checkfirst=True)
 
     uvicorn.run('main:app',
                 host='0.0.0.0', port=8000, reload=True)
