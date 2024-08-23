@@ -322,7 +322,7 @@ body {
     display: flex !important;
     gap: 2rem !important;
     padding: 2rem !important;
-    background-color: #f8f9fa !important;
+    background-color: #a2acb6 !important;
 }
 
 .feed__left-column {
@@ -809,19 +809,22 @@ body {
 
 /* 회원가입 페이지 */
 .sign-up {
-    max-width: 25rem !important;
+    max-width: 30rem !important;
     margin: 6.25rem 5% 6.25rem auto !important;
+    /* 오른쪽 정렬 */
     padding: 2.5rem !important;
     background-color: #fff !important;
     border-radius: 0.5rem !important;
     box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1) !important;
     position: relative !important;
+    /* 로고 배치를 위해 */
 }
 
 .sign-up::before {
     content: '' !important;
     position: absolute !important;
     left: -270% !important;
+    /* 로고 위치 조정: 이 값을 조절하여 로고의 좌우 위치 변경 가능 */
     top: 50% !important;
     transform: translateY(-60%) !important;
     width: 600px !important;
@@ -901,17 +904,210 @@ body {
     text-decoration: underline !important;
 }
 
-@media (max-width: 48rem) {
+/* 회원 로그인 페이지 */
+.sign-in {
+    max-width: 27rem !important;
+    margin: 6.25rem 10% 6.25rem auto !important;
+    padding: 2.5rem !important;
+    background-color: #fff !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1) !important;
+    position: relative !important;
+}
+
+.sign-in::before {
+    content: '' !important;
+    position: absolute !important;
+    left: calc(-100% - 17rem) !important;
+    top: 70% !important;
+    transform: translateY(-50%) !important;
+    width: 130% !important;
+    height: 0 !important;
+    padding-bottom: 83.33% !important;
+    background-image: url('/static/images/logo_text.svg') !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: contain !important;
+}
+
+/* 회원가입 페이지 */
+.sign-up {
+    max-width: 27rem !important;
+    margin: 6.25rem 10% 6.25rem auto !important;
+    padding: 2.5rem !important;
+    background-color: #fff !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1) !important;
+    position: relative !important;
+}
+
+.sign-up::before {
+    content: '' !important;
+    position: absolute !important;
+    left: calc(-100% - 19rem) !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 130% !important;
+    height: 0 !important;
+    padding-bottom: 83.33% !important;
+    background-image: url('/static/images/logo_text.svg') !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: contain !important;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 64rem) {
+
+    /* 1024px */
+    .sign-in,
     .sign-up {
+        margin: 8.25rem auto !important;
+    }
+
+    .sign-in::before,
+    .sign-up::before {
+        left: 50% !important;
+        top: -10px !important;
+        transform: translateX(-50%) !important;
+        width: 300px !important;
+        height: 250px !important;
+        padding-bottom: 0 !important;
+    }
+}
+
+@media (max-width: 48rem) {
+
+    /* 768px */
+    .sign-in,
+    .sign-up {
+        max-width: 90% !important;
         margin: 3.125rem auto !important;
         padding: 1.25rem !important;
     }
 
+    .sign-in::before,
     .sign-up::before {
-        left: 50% !important;
         top: -150px !important;
-        transform: translateX(-50%) !important;
-        width: 150px !important;
+        width: 180px !important;
         height: 150px !important;
+    }
+}
+
+@media (max-width: 30rem) {
+
+    /* 480px */
+    .sign-in::before,
+    .sign-up::before {
+        width: 150px !important;
+        height: 125px !important;
+        top: -140px !important;
+    }
+}
+
+/* 이슈발행 페이지 */
+.issue-publish {
+    padding: 2rem !important;
+    background-color: #f8f9fa !important;
+}
+
+.issue-publish__title {
+    font-size: 2rem !important;
+    margin-bottom: 2rem !important;
+    color: #333 !important;
+}
+
+.issue-publish__content {
+    display: flex !important;
+    gap: 2rem !important;
+}
+
+.issue-publish__main-section {
+    flex: 2 !important;
+}
+
+.issue-publish__sidebar {
+    flex: 1 !important;
+}
+
+.form-group {
+    margin-bottom: 1.5rem !important;
+}
+
+.form-label {
+    display: block !important;
+    margin-bottom: 0.5rem !important;
+    font-weight: bold !important;
+    color: #495057 !important;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+    width: 100% !important;
+    padding: 0.625rem !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 0.25rem !important;
+    font-size: 1rem !important;
+}
+
+.form-textarea {
+    min-height: 100px !important;
+}
+
+.date-range {
+    display: flex !important;
+    gap: 1rem !important;
+}
+
+.date-input {
+    flex: 1 !important;
+}
+
+.btn {
+    padding: 0.625rem 1.25rem !important;
+    font-size: 1rem !important;
+    border-radius: 0.25rem !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s !important;
+}
+
+.btn--secondary {
+    background-color: #6c757d !important;
+    color: white !important;
+    border: none !important;
+}
+
+.btn--secondary:hover {
+    background-color: #5a6268 !important;
+}
+
+.btn--primary {
+    background-color: #0d6efd !important;
+    color: white !important;
+    border: none !important;
+}
+
+.btn--primary:hover {
+    background-color: #0b5ed7 !important;
+}
+
+.checkbox-group {
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.form-checkbox {
+    margin-right: 0.5rem !important;
+}
+
+@media (max-width: 768px) {
+    .issue-publish__content {
+        flex-direction: column !important;
+    }
+
+    .issue-publish__sidebar {
+        margin-top: 2rem !important;
     }
 }
