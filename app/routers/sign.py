@@ -99,7 +99,6 @@ async def signup_post(
 ):
 
     image_content = await image.read()
-    print(image_content)
 
     try:
         user_create = user_schema.UserCreate(
@@ -112,13 +111,15 @@ async def signup_post(
             image=image_content
         )
     except:
-        return RedirectResponse(url='/signup?error=Email 형식이 유효하지 않습니다.', status_code=status.HTTP_302_FOUND)
-
-    # 이미 회원가입이 되어있는지 확인
+        return JSONResponse(content={"error": "이메일형식이 올바르지않습니다. 다시 작성해주세요"}, status_code=status.HTTP_400_BAD_REQUEST)
     userdata_obj = UserData()
 
-    if userdata_obj.get_user_password(email, key='email'):
-        return RedirectResponse(url='/signup?error=이미 등록된 계정입니다. 로그인해주세요', status_code=status.HTTP_302_FOUND)
+    # admin 계정에 email이 존재한다면 회원가입 못하도록 함
+    if userdata_obj.get_admin_data(user_create.email):
+        return JSONResponse(content={"error": "admin계정에 존재하는 계정입니다. 다른 계정으로 회원가입해주세요"}, status_code=status.HTTP_400_BAD_REQUEST)
+
+    if userdata_obj.get_user_password(email, key='email'):  # 이미 회원가입이 되어있는지 확인
+        return JSONResponse(content={"error": "이미 존재하는 계정입니다. 다른 계정으로 회원가입해주세요"}, status_code=status.HTTP_400_BAD_REQUEST)
     else:
         userdata_obj.create_user(user_create=user_create)
 

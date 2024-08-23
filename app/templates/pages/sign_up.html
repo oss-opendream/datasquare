@@ -3,7 +3,7 @@
 {% set hide_footer = true %}
 {% block title %}회원가입 - DataSquare{% endblock %}
 {% block content %}
-
+<script src="{{ url_for('static',path='js/sign_up.js' )}}"></script>
 <div class="sign-up">
     <h1 class="sign-up__title">Sign Up</h1>
     <form class="sign-up__form" method="post" enctype="multipart/form-data">
