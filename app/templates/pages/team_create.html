@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% set hide_header = true %}
+{% set hide_footer = true %}
+{% block title %}로그인 - DataSquare{% endblock %}
+{% block content %}
+<script src="/static/js/team_create.js"></script>
+<div>
+    <h1>Team Management</h1>
+</div>
+<div>
+    <form action="/admin/init/set_teams" method="post" enctype="multipart/form-data">
+        <button type="button" onclick="addRow()">Add Row</button>
+        <button type="submit">Confirm</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Team Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="team-table-body">
+                <tr>
+                    <td><input type="text" name="team_names"></td>
+                    <td>
+                        <button type="button" onclick="removeRow(this)">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+{% endblock %}
