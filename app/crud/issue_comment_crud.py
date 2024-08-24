@@ -1,4 +1,4 @@
-'''issue_comment 데이터를 curd 하기 위한 파일입니다.'''
+'''이슈 댓글 데이터를 CRUD하기 위한 모듈'''
 
 
 from sqlalchemy.orm import Session
@@ -9,12 +9,13 @@ from app.models.database import datasquare_db
 
 
 class IssueCommentData():
-    '''IssueCommentData crud 클래스입니다.'''
+    '''이슈 댓글 데이터를 CRUD하는 클래스'''
 
     def __init__(self,
                  current_userid: str,
                  db: Session = datasquare_db
                  ) -> None:
+        '''IssueCommentData 클래스의 초기화 메서드'''
 
         self.current_userid = current_userid
         self.db = db
@@ -22,12 +23,8 @@ class IssueCommentData():
     def create_issue_comment(self,
                              issue_id: int,
                              content: str
-                             ):
-        '''
-        issue_comment 데이터를 생성합니다.
-        register를 통해 create_issue_comment를 오버로딩합니다.
-        댓글 기능을 사용할 때 실행됩니다.
-        '''
+                             ) -> None:
+        '''새 댓글을 생성하고 저장하는 함수'''
 
         new_comment = IssueComment(
             publisher=self.current_userid,
@@ -42,8 +39,8 @@ class IssueCommentData():
             db_session.refresh(new_comment)
 
     def read_issue_comment(self,
-                           comment_id: int):
-        '''특정 comment_id에 해당하는 댓글을 조회합니다.'''
+                           comment_id: int) -> IssueComment:
+        '''특정 댓글 ID에 해당하는 댓글을 조회하는 함수'''
 
         with next(self.db.get_db()) as db_session:
             comment = db_session.query(IssueComment) \
@@ -55,11 +52,8 @@ class IssueCommentData():
 
     def read_issue_comments(self,
                             issue_id: int
-                            ):
-        '''
-        이슈에 해당하는 issue_comment 데이터들을 불러오는 함수입니다.
-        issue_comment들을 리스트 형태로 리턴합니다.
-        '''
+                            ) -> IssueComment:
+        '''특정 이슈에 대한 모든 댓글을 조회하는 함수'''
 
         with next(self.db.get_db()) as db_session:
             comments = db_session.query(IssueComment) \
@@ -71,20 +65,17 @@ class IssueCommentData():
 
     def modified_issue_comment(self,
                                comment_id: int,
-                               content: str):
-        '''
-        comment를 수정하는 함수입니다.
-        comment_id를 받고 데이터를 수정합니다.
-        '''
+                               content: str) -> IssueComment:
+        '''특정 댓글을 수정하는 함수'''
 
         with next(self.db.get_db()) as db_session:
             comment = db_session.query(IssueComment) \
-                    .filter(IssueComment.comment_id == comment_id) \
-                    .one_or_none()
+                .filter(IssueComment.comment_id == comment_id) \
+                .one_or_none()
 
             if comment is None:
                 return None
-            
+
             if comment.publisher != self.current_userid:
                 raise PermissionError(
                     "You don't have permission to modify this comment.")
@@ -96,35 +87,34 @@ class IssueCommentData():
         return comment
 
     def delete_all_issue_comment(self,
-                             comments_id_list: list):
-        '''특정 comment_id에 해당하는 댓글을 삭제합니다.'''
+                                 comments_id_list: list) -> None:
+        '''특정 댓글 ID 리스트에 해당하는 댓글들을 삭제하는 함수'''
 
         with next(self.db.get_db()) as db_session:
             for comment_id in comments_id_list:
                 comment = db_session.query(IssueComment) \
                     .filter(IssueComment.comment_id == comment_id) \
                     .one_or_none()
-                
+
                 comment.is_deleted = 1
                 db_session.commit()
-                
+
             db_session.refresh(comment)
 
     def delete_issue_comment(self,
-                        comment_id: int):
-        
-        '''특정 comment_id에 해당하는 댓글을 삭제합니다.'''
+                             comment_id: int) -> bool:
+        '''특정 댓글을 삭제하는 함수'''
 
         with next(self.db.get_db()) as db_session:
             comment = db_session.query(IssueComment) \
                 .filter(IssueComment.comment_id == comment_id) \
                 .one_or_none()
-            
+
             if comment.publisher != self.current_userid:
                 raise PermissionError(
                     "You don't have permission to delete this comment."
-                    )
-            
+                )
+
             comment.is_deleted = 1
             db_session.commit()
             db_session.refresh(comment)

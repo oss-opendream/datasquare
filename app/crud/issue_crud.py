@@ -1,7 +1,6 @@
-'''issue 데이터를 curd 하기 위한 파일입니다.'''
+'''이슈 데이터를 CRUD하기 위한 모듈'''
 
 
-from fastapi import Form
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 
@@ -13,23 +12,26 @@ from app.utils.time import current_time
 
 
 class IssueData():
-    '''IssueData crud 클래스입니다.'''
+    '''이슈 데이터를 CRUD하는 클래스'''
 
-    def __init__(self,
-                 current_userid: str,
-                 db: Session = datasquare_db
-                 ) -> None:
+    def __init__(
+        self,
+            current_userid: str,
+            db: Session = datasquare_db
+    ) -> None:
+        '''IssueData 클래스의 초기화 메서드'''
 
         self.current_userid = current_userid
         self.db = db
 
-    def create_issue(self,
-                     title: str = Form(...),
-                     content: str = Form(...),
-                     requested_team: str = Form(...),
-                     is_private: int = Form(...)
-                     ):
-        '''issue 데이터를 생성, 저장합니다.'''
+    def create_issue(
+        self,
+            title: str,
+            content: str,
+            requested_team: str,
+            is_private: int
+    ) -> Issue:
+        '''새 이슈를 생성하고 저장하는 함수'''
 
         now = current_time()
 
@@ -51,25 +53,18 @@ class IssueData():
 
         return new_issue
 
-    def read_issues_all(self):
-        '''
-        모든 Issue 데이터를 읽어오는 함수입니다.
-        모든 Issue들을 list형태로 반환합니다.
-        '''
+    def read_issues_all(self) -> list[Issue]:
+        '''모든 이슈를 읽어와 리스트로 반환하는 함수'''
 
         with next(self.db.get_db()) as db_session:
             issues = db_session.query(Issue) \
-                .filter(Issue.is_deleted == 0).all()
+                .filter(Issue.is_deleted == 0) \
+                .all()
 
         return issues
 
-    def read_issue(self,
-                   issue_id: int
-                   ):
-        '''
-        Issue 데이터를 읽어오는 함수입니다.
-        issue_id에 해당하는 한 개의 이슈 데이터를 읽어옵니다.
-        '''
+    def read_issue(self, issue_id: int) -> Issue:
+        '''주어진 ID에 해당하는 이슈 데이터를 읽어오는 함수'''
 
         with next(self.db.get_db()) as db_session:
             issue = db_session.query(Issue) \
@@ -79,17 +74,15 @@ class IssueData():
 
         return issue
 
-    def modified_issue(self,
-                       issue_id: int = Form(...),
-                       title: str = Form(...),
-                       content: str = Form(...),
-                       requested_team: str = Form(...),
-                       is_private: int = Form(...)
-                       ):
-        '''
-        issue 내용을 수정하는 함수입니다.
-        issue_id를 받아서 해당 이슈를 수정합니다.
-        '''
+    def modified_issue(
+        self,
+        issue_id: int,
+        title: str,
+        content: str,
+        requested_team: str,
+        is_private: int
+    ) -> Issue:
+        '''이슈의 내용을 수정하는 함수'''
 
         with next(self.db.get_db()) as db_session:
             issue = db_session.query(Issue) \
@@ -99,7 +92,6 @@ class IssueData():
             if issue is None or issue.is_deleted == 1:
                 return False
 
-        # 수정할 필드 업데이트
             issue.title = title
             issue.content = content
             issue.requested_team = requested_team
@@ -111,12 +103,8 @@ class IssueData():
 
         return issue
 
-    def delete_issue(self,
-                     issue_id: int):
-        '''
-        issue를 삭제하는 함수입니다.
-        issue_id를 받아서 해당 이슈를 삭제합니다.
-        '''
+    def delete_issue(self, issue_id: int) -> None:
+        '''해당 이슈를 삭제하는 함수'''
 
         with next(self.db.get_db()) as db_session:
             issue = db_session.query(Issue) \
@@ -136,10 +124,9 @@ class IssueData():
                 raise PermissionError(
                     "You don't have permission to delete this comment."
                 )
+
             issue.is_deleted = 1
             issue.modified_at = current_time()
 
             db_session.commit()
             db_session.refresh(issue)
-
-        return True
