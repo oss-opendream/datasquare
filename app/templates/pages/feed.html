@@ -35,7 +35,7 @@
         </div>
         <div class="feed__issues">
             {% for issue in issues %}
-            <a href="/issue/view?issue_id={{ issue.id }}">
+            <a href="/data_request/view?issue_id={{ issue.id }}">
                 <div class="feed__issue-card">
                     <img src="data:image;base64,{{ issue.profile_pic | safe }}" alt="{{ issue.author_name }}"
                         class="feed__issue-profile-pic">
