@@ -8,3 +8,4 @@ pytz~=2024.1
 SQLAlchemy~=2.0.32
 starlette~=0.37.2
 uvicorn~=0.30.3
+bcrypt~=4.2.0
