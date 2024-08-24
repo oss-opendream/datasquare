@@ -39,8 +39,8 @@ def create_app():
     routers = [
         sign.router,
         feed.router,
-        data_request.router,
-        issue_comment.router,
+        data_request.data_request_router,
+        issue_comment.issue_comment_router,
         database_router.router,
         profile.router,
         admin.router,
