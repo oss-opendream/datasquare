@@ -7,18 +7,17 @@ from datetime import timedelta, datetime
 from typing import Annotated
 
 from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi import APIRouter, Request, Depends, Form, HTTPException, File, UploadFile
+from fastapi import APIRouter, Request, Depends, Form, File, UploadFile
 from fastapi.templating import Jinja2Templates
-from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
-from fastapi import Cookie, Response
+from fastapi import Response
 from jose import jwt
 from starlette import status
 
 from app.crud.user_crud import UserData
 from app.crud.team_crud import TeamData
 from app.schemas import user_schema
-from app.crud.noti import get_notification_count
 
 router = APIRouter()
 templates = Jinja2Templates(directory='app/templates')
