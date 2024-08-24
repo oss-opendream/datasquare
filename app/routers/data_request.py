@@ -78,10 +78,11 @@ async def create_issue(title: str = Form(...),
 
     issue_data = IssueData(current_user.profile_id)
 
+    team_id = TeamData().get_team_id(requested_team)
     new_issue = issue_data.create_issue(
         title=title,
         content=content,
-        requested_team=requested_team,
+        requested_team=team_id,
         is_private=is_private
     )
 

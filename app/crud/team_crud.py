@@ -82,3 +82,24 @@ class TeamData:
                 .all()
 
         return teams
+
+    def get_team_name_one(self, team_profile_id: int):
+        '''팀 아이디를 받아서 팀 이름 리턴 함수'''
+
+        with next(self.db.get_db()) as db_session:
+            team = db_session.query(TeamProfile).filter(
+                TeamProfile.profile_id == team_profile_id).one_or_none()
+            team_name = team.name
+
+        return team_name
+
+    def get_team_id(self, team_name: str):
+        '''팀 이름을 받아서 팀 아이디 리턴 함수'''
+
+        with next(self.db.get_db()) as db_session:
+
+            team = db_session.query(TeamProfile).filter(
+                TeamProfile.team_name == team_name).one()
+            team_id = team.profile_id
+
+        return team_id

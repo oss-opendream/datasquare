@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 
 
 from app.crud.issue_comment_crud import IssueCommentData
+from app.models.profile import TeamProfile
 from app.models.issue import Issue
 from app.models.database import datasquare_db
 from app.utils.time import current_time
