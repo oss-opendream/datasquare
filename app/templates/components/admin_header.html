@@ -1,0 +1,26 @@
+<header class="header">
+    <div class="header__content">
+        <a href="{{ url_for('feed') }}">
+            <div class="header__logo">
+                <img src="{{ url_for('static', path='/images/logo_withouttext.svg') }}" alt="DataSquare Logo"
+                    class="header__logo-image">
+                <div class="header__logo-text">
+                    <span class="header__logo-brand">DataSquare</span>
+                    <br>
+                    <span class="header__logo-company">for {{ company_name }}</span>
+                </div>
+            </div>
+        </a>
+        <nav class="header__nav">
+            <a href="{{ url_for('databases') }}" class="header__nav-item">Databases</a>
+        </nav>
+        <div class="header__user-actions">
+            <div id="header__notification-button" class="header__notification-container">
+                <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications">
+            </div>
+            <a class="header__logout-button">
+                <img src="{{ url_for('static', path='images/logout-icon.svg') }}" alt="Logout"
+                    class="header__logout-icon">
+            </a>
+        </div>
+</header>

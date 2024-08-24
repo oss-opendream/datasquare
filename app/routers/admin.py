@@ -30,8 +30,8 @@ async def lifespan(app: FastAPI):
     yield
 
 
-@router.get('/')
-async def redirect_admin(request: Request, current_user=Depends(get_current_user)):
+@router.get('')
+async def redirect_admin(current_user=Depends(get_current_user)):
 
     if isinstance(current_user, user_schema.AdminUser):
         return RedirectResponse(url='/admin/teams', status_code=status.HTTP_302_FOUND)
