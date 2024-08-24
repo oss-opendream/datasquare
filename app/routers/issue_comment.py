@@ -4,16 +4,14 @@ issue_id를 기준으로 issue데이터와 issue_comment를 불러옵니다.
 '''
 
 
-from fastapi import APIRouter, Request, HTTPException, Form, Depends
+from fastapi import APIRouter, Form, Depends
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import RedirectResponse
 
 
-from app.crud.issue_crud import IssueData
 from app.crud.issue_comment_crud import IssueCommentData
 from app.schemas.user_schema import User
 from app.utils.get_current_user import get_current_user
-from app.crud.noti import get_notification_count
 
 
 issue_comment_router = APIRouter(prefix='/issue_comment')

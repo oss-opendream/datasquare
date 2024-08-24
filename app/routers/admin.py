@@ -1,10 +1,11 @@
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi import APIRouter, Request, Depends, Form, HTTPException
 from fastapi.templating import Jinja2Templates
 from starlette import status
-from contextlib import asynccontextmanager
 
 from app.crud.user_crud import UserData
 from app.crud.team_crud import TeamData

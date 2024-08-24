@@ -62,3 +62,26 @@ class TeamData:
                                 .all()
 
         return members
+
+    def __create_base_query(self, db_session: Session):
+        '''Context manager 기반 Base query 객체 생성 함수'''
+
+        base_query = db_session \
+            .query(TeamProfile)
+
+        return base_query
+
+    def get_all(self):
+        ''' "team_profile" 테이블의 team_name, profile_id 출력 함수'''
+
+        with next(self.db.get_db()) as db_session:
+            base_query = self.__create_base_query(db_session)
+
+            teams = base_query \
+                .with_entities(
+                    TeamProfile.team_name,
+                    TeamProfile.profile_id
+                ) \
+                .all()
+
+        return teams

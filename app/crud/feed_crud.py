@@ -11,10 +11,13 @@ from app.models.profile import PersonalProfile, TeamProfile, TeamMembership
 from app.schemas.user_schema import User
 
 
-class IssueData:
+class FeedData:
     ''' "issue" 테이블에서 쿼리된 이슈 데이터에 대한 class'''
 
-    def __init__(self, current_user_profile: User, order: str = "desc", db: Session = datasquare_db) -> None:
+    def __init__(self,
+                 current_user_profile: User,
+                 order: str = "desc",
+                 db: Session = datasquare_db) -> None:
         self.db = db
         self.current_user_id = current_user_profile.profile_id
         self.current_user_name = current_user_profile.name
@@ -132,33 +135,3 @@ class IssueData:
         result_data = self.__format_issue_data(search_result)
 
         return result_data
-
-
-class Team:
-    ''' "team_profile" 테이블 관련 쿼리된 데이터에 대한 class'''
-
-    def __init__(self, db: Session = datasquare_db) -> None:
-        self.db = db
-
-    def __create_base_query(self, db_session: Session):
-        '''Context manager 기반 Base query 객체 생성 함수'''
-
-        base_query = db_session \
-            .query(TeamProfile)
-
-        return base_query
-
-    def get_all(self):
-        ''' "team_profile" 테이블의 team_name, profile_id 출력 함수'''
-
-        with next(self.db.get_db()) as db_session:
-            base_query = self.__create_base_query(db_session)
-
-            teams = base_query \
-                .with_entities(
-                    TeamProfile.team_name,
-                    TeamProfile.profile_id
-                ) \
-                .all()
-
-        return teams
