@@ -1,21 +1,27 @@
+'''개인 프로필 페이지 관리 라우터 함수'''
+
 import base64
 from typing import Annotated
 
 from fastapi import APIRouter, Request, Depends, Form, File, UploadFile
 from fastapi.templating import Jinja2Templates
 
-from app.crud.user_crud import UserData
-from app.crud.team_crud import TeamData
-from app.schemas.user_schema import User
 from app.crud.noti import get_notification_count
+from app.crud.team_crud import TeamData
+from app.crud.user_crud import UserData
+from app.schemas.user_schema import User
 from app.utils.get_current_user import get_current_user
+
 
 templates = Jinja2Templates(directory='app/templates')
 profilerouter = APIRouter(prefix="/profile")
 
 
 @profilerouter.get("/")
-async def personal(request: Request, current_user=Depends(get_current_user)):
+async def personal(
+    request: Request,
+    current_user=Depends(get_current_user)
+):
     '''개인 프로필 출력 라우터 '''
 
     personal_db = UserData().get_user(
@@ -38,7 +44,10 @@ async def personal(request: Request, current_user=Depends(get_current_user)):
 
 
 @profilerouter.get("/profile_edit")
-async def personal_edit(request: Request, current_user=Depends(get_current_user)):
+async def personal_edit(
+        request: Request,
+        current_user=Depends(get_current_user)
+):
     '''개인 프로필 수정 페이지 라우터'''
 
     return templates.TemplateResponse(
@@ -96,12 +105,11 @@ async def personal_post(request: Request,
     )
 
 
-# @profilerouter.get("/team")
-# async def team_profile(request : Request,
-#                        current_user : user_schema.User = Depends(get_current_user)):
-
 @profilerouter.get('/team')
-async def team_profile_get(request: Request, current_user: User = Depends(get_current_user)):
+async def team_profile_get(
+    request: Request,
+    current_user: User = Depends(get_current_user)
+):
     '''team 프로필 View 페이지 라우터'''
 
     team = TeamData()
@@ -119,6 +127,3 @@ async def team_profile_get(request: Request, current_user: User = Depends(get_cu
             'has_permission': True
         }
     )
-
-# @profilerouter.get('/team/edit')
-# async def team_profile_edit
