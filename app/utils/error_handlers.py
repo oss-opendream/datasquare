@@ -7,95 +7,51 @@ from fastapi.templating import Jinja2Templates
 templates = Jinja2Templates(directory='app/templates')
 
 
-async def bad_request(request: Request):
-    '''404 Bad_Request 오류 대응 페이지 및 오류 메시지를 출력하는 함수'''
+async def error_catch(request: Request, exc: Exception):
+    '''에러 처리 페이지 함수'''
 
     return templates.TemplateResponse(
         'pages/404.html',
         {
             'request': request,
-            'status_code': 400,
-            'error_message': 'Bad_Request',
+            'status_code': exc.status_code,
+            'error_message': exc.detail,
         },
-        status_code=400
-    )
-
-
-async def unauthorized(request: Request):
-    '''401 Unauthorized 오류 대응 페이지 및 오류 메시지를 출력하는 함수'''
-
-    return templates.TemplateResponse(
-        'pages/404.html',
-        {
-            'request': request,
-            'status_code': 401,
-            'error_message': 'Unauthorized',
-        },
-        status_code=401
-    )
-
-
-async def forbidden(request: Request):
-    '''403 Forbidden 오류 대응 페이지 및 오류 메시지를 출력하는 함수'''
-
-    return templates.TemplateResponse(
-        'pages/404.html',
-        {
-            'request': request,
-            'status_code': 403,
-            'error_message': 'Forbidden',
-        },
-        status_code=403
-    )
-
-
-async def not_found(request: Request):
-    '''404 Not_Found 오류 대응 페이지 및 오류 메시지를 출력하는 함수'''
-
-    return templates.TemplateResponse(
-        'pages/404.html',
-        {
-            'request': request,
-            'status_code': 404,
-            'error_message': 'Not_Found',
-        },
-        status_code=404
-    )
-
-
-async def unprocessable_entity(request: Request):
-    '''422 Unprocessable_Entity 오류 대응 페이지 및 오류 메시지를 출력하는 함수'''
-
-    return templates.TemplateResponse(
-        'pages/404.html',
-        {
-            'request': request,
-            'status_code': 422,
-            'error_message': 'Unprocessable_Entity',
-        },
-        status_code=422
-    )
-
-
-async def internal_server_error(request: Request):
-    '''500 Internal_Server_Error 오류 대응 페이지 및 오류 메시지를 출력하는 함수'''
-
-    return templates.TemplateResponse(
-        'pages/404.html',
-        {
-            'request': request,
-            'status_code': 500,
-            'error_message': 'Internal_Server_Error',
-        },
-        status_code=500
     )
 
 
 error_handlers = {
-    400: bad_request,
-    401: unauthorized,
-    403: forbidden,
-    404: not_found,
-    422: unprocessable_entity,
-    500: internal_server_error,
+    400: error_catch,
+    401: error_catch,
+    402: error_catch,
+    403: error_catch,
+    404: error_catch,
+    405: error_catch,
+    406: error_catch,
+    407: error_catch,
+    408: error_catch,
+    409: error_catch,
+    410: error_catch,
+    411: error_catch,
+    412: error_catch,
+    413: error_catch,
+    414: error_catch,
+    415: error_catch,
+    416: error_catch,
+    417: error_catch,
+    426: error_catch,
+    428: error_catch,
+    429: error_catch,
+    431: error_catch,
+    451: error_catch,
+    500: error_catch,
+    501: error_catch,
+    502: error_catch,
+    503: error_catch,
+    504: error_catch,
+    505: error_catch,
+    506: error_catch,
+    507: error_catch,
+    508: error_catch,
+    510: error_catch,
 }
