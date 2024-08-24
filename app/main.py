@@ -6,6 +6,7 @@ from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
+from starlette import status
 
 from app.models.database import Base, datasquare_db
 from app.routers import feed, issue_publish, issue_view, sign, database_router, profile, admin
@@ -62,7 +63,7 @@ async def admin_middleware(request: Request, call_next):
 
     if getattr(app, 'redirect_flag', False):
         app.redirect_flag = False
-        return RedirectResponse(url="/admin")
+        return RedirectResponse(url="/admin/account/create", status_code=status.HTTP_302_FOUND)
 
     response = await call_next(request)
 
@@ -76,14 +77,13 @@ def root_redirect(request: Request):
     '''
     try:
         current_user = get_current_user(request)
+        if isinstance(current_user, User):
+            return RedirectResponse('/feed', status_code=status.HTTP_302_FOUND)
+        elif isinstance(current_user, AdminUser):
+            return RedirectResponse('/admin', status_code=status.HTTP_302_FOUND)
 
     except:
-        return RedirectResponse('/signin')
-
-    if isinstance(current_user, User):
-        return RedirectResponse('/feed')
-    elif isinstance(current_user, AdminUser):
-        return RedirectResponse('/admin/init')
+        return RedirectResponse('/signin', status_code=status.HTTP_302_FOUND)
 
 
 @app.get('/databases')

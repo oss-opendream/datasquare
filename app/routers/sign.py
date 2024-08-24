@@ -54,7 +54,7 @@ async def signin_post(request: Request,
     # admin 계정일 때는 Page를 다르게 보이게 함.
     if not user:
         user = userdata_obj.get_admin_data(form_data.username)
-        url = '/admin/init'
+        url = '/admin'
 
     if not user or not userdata_obj.pwd_context.verify(form_data.password, user.password):
         return RedirectResponse(url='/signin?error=비밀번호가 일치하지 않습니다.', status_code=status.HTTP_302_FOUND)
