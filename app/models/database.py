@@ -16,9 +16,7 @@ DATASQUARE_DATABASE_URI = 'sqlite:///app/models/dsdb.db'
 class Database:
     '''
     데이터베이스 연결을 위한 engine 객체, connection pool을 생성하는 class
-
-    Args:
-        param db_uri: 연결할 database URI
+    :param db_uri: 연결할 database URI
     '''
 
     def __init__(self, db_uri):
@@ -31,9 +29,7 @@ class Database:
         )
 
     def get_db(self):
-        '''
-        DB 세션 관리 함수
-        '''
+        '''DB 세션 객체를 출력하는 함수'''
 
         db = self.sessionlocal()
         try:

@@ -4,10 +4,12 @@
 from sqlalchemy import Column, Integer, ForeignKey, BLOB, Text, String
 from sqlalchemy.orm import relationship
 
-from app.models.database import Base, datasquare_db
+from app.models.database import Base
 
 
 class PersonalProfile(Base):
+    ''''personal_profile' 테이블 관련 모델 class'''
+
     __tablename__ = 'personal_profile'
 
     profile_id = Column(Integer, primary_key=True, unique=True, nullable=False)
@@ -17,7 +19,6 @@ class PersonalProfile(Base):
     phone_number = Column(String, unique=True, nullable=False)
     profile_image = Column(BLOB)
 
-    # Relationships
     teams_re = relationship('TeamProfile', back_populates='team_manager_re')
     issues_re = relationship('Issue', back_populates='publisher_re')
     comments_re = relationship('IssueComment', back_populates='publisher_re')
@@ -25,6 +26,8 @@ class PersonalProfile(Base):
 
 
 class TeamProfile(Base):
+    ''''team_profile' 테이블 관련 모델 class'''
+
     __tablename__ = 'team_profile'
 
     profile_id = Column(Integer, primary_key=True, unique=True, nullable=False)
@@ -34,13 +37,14 @@ class TeamProfile(Base):
         'personal_profile.profile_id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=True)
     profile_image = Column(BLOB)
 
-    # Relationships
     team_manager_re = relationship(
         'PersonalProfile', back_populates='teams_re')
     members_re = relationship('TeamMembership', back_populates='team_re')
 
 
 class TeamMembership(Base):
+    ''''team_membership' 테이블 관련 모델 class'''
+
     __tablename__ = 'team_membership'
 
     membership_id = Column(Integer, primary_key=True,
@@ -50,13 +54,13 @@ class TeamMembership(Base):
     team_id = Column(Integer, ForeignKey('team_profile.profile_id',
                      onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
 
-    # Relationships
     member_re = relationship(
         'PersonalProfile', back_populates='memberships_re')
     team_re = relationship('TeamProfile', back_populates='members_re')
 
 
 class Admin(Base):
+    ''''admin' 테이블 관련 모델 class'''
     __tablename__ = 'admin'
 
     id = Column(Integer, primary_key=True, unique=True, nullable=False)

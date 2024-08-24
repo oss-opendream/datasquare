@@ -4,26 +4,26 @@
 from sqlalchemy import Column, Integer, ForeignKey, String
 from sqlalchemy.orm import relationship
 
-from app.models.database import Base, datasquare_db
-
-
-# Base.metadata.create_all(bind=datasquare_db.engine)
+from app.models.database import Base
 
 
 class OrgDatabase(Base):
+    ''''org_database' 테이블 관련 모델 class'''
+
     __tablename__ = 'org_database'
 
     database_id = Column(Integer, primary_key=True,
                          unique=True, nullable=False)
     database = Column(String, unique=True, nullable=False)
 
-    # Relationships
     tables_re = relationship('OrgDatabaseTable', back_populates='database_re')
     tags_re = relationship('DatabaseTagRelationship',
                            back_populates='database_re')
 
 
 class OrgDatabaseTable(Base):
+    ''''org_database_table' 테이블 관련 모델 class'''
+
     __tablename__ = 'org_database_table'
 
     table_id = Column(Integer, primary_key=True, unique=True, nullable=False)
@@ -31,22 +31,24 @@ class OrgDatabaseTable(Base):
     within_db = Column(Integer, ForeignKey('org_database.database_id',
                        onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
 
-    # Relationships
     database_re = relationship('OrgDatabase', back_populates='tables_re')
 
 
 class DatabaseTag(Base):
+    ''''database_tag' 테이블 관련 모델 class'''
+
     __tablename__ = 'database_tag'
 
     id = Column(Integer, primary_key=True, unique=True, nullable=False)
     tag_name = Column(String, unique=True, nullable=False)
 
-    # Relationships
     relationships_re = relationship(
         'DatabaseTagRelationship', back_populates='tag_re')
 
 
 class DatabaseTagRelationship(Base):
+    ''''database_tag_relationship' 테이블 관련 모델 class'''
+
     __tablename__ = 'database_tag_relationship'
 
     relationship_id = Column(Integer, primary_key=True,
@@ -56,6 +58,5 @@ class DatabaseTagRelationship(Base):
     database_id = Column(Integer, ForeignKey(
         'org_database.database_id', onupdate='CASCADE', ondelete='RESTRICT'), nullable=False)
 
-    # Relationships
     tag_re = relationship('DatabaseTag', back_populates='relationships_re')
     database_re = relationship('OrgDatabase', back_populates='tags_re')
