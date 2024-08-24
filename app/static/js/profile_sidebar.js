@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const sidebarLinks = [
         { url: '/profile', text: 'Personal' },
         { url: '/profile/team', text: 'Team' },
-        { url: '/profile/admin', text: 'Admin' },
 
     ];
 

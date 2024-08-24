@@ -42,7 +42,7 @@ def create_app():
         data_request.data_request_router,
         issue_comment.issue_comment_router,
         database_router.router,
-        profile.router,
+        profile.profilerouter,
         admin.router,
     ]
 

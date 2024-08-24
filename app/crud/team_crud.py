@@ -3,7 +3,7 @@
 from sqlalchemy.orm import Session
 
 from app.models.database import datasquare_db
-from app.models.profile import TeamProfile, TeamMembership
+from app.models.profile import TeamProfile, TeamMembership, PersonalProfile
 
 
 class TeamData:
@@ -23,16 +23,17 @@ class TeamData:
 
         return departments
 
-    def get_current_user_team_name(self, current_userid):
+    def get_current_user_team_data(self, current_userid) -> TeamProfile:
+        '''특정 사용자의 팀 이름을 추출.'''
 
         with next(self.db.get_db()) as db_session:
-            current_user_team_name = db_session \
+            current_user_team_data = db_session \
                 .query(TeamProfile) \
                 .join(TeamMembership, TeamMembership.team_id == TeamProfile.profile_id) \
                 .filter(TeamMembership.member_id == current_userid) \
-                .one_or_none().team_name
+                .one_or_none()
 
-        return current_user_team_name
+        return current_user_team_data
 
     # def get_team_member(self, team_id):
 
@@ -50,3 +51,14 @@ class TeamData:
 
             db_session.commit()
             db_session.refresh(new_team)
+
+    def get_team_members(self, team_id):
+        '''특정 팀에 해당하는 멤버들을 보여줌.'''
+
+        with next(self.db.get_db()) as db_session:
+            members = db_session.query(PersonalProfile) \
+                                .filter(TeamMembership.team_id == team_id) \
+                                .join(TeamMembership, TeamMembership.member_id == PersonalProfile.profile_id) \
+                                .all()
+
+        return members
