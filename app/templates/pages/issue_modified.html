@@ -6,7 +6,7 @@
 <main class="page-content">
     <h1 class="secondary-headline">Data Modified</h1>
     <div class="contents">
-        <form action="/issue/modified" method="post">
+        <form action="/data_request/modified" method="post">
             <div>
                 <h4>requirement</h4>
                 <div>
@@ -80,7 +80,7 @@
     function cancelPublish() {
         alert('이슈 수정을 취소하였습니다.');
         // 여기에 추가적인 취소 로직 구현 (예: 페이지 이동)
-        window.location.href = '/issue/view?issue_id={{issue.issue_id}}';
+        window.location.href = '/data_request/view?issue_id={{issue.issue_id}}';
 
     }
 </script>
