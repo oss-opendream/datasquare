@@ -1,4 +1,4 @@
-'''시간 관련 함수입니다.'''
+'''현재 시각 및 시간대를 처리하는 모듈'''
 
 
 from datetime import datetime
@@ -7,7 +7,7 @@ import pytz
 
 
 def get_timezone_code(offset):
-    '''UTC 오프셋을 알파벳으로 변환 '''
+    '''UTC 오프셋을 알파벳으로 변환하는 함수'''
 
     offset_hours = int(offset[:3])
     return 'YXWVUTSRQPONZABCDEFGHIKLM'[offset_hours + 12]

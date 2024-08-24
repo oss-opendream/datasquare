@@ -1,3 +1,6 @@
+'''서비스 인증용 secret_key를 생성, 조회하는 모듈'''
+
+
 import argparse
 import secrets
 
@@ -16,12 +19,11 @@ def parse_argeuments():
                         HS256, HS384, HS512, RS256, RS384, RS512, ES256, ES384, ES512, PS256, PS384, PS512
                         ''')
 
-    args = parser.parse_args()
-
-    return args
+    return parser.parse_args()
 
 
 def create_key(token_time, algorithm):
+    '''".env" 파일에 secret_key와 token 유효기간을 저장하는 함수'''
 
     with open(".env", "w", encoding="utf-8") as f:
         secret_key = secrets.token_hex(32)
