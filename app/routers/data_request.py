@@ -13,43 +13,11 @@ from app.utils.get_current_user import get_current_user
 from app.crud.noti import get_notification_count
 
 
-router = APIRouter()
+data_request_router = APIRouter(prefix="/data_request")
 templates = Jinja2Templates(directory='app/templates')
 
 
-@router.post('/issue/publish', name='data_request')
-async def create_issue(title: str = Form(...),
-                       content: str = Form(...),
-                       requested_team: str = Form(...),
-                       is_private: int = Form(...),
-                       current_user: User = Depends(get_current_user)
-                       ):
-    '''
-    Issue, IssueComment 객체를 생성하고 데이터베이스에 저장,
-    issue/view/issue_id={Issue.issue_id} 페이지로 Redirect합니다.
-    '''
-
-    issue_data = IssueData(current_user.profile_id)
-
-    new_issue = issue_data.create_issue(
-        title=title,
-        content=content,
-        requested_team=requested_team,
-        is_private=is_private
-    )
-
-    IssueCommentData(current_user.profile_id).create_issue_comment(
-        new_issue.issue_id, 'Init new issue!!!!')
-
-    ret = RedirectResponse(
-        url=f'/issue/view?issue_id={new_issue.issue_id}',
-        status_code=303
-    )
-
-    return ret
-
-
-@router.get('/issue/publish', response_class=HTMLResponse, name='data_request')
+@data_request_router.get('/publish', response_class=HTMLResponse)
 async def issue_pulish(request: Request,
                        current_user: User = Depends(get_current_user)
                        ):
@@ -71,7 +39,72 @@ async def issue_pulish(request: Request,
     return ret
 
 
-@router.post('/issue/modified', name='data_modified')
+@data_request_router.get('/view', response_class=HTMLResponse, name='issue_views')
+async def issue_views(request: Request,
+                      issue_id: int,
+                      current_user: User = Depends(get_current_user)
+                      ):
+    '''
+    이슈 조회 함수입니다.
+    issue_id를 기준으로 issue 데이터와
+    issue_comment.within == issue.issue_id인 issue_comment데이터를 불러옵니다.
+    '''
+
+    issue = IssueData(current_user.profile_id).read_issue(issue_id)
+
+    if not issue:
+        raise HTTPException(status_code=404, detail='Issue not found')
+
+    comments = IssueCommentData(
+        current_user.profile_id).read_issue_comments(issue_id)
+
+    ret = templates.TemplateResponse(
+        'pages/issue_view.html',
+        {
+            'request': request,
+            'issue': issue,
+            'comments': comments,
+            'current_user': current_user,
+            'notification_count': get_notification_count(current_user.profile_id)
+        }
+    )
+
+    return ret
+
+
+@data_request_router.post('/publish')
+async def create_issue(title: str = Form(...),
+                       content: str = Form(...),
+                       requested_team: str = Form(...),
+                       is_private: int = Form(...),
+                       current_user: User = Depends(get_current_user)
+                       ):
+    '''
+    Issue, IssueComment 객체를 생성하고 데이터베이스에 저장,
+    data_request/view/issue_id={Issue.issue_id} 페이지로 Redirect합니다.
+    '''
+
+    issue_data = IssueData(current_user.profile_id)
+
+    new_issue = issue_data.create_issue(
+        title=title,
+        content=content,
+        requested_team=requested_team,
+        is_private=is_private
+    )
+
+    IssueCommentData(current_user.profile_id).create_issue_comment(
+        new_issue.issue_id, 'Init new issue!!!!')
+
+    ret = RedirectResponse(
+        url=f'/data_request/view?issue_id={new_issue.issue_id}',
+        status_code=303
+    )
+
+    return ret
+
+
+@data_request_router.post('/modified')
 async def modified_issue(issue_id: int = Form(...),
                          title: str = Form(...),
                          content: str = Form(...),
@@ -81,28 +114,28 @@ async def modified_issue(issue_id: int = Form(...),
                          ):
     '''
     issue data 수정한 것을 반영하는 함수 입니다.
-    issue/view/issue_id={Issue.issue_id} 페이지로 Redirect합니다.
+    data_request/view/issue_id={Issue.issue_id} 페이지로 Redirect합니다.
     '''
 
     IssueData(current_userid=current_user.profile_id).modified_issue(issue_id=issue_id,
-                                                               title=title,
-                                                               content=content,
-                                                               requested_team=requested_team,
-                                                               is_private=is_private
-                                                               )
+                                                                     title=title,
+                                                                     content=content,
+                                                                     requested_team=requested_team,
+                                                                     is_private=is_private
+                                                                     )
 
     IssueCommentData(current_userid=current_user.profile_id) \
         .create_issue_comment(issue_id=issue_id, content='Modified issue!!!!')
 
     ret = RedirectResponse(
-        url=f'/issue/view?issue_id={issue_id}',
+        url=f'/data_request/view?issue_id={issue_id}',
         status_code=303
     )
 
     return ret
 
 
-@router.get('/issue/modified', response_class=HTMLResponse, name='data_modified')
+@data_request_router.get('/modified', response_class=HTMLResponse)
 async def issue_modified_page(request: Request,
                               issue_id: int,
                               current_user: User = Depends(get_current_user)
@@ -133,13 +166,13 @@ async def issue_modified_page(request: Request,
     return ret
 
 
-@router.post('/issue/deleted', name='data_deleted')
+@data_request_router.post('/deleted')
 async def deleted_issue(issue_id: int = Form(...),
                         current_user: User = Depends(get_current_user)
                         ):
     '''
     issue data 수정한 것을 반영하는 함수 입니다.
-    issue/view/issue_id={Issue.issue_id} 페이지로 Redirect합니다.
+    data_request/view/issue_id={Issue.issue_id} 페이지로 Redirect합니다.
     '''
 
     try:
@@ -148,7 +181,7 @@ async def deleted_issue(issue_id: int = Form(...),
         ret = RedirectResponse(url='/feed', status_code=303)
     except PermissionError:
         ret = RedirectResponse(
-            url=f'/issue/view?issue_id={issue_id}',
+            url=f'/data_request/view?issue_id={issue_id}',
             status_code=303
         )
 

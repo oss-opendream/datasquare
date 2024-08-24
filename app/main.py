@@ -9,7 +9,7 @@ from fastapi.responses import RedirectResponse
 from starlette import status
 
 from app.models.database import Base, datasquare_db
-from app.routers import feed, issue_publish, issue_view, sign, database_router, profile, admin
+from app.routers import feed, data_request, issue_comment, sign, database_router, profile, admin
 from app.utils.errer_handlers import error_handlers
 
 
@@ -39,8 +39,8 @@ def create_app():
     routers = [
         sign.router,
         feed.router,
-        issue_publish.router,
-        issue_view.router,
+        data_request.router,
+        issue_comment.router,
         database_router.router,
         profile.router,
         admin.router,
