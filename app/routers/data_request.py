@@ -17,7 +17,7 @@ data_request_router = APIRouter(prefix="/data_request")
 templates = Jinja2Templates(directory='app/templates')
 
 
-@data_request_router.get('/publish', response_class=HTMLResponse)
+@data_request_router.get('/publish', response_class=HTMLResponse, name='data_request')
 async def issue_pulish(request: Request,
                        current_user: User = Depends(get_current_user)
                        ):
