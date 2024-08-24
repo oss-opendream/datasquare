@@ -2,18 +2,15 @@
 
 
 import uvicorn
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 
 from app.models.database import Base, datasquare_db
-from app.crud.user_crud import UserData
 from app.routers import feed, issue_publish, issue_view, sign, database_router, profile, admin
 from app.utils.errer_handlers import error_handlers
 
-from fastapi.exceptions import RequestValidationError
-from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.schemas.user_schema import User, AdminUser
 from app.utils.get_current_user import get_current_user
@@ -50,7 +47,7 @@ def create_app():
 
     for router in routers:
         created_app.include_router(router)
-    
+
     for status_code, handler in error_handlers.items():
         created_app.add_exception_handler(status_code, handler)
 
@@ -94,11 +91,7 @@ def databases_test():
     return {'hello': 'world'}
 
 
-
-
-
 if __name__ == '__main__':
 
     uvicorn.run('main:app',
                 host='0.0.0.0', port=8000, reload=True)
-
