@@ -30,7 +30,9 @@ async def create_issue_comment(issue_id: int = Form(...),
         issue_id, comment)
 
     ret = RedirectResponse(
-        url=f'/data_request/view?issue_id={issue_id}', status_code=303)
+        url=f'/data_request/view?issue_id={issue_id}',
+        status_code=303
+    )
 
     return ret
 
@@ -47,7 +49,9 @@ async def modify_issue_comment(comment_id: int = Form(...),
     issue_id = comment.within
 
     ret = RedirectResponse(
-        url=f'/data_request/view?issue_id={issue_id}', status_code=303)
+        url=f'/data_request/view?issue_id={issue_id}',
+        status_code=303
+    )
 
     return ret
 
@@ -62,6 +66,8 @@ async def delete_issue_comment(issue_id: int = Form(...),
         current_userid=current_user.profile_id).delete_issue_comment(comment_id)
 
     ret = RedirectResponse(
-        url=f'/data_request/view?issue_id={issue_id}', status_code=303)
+        url=f'/data_request/view?issue_id={issue_id}',
+        status_code=303
+    )
 
     return ret

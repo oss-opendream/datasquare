@@ -50,7 +50,11 @@
                         <span class="comment-text">{{ comment.content }}</span>
                         {% if comment.publisher == current_user.profile_id %}
                         <button onclick="editComment({{ comment.comment_id }})">Edit</button>
-                        <button onclick="deleteComment({{ comment.comment_id }})">Delete</button>
+                        <form action="/issue_comment/delete" method="post">
+                            <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
+                            <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
+                            <button class="btn btn--primary issue-comment-button" type="submit">Delete</button>
+                        </form>
                         {% endif %}
                     </li>
                     {% endfor %}
@@ -79,7 +83,7 @@
             </div>
         </div>
     </div>
-    <!-- <script src="{{ url_for('static', path='js/issue_delete.js') }}"></script> -->
+    <!-- <script src="{{ url_for('static', path='js/issue_comment_delete.js') }}"></script> -->
     <script src="{{ url_for('static', path='js/issue_comment_edit.js') }}"></script>
 </div>
 
