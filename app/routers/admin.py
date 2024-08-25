@@ -2,6 +2,7 @@
 
 
 from contextlib import asynccontextmanager
+from typing import List, Optional
 
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
@@ -77,7 +78,7 @@ async def create_admin_post(email=Form(...),
     )
 
 
-@router.get('/teams')
+@router.get('/teams/set')
 async def teams_settings(
     request: Request,
     current_user=Depends(get_current_user),
@@ -107,7 +108,66 @@ async def set_teams(
         teamdata = TeamData()
         teamdata.create_teams(team_names=team_names)
 
-        return RedirectResponse(url='/admin/teams', status_code=status.HTTP_302_FOUND)
+        return RedirectResponse(
+            url='/admin/teams',
+            status_code=status.HTTP_302_FOUND,
+        )
 
     else:
         raise HTTPException(status_code=401)
+
+
+@router.get('/teams')
+async def manage_teams_info(
+    request: Request,
+    current_user=Depends(get_current_user),
+):
+    '''팀 관리 페이지 함수'''
+
+    if isinstance(current_user, user_schema.AdminUser):
+        team_data = TeamData()
+        team_profiles = team_data.get_all()
+
+        if not team_profiles:
+            return RedirectResponse(
+                url="/admin/teams/set",
+                status_code=status.HTTP_302_FOUND,
+            )
+
+        return templates.TemplateResponse(
+            'pages/team_manage.html',
+            {
+                'request': request,
+                'teams': team_profiles,
+            },
+        )
+
+
+@router.post('/teams/update')
+async def update_team_info(
+    team_names: List[str] = Form(...),
+    profile_ids: List[Optional[str]] = Form(...),
+    team_managers: List[Optional[str]] = Form(...),
+    delete_flags: List[str] = Form(...),
+    current_user=Depends(get_current_user),
+):
+    '''팀 정보 생성, 수정, 삭제 함수'''
+
+    if isinstance(current_user, user_schema.AdminUser):
+        team_data = TeamData()
+        team_data.modify_team_info(
+            profile_ids=profile_ids,
+            team_names=team_names,
+            team_managers=team_managers,
+            delete_flags=delete_flags,
+        )
+
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='No permission'
+        )
+
+    return RedirectResponse(
+        url='/admin/teams',
+        status_code=status.HTTP_302_FOUND)

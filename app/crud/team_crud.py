@@ -1,5 +1,8 @@
 '''Team에 대한 CRUD 기능을 제공'''
 
+
+from typing import List, Optional
+
 from sqlalchemy.orm import Session
 
 from app.models.database import datasquare_db
@@ -41,7 +44,8 @@ class TeamData:
 
         with next(self.db.get_db()) as db_session:
             for team in team_names:
-                new_team = TeamProfile(team_name=team)
+                new_team = TeamProfile(team_name=team,
+                                       team_manager='')
                 db_session.add(new_team)
 
             db_session.commit()
@@ -61,16 +65,12 @@ class TeamData:
         return members
 
     def get_all(self) -> TeamProfile:
-        ''' "team_profile" 테이블의 team_name과 profile_id를 출력 함수'''
+        ''' "team_profile" 테이블의 모든 레코드를 TeamProfile 객체로 출력하는 함수'''
 
         with next(self.db.get_db()) as db_session:
 
             teams = db_session \
                 .query(TeamProfile) \
-                .with_entities(
-                    TeamProfile.team_name,
-                    TeamProfile.profile_id
-                ) \
                 .all()
 
         return teams
@@ -96,3 +96,68 @@ class TeamData:
             team_id = team.profile_id
 
         return team_id
+
+    def get_team_profile(self, team_profile_id: int) -> TeamProfile | None:
+        '''"team_profile" 테이블 내 "team_profile_id"와 일치하는 TeamProfile 객체 반환 함수'''
+
+        with next(self.db.get_db()) as db_session:
+            team_profile = db_session \
+                .query(TeamProfile) \
+                .filter(TeamProfile.profile_id == team_profile_id) \
+                .one_or_none()
+
+        return team_profile
+
+    def modify_team_info(
+            self,
+            team_names: List[str],
+            profile_ids: List[Optional[str]],
+            team_managers: List[Optional[str]],
+            delete_flags: List[str],
+    ):
+        '''team_profile row 수정, 삭제 및 추가 session commit 함수'''
+
+        profile_ids = [int(pid) if pid.isdigit()
+                       else None
+                       for pid in profile_ids]
+
+        with next(self.db.get_db()) as db_session:
+
+            for profile_id, team_name, team_manager, delete_flag in zip(
+                    profile_ids,
+                    team_names,
+                    team_managers,
+                    delete_flags,
+            ):
+
+                if profile_id is not None:
+                    if delete_flag == 'true':
+                        profile_to_be_deleted = db_session \
+                            .query(TeamProfile) \
+                            .filter(TeamProfile.profile_id == profile_id) \
+                            .one_or_none()
+                        db_session.delete(profile_to_be_deleted)
+
+                    elif team_name.strip():
+                        profile_to_be_updated = db_session \
+                            .query(TeamProfile) \
+                            .filter(TeamProfile.profile_id == profile_id) \
+                            .one_or_none()
+
+                        profile_to_be_updated.team_name = team_name
+                        profile_to_be_updated.team_manager = team_manager
+
+                        db_session.add(profile_to_be_updated)
+
+                else:
+                    if team_name.strip():
+                        new_team_profile = TeamProfile(
+                            team_name=team_name,
+                            team_manager=team_manager
+                        )
+                        db_session.add(new_team_profile)
+
+            db_session.commit()
+
+            for team_profile in db_session.query(TeamProfile).all():
+                db_session.refresh(team_profile)
