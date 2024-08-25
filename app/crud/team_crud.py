@@ -81,7 +81,8 @@ class TeamData:
         with next(self.db.get_db()) as db_session:
             team = db_session.query(TeamProfile).filter(
                 TeamProfile.profile_id == team_profile_id).one_or_none()
-            team_name = team.name
+            if team:
+                team_name = team.team_name
 
         return team_name
 

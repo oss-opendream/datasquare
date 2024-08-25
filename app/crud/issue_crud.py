@@ -75,7 +75,7 @@ class IssueData():
 
         return issue
 
-    def modified_issue(
+    def update_issue_data(
         self,
         issue_id: int,
         title: str,
@@ -104,7 +104,7 @@ class IssueData():
 
         return issue
 
-    def delete_issue(self, issue_id: int) -> None:
+    def delete_issue_data(self, issue_id: int) -> None:
         '''해당 이슈를 삭제하는 함수'''
 
         with next(self.db.get_db()) as db_session:

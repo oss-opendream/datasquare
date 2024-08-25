@@ -26,7 +26,7 @@ async def issue_pulish(
 
     departments = TeamData().get_team_name()
     ret = templates.TemplateResponse(
-        'pages/issue_publish.html',
+        'pages/data_request.html',
         {
             'request': request,
             'departments': departments,
@@ -53,12 +53,15 @@ async def issue_views(
     comments = IssueCommentData(
         current_user.profile_id).read_issue_comments(issue_id)
 
+    team_name = TeamData().get_team_name_one(issue.requested_team)
+
     ret = templates.TemplateResponse(
-        'pages/issue_view.html',
+        'pages/data_request_view.html',
         {
             'request': request,
             'issue': issue,
             'comments': comments,
+            'team_name': team_name,
             'current_user': current_user,
             'notification_count': get_notification_count(current_user.profile_id)
         }
@@ -67,7 +70,7 @@ async def issue_views(
     return ret
 
 
-@data_request_router.post('/publish')
+@ data_request_router.post('/publish')
 async def create_issue(title: str = Form(...),
                        content: str = Form(...),
                        requested_team: str = Form(...),
@@ -97,8 +100,8 @@ async def create_issue(title: str = Form(...),
     return ret
 
 
-@data_request_router.post('/modified')
-async def modified_issue(
+@data_request_router.post('/edit')
+async def update_issue(
     issue_id: int = Form(...),
     title: str = Form(...),
     content: str = Form(...),
@@ -108,12 +111,13 @@ async def modified_issue(
 ):
     '''issue data 수정한 것을 반영하는 함수'''
 
+    team_id = TeamData().get_team_id(requested_team)
     IssueData(current_userid=current_user.profile_id) \
-        .modified_issue(
+        .update_issue_data(
             issue_id=issue_id,
             title=title,
             content=content,
-            requested_team=requested_team,
+            requested_team=team_id,
             is_private=is_private
     )
 
@@ -131,11 +135,11 @@ async def modified_issue(
     return ret
 
 
-@data_request_router.get('/modified', response_class=HTMLResponse)
-async def issue_modified_page(request: Request,
-                              issue_id: int,
-                              current_user: User = Depends(get_current_user)
-                              ):
+@data_request_router.get('/edit', response_class=HTMLResponse)
+async def issue_edit_page(request: Request,
+                          issue_id: int,
+                          current_user: User = Depends(get_current_user)
+                          ):
     '''이슈 수정 페이지'''
 
     issue = IssueData(current_userid=current_user).read_issue(
@@ -145,12 +149,14 @@ async def issue_modified_page(request: Request,
         raise HTTPException(status_code=404, detail='Issue not found')
 
     departments = TeamData().get_team_name()
+    selected_team_name = TeamData().get_team_name_one(issue.requested_team)
 
     ret = templates.TemplateResponse(
-        'pages/issue_modified.html',
+        'pages/data_request_edit.html',
         {
             'request': request,
             'departments': departments,
+            'selected_team_name': selected_team_name,
             'issue': issue,
             'notification_count': get_notification_count(current_user.profile_id)
         }
@@ -159,14 +165,14 @@ async def issue_modified_page(request: Request,
     return ret
 
 
-@data_request_router.post('/deleted')
-async def deleted_issue(issue_id: int = Form(...),
-                        current_user: User = Depends(get_current_user)
-                        ):
+@data_request_router.post('/delete')
+async def delete_issue(issue_id: int = Form(...),
+                       current_user: User = Depends(get_current_user)
+                       ):
     '''issue data 수정 함수'''
 
     try:
-        IssueData(current_userid=current_user.profile_id).delete_issue(
+        IssueData(current_userid=current_user.profile_id).delete_issue_data(
             issue_id=issue_id)
         ret = RedirectResponse(url='/feed', status_code=303)
     except PermissionError:
