@@ -59,13 +59,19 @@ async def signin_post(
         user = userdata_obj.get_admin_data(form_data.username)
         url = '/admin'
 
+    # print(user)
+
     if not user or not userdata_obj.pwd_context.verify(form_data.password, user.password):
-        return JSONResponse(
-            content={
-                "error": "비밀번호가 일치하지 않습니다."
-            },
-            status_code=status.HTTP_400_BAD_REQUEST
-        )
+        return RedirectResponse(url='/signin?error=비밀번호가 일치하지 않습니다.',
+                                status_code=status.HTTP_302_FOUND)
+
+        #                         )
+        # return JSONResponse(
+        #     content={
+        #         "error": "비밀번호가 일치하지 않습니다."
+        #     },
+        #     status_code=status.HTTP_400_BAD_REQUEST
+        # )
 
     data = {
         'sub': user.email,  # 사용자 식별
