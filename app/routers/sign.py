@@ -23,7 +23,7 @@ from app.schemas import user_schema
 router = APIRouter()
 templates = Jinja2Templates(directory='app/templates')
 
-load_dotenv()
+load_dotenv( override=True)
 
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES'))
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
@@ -41,12 +41,13 @@ async def singin_get(
                                       )
 
 
-@router.post('/signin/post', response_class=HTMLResponse, response_model=user_schema.Token, name='sign_post')
+@router.post('/signin/post',response_model=user_schema.Token, name='sign_post')
 async def signin_post(
     request: Request,
     form_data: OAuth2PasswordRequestForm = Depends(),
 ):
     '''로그인 정보 라우터 함수'''
+    print(form_data)
 
     userdata_obj = UserData()
     user = userdata_obj.get_user_password(form_data.username,
@@ -59,9 +60,12 @@ async def signin_post(
         url = '/admin'
 
     if not user or not userdata_obj.pwd_context.verify(form_data.password, user.password):
-        return RedirectResponse(url='/signin?error=비밀번호가 일치하지 않습니다.',
-                                status_code=status.HTTP_302_FOUND
-                                )
+        return JSONResponse(
+            content={
+                "error": "비밀번호가 일치하지 않습니다."
+            },
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
 
     data = {
         'sub': user.email,  # 사용자 식별

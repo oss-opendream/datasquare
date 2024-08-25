@@ -9,8 +9,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 폼과 필드 가져오기
     const form = document.querySelector('form');
-    const passwordField = form.querySelector('input[name="password"]');
-    const password2Field = form.querySelector('input[name="password2"]');
 
     // error 요소
     const errorDiv = document.createElement('div');
@@ -19,20 +17,9 @@ document.addEventListener("DOMContentLoaded", function() {
     errorDiv.style.fontSize = '16px';
     errorDiv.style.width = '100%';
 
-    // 필드에 error 메시지 추가
-    password2Field.parentNode.appendChild(errorDiv);
+
 
     form.addEventListener('submit', function(event) {
-        // 비밀번호와 비밀번호 확인이 일치하지 않으면 폼 제출을 막고 경고 표시
-        // if (passwordField.value !== password2Field.value) {
-        //     event.preventDefault(); // 폼 제출 막기
-        //     errorDiv.textContent = '비밀번호가 일치하지 않습니다.';
-
-        //     // 페이지를 경고 메시지가 있는 위치로 스크롤
-        //     password2Field.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // } else {
-        //     errorDiv.textContent = ''; // 에러 메시지 지우기
-        // }
 
         event.preventDefault(); // 폼 제출 기본 동작 방지
     
@@ -61,29 +48,3 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-        
-        // // 폼 데이터 제출
-        // fetch('/signup', {
-        //     method: 'POST',
-        //     body: formData
-        // })
-        // .then(response => {
-        //     // JSON 형식으로 응답 읽기
-        //     return response.json();
-        // })
-        // .then(data => {
-        //     if (data.error) {
-        //         // 서버에서 에러 메시지가 반환되면 팝업창 표시
-        //         alert(data.error);
-        //     } else {
-        //         // 성공적으로 처리된 경우 리디렉션
-        //         window.location.href = '/signin';
-        //     }
-        // })
-//         // .catch(error => console.error('Error:', error));
-
-//     });
-
-//     form.addEventListener('submit', function(event) {
-       
-// });
