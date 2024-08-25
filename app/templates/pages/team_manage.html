@@ -1,32 +1,40 @@
 {% extends "admin_base.html" %}
 {% set hide_header = false %}
 {% set hide_footer = false %}
-{% block title %}로그인 - DataSquare{% endblock %}
+{% block title %}Team Management - DataSquare{% endblock %}
 {% block content %}
-<script src="/static/js/team_management.js"></script>
+
 <br>
 <br>
 <br>
 <br>
-<br>
-<br>
-<div>
-    <h1>Team Management</h1>
-</div>
-<button type="button" onclick="addRow()">add row</button>
-<form method="post" action="/admin/teams/update">
-    <div id="team-rows">
-        <!-- 각 팀 프로필 row (Python에서 렌더링) -->
-        {% for team in teams %}
-        <div class="team-row">
-            <input readonly type="hidden" name="profile_ids" value="{{ team.profile_id }}">
-            <input type="text" name="team_names" value="{{ team.team_name }}">
-            <input type="text" name="team_managers" value="{{ team.team_manager }}">
-            <input type="hidden" name="delete_flags" value="false">
-            <button type="button" onclick="removeRow(this)">Remove</button>
+<div class="team-management">
+    <h1 class="team-management__title">Team Management</h1>
+    <div class="team-management__content">
+        <nav class="team-management__nav">
+            <a href="{{ url_for('team_settings') }}" class="team-management__nav-item">Team</a>
+        </nav>
+        <div class="team-management__main">
+            <form method="post" action="/admin/teams/update">
+                <button type="button" onclick="addRow()">Add row</button>
+                <div id="team-rows">
+                    {% for team in teams %}
+                    <div class="team-row">
+                        <input readonly type="hidden" name="profile_ids" value="{{ team.profile_id }}">
+                        <input type="text" name="team_names" value="{{ team.team_name }}">
+                        <input type="text" name="team_managers" value="{{ team.team_manager }}">
+                        <input type="hidden" name="delete_flags" value="false">
+                        <button type="button" onclick="removeRow(this)">Remove</button>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="submit">Save</button>
+            </form>
         </div>
-        {% endfor %}
     </div>
-    <button type="submit">Submit</button>
-</form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/team_management.js"></script>
 {% endblock %}
