@@ -117,7 +117,7 @@ async def set_teams(
         raise HTTPException(status_code=401)
 
 
-@router.get('/teams')
+@router.get('/teams', name='team_settings')
 async def manage_teams_info(
     request: Request,
     current_user=Depends(get_current_user),
