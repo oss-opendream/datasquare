@@ -3,6 +3,7 @@
 {% block content %}
 
 <script src="{{ url_for('static', path='/js/profile_sidebar.js') }}"></script>
+<script src="{{ url_for('static', path='/js/team_profile.js') }}"></script>
 
 <div class="wrapper">
     <div class="sidebar" id="sidebar">
@@ -17,9 +18,9 @@
         <div class="team-profile-view__content">
             <div class="team-profile-view__details">
                 <h2>Team Name</h2>
-                <p class="team-profile-view__name">{{ team.team_name}}</p>
+                <p class="team-profile-view__name" id = "team_name">{{ team.team_name}}</p>
                 <h2>Team Introduction</h2>
-                <p class="team-profile-view__introduction"> {{team.team_introduction}}</p>
+                <p class="team-profile-view__introduction" id = "team_introduction"> {{team.team_introduction}}</p>
                 <div class="team-profile-view__members">
                     <h2 class="team-profile-view__members-title">Team members</h2>
                     {% for member in members %}
@@ -31,11 +32,9 @@
                     </div>
                     {% endfor %}
                 </div>
-                <div class = "team-profile-view__edit">
+                <div class = "team-profile-view__edit" id = "team-profile-view__edit">
                     {% if has_permission %}
-                    <a href ="/profile/team/edit">
-                        <button id="editButton" class="edit-button">Edit</button>
-                    </a>
+                        <button id="editButton" class="edit-button" onclick="editComment()">Edit</button>
                     {% endif %}
                 </div>
             </div>

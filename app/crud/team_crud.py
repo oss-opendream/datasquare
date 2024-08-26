@@ -166,3 +166,24 @@ class TeamData:
 
             for team_profile in db_session.query(TeamProfile).all():
                 db_session.refresh(team_profile)
+
+    def modify_team_info_profile(
+            self,
+            origin_name: str,
+            team_name: str,
+            team_intro: str
+    ):
+        '''team 프로필 설정 함수'''
+
+        with next(self.db.get_db()) as db_session:
+
+            team = db_session.query(TeamProfile).filter(
+                TeamProfile.team_name == origin_name).one_or_none()
+
+            print(team)
+
+            if team:
+                team.team_name = team_name
+                team.team_introduction = team_intro
+
+                db_session.commit()

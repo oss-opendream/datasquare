@@ -5,6 +5,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Request, Depends, Form, File, UploadFile
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import JSONResponse
 
 from app.crud.noti import get_notification_count
 from app.crud.team_crud import TeamData
@@ -127,3 +128,24 @@ async def team_profile_get(
             'has_permission': True
         }
     )
+
+
+@profilerouter.post('/team')
+async def team_profile_post(
+    origin_name: str = Form(...),
+    team_name: str = Form(...),
+    team_intro: str = Form(...),
+    current_user: User = Depends(get_current_user)
+):
+    '''team 프로필 View 페이지 저장 라우터'''
+
+    team = TeamData()
+    team.modify_team_info_profile(origin_name, team_name, team_intro)
+
+    ret = JSONResponse(
+        content={
+            "status": "success",
+        }
+    )
+
+    return ret

@@ -12,10 +12,6 @@ function editComment(commentId) {
     originalText = currentText;
     const commentPublisher = commentElement.querySelector('.comment-publisher').innerText;
 
-    console.log(commentElement);
-    console.log(currentText);
-    console.log(commentPublisher);
-
     editingCommentId = commentId;  // 현재 수정 중인 댓글 ID 설정
 
     commentElement.innerHTML = `
@@ -58,10 +54,6 @@ function saveComment(commentId) {
     const commentElement = document.getElementById('comment-' + commentId);
     const currentText = commentElement.querySelector('.comment-text').value;
     const commentPublisher = commentElement.querySelector('.comment-publisher').innerText;
-
-    console.log(commentElement);
-    console.log(currentText);
-    console.log(commentPublisher);
 
     fetch('/issue_comment/modify', {
         method: 'POST',
