@@ -16,7 +16,7 @@ function editComment() {
 
     editButton.innerHTML =`
     <div class = "team-profile-view__save" id = 'team-profile-view__save'>
-        <button id="saveButton" class="save-button" onclick="saveComment()">Save</button>
+        <button id="saveButton" class="edit-button" onclick="saveComment()">Save</button>
     </div>
     `
 };

@@ -86,7 +86,8 @@
             </li>
             {% endfor %}
         </div>
-        <div class="data-request__comment-form">
+        <div class="data-request__comments">
+            <h2 class="data-request__comments-title">Comments</h2>
             <form class="data-request__comment-form" action="/issue_comment/create" method="post">
                 <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
                 <textarea id="comment" name="comment" class="form-textarea" placeholder="Comment" required></textarea>

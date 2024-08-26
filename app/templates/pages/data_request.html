@@ -62,26 +62,15 @@
                 </div>
 
                 <div class="form-actions">
-                    <button type="button" class="btn btn--cancle" onclick="canclePublish()">Cancle</button>
+                    <button type="button" class="btn btn--cancel" onclick="cancelPublish()">Cancel</button>
                     <button type="submit" class="btn btn--submit">Publish</button>
                 </div>
             </form>
         </div>
     </div>
-
-    <div class="data-request__comments">
-        <h2 class="data-request__comments-title">댓글</h2>
-        <div class="data-request__comments-list">
-            <!-- Add comments here -->
-        </div>
-        <div class="data-request__comment-form">
-            <textarea id="comment" name="comment" class="form-textarea" placeholder="댓글 본문"></textarea>
-            <button type="button" class="btn btn--primary">등록</button>
-        </div>
-    </div>
 </div>
 <script>
-    function canclePublish() {
+    function cancelPublish() {
         alert('이슈 발행을 취소하였습니다.');
         // 여기에 추가적인 취소 로직 구현 (예: 페이지 이동)
         window.location.href = '/feed';

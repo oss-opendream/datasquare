@@ -117,6 +117,7 @@ async def team_profile_get(
 
     team_data = team.get_current_user_team_data(current_user.profile_id)
     team_members = team.get_team_members(team_data.profile_id)
+    team_manager = team_data.team_manager
 
     return templates.TemplateResponse(
         'pages/team_profile_view.html',
@@ -125,7 +126,7 @@ async def team_profile_get(
             'notification_count': get_notification_count(current_user.profile_id),
             'team': team_data,
             'members': team_members,
-            'has_permission': True
+            'has_permission': (team_manager == current_user.profile_id)
         }
     )
 
