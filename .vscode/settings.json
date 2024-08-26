@@ -2,7 +2,7 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.autopep8"
   },
-  "[markdown][json][jsonc]": {
+  "[markdown][json][jsonc][html][css][javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.formatOnSave": true,
