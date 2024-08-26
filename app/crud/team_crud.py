@@ -97,7 +97,7 @@ class TeamData:
 
         return team_id
 
-    def get_team_profile(self, team_profile_id: int) -> TeamProfile | None:
+    def get_team_profile(self, team_profile_id: int) -> TeamProfile:
         '''"team_profile" 테이블 내 "team_profile_id"와 일치하는 TeamProfile 객체 반환 함수'''
 
         with next(self.db.get_db()) as db_session:
