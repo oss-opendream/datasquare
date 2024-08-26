@@ -639,8 +639,7 @@ body {
 /* 데이터 요청 페이지 스타일 */
 .data-request {
     max-width: 1200px;
-    margin: 60px auto 0;
-    /* 상단 여백을 60px로 조정하여 헤더와 겹치지 않도록 함 */
+    margin: 0 auto;
     padding: 2rem;
     background-color: #f8f9fa;
 }
@@ -653,11 +652,14 @@ body {
 
 .data-request__content {
     display: flex;
-    flex-direction: column;
     gap: 2rem;
 }
 
 .data-request__main-section {
+    flex: 2;
+}
+
+.data-request__sidebar {
     flex: 1;
 }
 
@@ -717,7 +719,7 @@ body {
 }
 
 .btn--submit {
-    background-color: #007bff;
+    background-color: #0056b3;
     color: white;
 }
 
@@ -728,10 +730,6 @@ body {
 
 .btn:hover {
     opacity: 0.9;
-}
-
-.data-request__sidebar {
-    margin-top: 2rem;
 }
 
 .data-request__sidebar-title {
@@ -782,6 +780,11 @@ body {
 .comment-text {
     display: block;
     margin-top: 0.5rem;
+}
+
+/* 라디오 버튼 스타일 */
+.form-group input[type="radio"] {
+    margin-right: 0.5rem;
 }
 
 /* 반응형 디자인 */
@@ -1226,173 +1229,5 @@ body {
 
     .issue-publish__sidebar {
         margin-top: 2rem !important;
-    }
-}
-
-/* 팀 관련 페이지 */
-/* 공통 스타일 */
-.team-setting,
-.team-management {
-    max-width: 1200px !important;
-    margin: 80px auto 0 !important;
-    padding: 2rem !important;
-    background-color: #f8f9fa !important;
-}
-
-.team-setting__title,
-.team-management__title {
-    font-size: 2rem !important;
-    color: #333 !important;
-    margin-bottom: 2rem !important;
-}
-
-.team-setting__content,
-.team-management__content {
-    display: flex !important;
-    gap: 2rem !important;
-}
-
-.team-setting__nav,
-.team-management__nav {
-    flex: 1 !important;
-    max-width: 200px !important;
-}
-
-.team-setting__nav-item,
-.team-management__nav-item {
-    display: block !important;
-    padding: 0.5rem 1rem !important;
-    color: #007bff !important;
-    text-decoration: none !important;
-    border-radius: 4px !important;
-}
-
-.team-setting__nav-item:hover,
-.team-management__nav-item:hover {
-    background-color: #e9ecef !important;
-}
-
-.team-setting__main,
-.team-management__main {
-    flex: 3 !important;
-}
-
-/* 버튼 스타일 */
-.team-setting button,
-.team-management button {
-    padding: 0.5rem 1rem !important;
-    border: none !important;
-    border-radius: 4px !important;
-    cursor: pointer !important;
-    font-size: 1rem !important;
-    transition: background-color 0.3s !important;
-    margin-right: 0.5rem !important;
-    margin-bottom: 1rem !important;
-}
-
-.team-setting button[type="submit"],
-.team-management button[type="submit"] {
-    background-color: #007bff !important;
-    color: white !important;
-}
-
-.team-setting button[type="button"],
-.team-management button[type="button"] {
-    background-color: #6c757d !important;
-    color: white !important;
-}
-
-.team-setting button:hover,
-.team-management button:hover {
-    opacity: 0.9 !important;
-}
-
-/* 테이블 스타일 */
-.team-setting table,
-.team-management table,
-.team-setting .team-header,
-.team-management .team-header,
-.team-setting .team-row,
-.team-management .team-row {
-    width: 100% !important;
-    border-collapse: collapse !important;
-    margin-bottom: 1rem !important;
-}
-
-.team-setting th,
-.team-management th,
-.team-setting td,
-.team-management td,
-.team-setting .team-header p,
-.team-management .team-header p,
-.team-setting .team-row input,
-.team-management .team-row input {
-    padding: 0.75rem !important;
-    text-align: left !important;
-    border-bottom: 1px solid #dee2e6 !important;
-}
-
-.team-setting th,
-.team-management th,
-.team-setting .team-header p,
-.team-management .team-header p {
-    font-weight: bold !important;
-    background-color: #f8f9fa !important;
-}
-
-.team-setting input[type="text"],
-.team-management input[type="text"] {
-    width: 100% !important;
-    padding: 0.5rem !important;
-    border: 1px solid #ced4da !important;
-    border-radius: 4px !important;
-    font-size: 1rem !important;
-}
-
-/* 다이얼로그 스타일 */
-.team-management dialog {
-    border: none !important;
-    border-radius: 8px !important;
-    padding: 20px !important;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
-}
-
-.team-management .select-team-manager__title {
-    font-size: 1.5rem !important;
-    margin-bottom: 1rem !important;
-}
-
-.team-management .select-team-manager__member-table {
-    max-height: 300px !important;
-    overflow-y: auto !important;
-}
-
-.team-management #memberList {
-    list-style-type: none !important;
-    padding: 0 !important;
-}
-
-.team-management #memberList li {
-    padding: 0.5rem !important;
-    cursor: pointer !important;
-    transition: background-color 0.3s !important;
-}
-
-.team-management #memberList li:hover {
-    background-color: #f0f0f0 !important;
-}
-
-/* 반응형 디자인 */
-@media (max-width: 768px) {
-
-    .team-setting__content,
-    .team-management__content {
-        flex-direction: column !important;
-    }
-
-    .team-setting__nav,
-    .team-management__nav {
-        max-width: 100% !important;
-        margin-bottom: 1rem !important;
     }
 }
