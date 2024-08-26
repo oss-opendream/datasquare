@@ -72,16 +72,16 @@
         <div class="data-request__comments-list">
             {% for comment in comments %}
             <li id="comment-{{ comment.comment_id }}">
+                {% if comment.publisher == current_user.profile_id %}
+
                 <span class="comment-publisher">{{ comment.publisher }}</span>
                 <br>
                 <span class="comment-text">{{ comment.content }}</span>
-                {% if comment.publisher == current_user.profile_id %}
-                <button onclick="editComment({{ comment.comment_id }})">Edit</button>
-                <form action="/issue_comment/delete" method="post">
-                    <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
-                    <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
-                    <button class="btn btn--primary issue-comment-button" type="submit">Delete</button>
-                </form>
+                <button class="btn btn--primary issue-comment-button"
+                    onclick="editComment({{ comment.comment_id }})">Edit</button>
+                <button class="btn btn--primary issue-comment-button"
+                    onclick="deleteComment({{ comment.comment_id }})">Delete</button>
+                <hr>
                 {% endif %}
             </li>
             {% endfor %}
@@ -89,13 +89,12 @@
         <div class="data-request__comment-form">
             <form class="data-request__comment-form" action="/issue_comment/create" method="post">
                 <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
-                <textarea id="comment" name="comment" class="form-textarea" placeholder="Comment Content"
-                    required></textarea>
+                <textarea id="comment" name="comment" class="form-textarea" placeholder="Comment" required></textarea>
                 <button type="submit" class="btn btn--primary">Comment</button>
             </form>
         </div>
     </div>
 </div>
-<script src="{{ url_for('static', path='js/issue_comment_edit.js') }}"></script>
+<script src="{{ url_for('static', path='js/issue_comment.js') }}"></script>
 
 {% endblock %}

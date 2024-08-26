@@ -3,7 +3,7 @@
 
 from fastapi import APIRouter, Form, Depends
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, JSONResponse
 
 from app.crud.issue_comment_crud import IssueCommentData
 from app.schemas.user_schema import User
@@ -44,33 +44,35 @@ async def modify_issue_comment(
 ):
     '''issue_comment 수정 함수입니다.'''
 
-    comment = IssueCommentData(current_userid=current_user.profile_id) \
+    IssueCommentData(current_userid=current_user.profile_id) \
         .modified_issue_comment(comment_id=comment_id,
                                 content=content
                                 )
 
-    issue_id = comment.within
-
-    ret = RedirectResponse(
-        url=f'/data_request/view?issue_id={issue_id}',
-        status_code=303
+    ret = JSONResponse(
+        content={
+            "status": "success",
+            "comment_id": comment_id
+        }
     )
 
     return ret
 
 
 @issue_comment_router.post('/delete')
-async def delete_issue_comment(issue_id: int = Form(...),
-                               comment_id: int = Form(...),
+async def delete_issue_comment(comment_id: int = Form(...),
                                current_user: User = Depends(get_current_user)):
     '''issue_commnet 삭제 함수 입니다.'''
 
     IssueCommentData(current_userid=current_user.profile_id) \
         .delete_issue_comment(comment_id)
 
-    ret = RedirectResponse(
-        url=f'/data_request/view?issue_id={issue_id}',
-        status_code=303
+    ret = JSONResponse(
+        content={
+            "status": "success",
+            # "issue_id": issue_id,
+            "comment_id": comment_id
+        }
     )
 
     return ret
