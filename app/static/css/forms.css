@@ -23,3 +23,210 @@
     outline: none;
     border-color: var(--primary-color);
 }
+
+/* team_management.css */
+
+/* 공통 스타일 */
+.wrapper,
+.team-profile-edit,
+.team-management,
+.team-setting {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #f8f9fa;
+}
+
+/* 사이드바 스타일 */
+.sidebar {
+    width: 250px;
+    background-color: #fff;
+    padding: 1rem;
+    border-right: 1px solid #dee2e6;
+}
+
+.sidebar-header h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.sidebar-nav {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-nav li a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.sidebar-nav li a:hover {
+    background-color: #f1f3f5;
+}
+
+/* 팀 프로필 보기 스타일 */
+.team-profile-view__title,
+.team-profile-edit__title,
+.team-management__title,
+.team-setting__title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.team-profile-view__content,
+.team-profile-edit__content,
+.team-management__content,
+.team-setting__content {
+    display: flex;
+    gap: 2rem;
+}
+
+.team-profile-view__details h2 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.team-profile-view__members {
+    margin-top: 2rem;
+}
+
+.team-profile-view__member {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.team-profile-view__member img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+/* 폼 스타일 */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-textarea {
+    min-height: 100px;
+}
+
+/* 버튼 스타일 */
+.btn,
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn--primary,
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn--primary:hover,
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* 팀 관리 테이블 스타일 */
+.team-header,
+.team-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.team-header p {
+    font-weight: bold;
+}
+
+.team-row input[type="text"] {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+/* 다이얼로그 스타일 */
+dialog {
+    border: none;
+    border-radius: 4px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.select-team-manager__title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+#memberList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#memberList li {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#memberList li:hover {
+    background-color: #f1f3f5;
+}
+
+/* 알림 스타일 */
+.notification {
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 4px;
+}
+
+.notification--success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+
+    .wrapper,
+    .team-profile-edit__content,
+    .team-management__content,
+    .team-setting__content {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #dee2e6;
+        margin-bottom: 1rem;
+    }
+}

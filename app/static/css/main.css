@@ -638,21 +638,21 @@ body {
 
 /* 데이터 요청 페이지 스타일 */
 .data-request {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+    max-width: 90%;
+    margin: 5vh auto;
+    padding: 2em;
     background-color: #f8f9fa;
 }
 
 .data-request__title {
-    font-size: 2rem;
+    font-size: 2em;
     color: #333;
-    margin-bottom: 2rem;
+    margin-bottom: 1em;
 }
 
 .data-request__content {
     display: flex;
-    gap: 2rem;
+    gap: 2em;
 }
 
 .data-request__main-section {
@@ -663,13 +663,14 @@ body {
     flex: 1;
 }
 
+/* 폼 스타일 */
 .data-request__form .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.5em;
 }
 
 .data-request__form .form-label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.5em;
     font-weight: bold;
     color: #333;
 }
@@ -678,42 +679,44 @@ body {
 .data-request__form .form-textarea,
 .data-request__form .form-select {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.5em;
     border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 1rem;
+    border-radius: 0.25em;
+    font-size: 1em;
 }
 
 .data-request__form .form-textarea {
-    min-height: 150px;
+    min-height: 10em;
 }
 
+/* 날짜 범위 선택 스타일 */
 .date-range {
     display: flex;
-    gap: 1rem;
+    gap: 1em;
 }
 
 .date-input {
     flex: 1;
 }
 
+/* 버튼 스타일 */
 .form-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2rem;
+    gap: 1em;
+    margin-top: 2em;
 }
 
 .btn {
-    padding: 0.5rem 1rem;
+    padding: 0.5em 1em;
     border: none;
-    border-radius: 4px;
+    border-radius: 0.25em;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1em;
     transition: background-color 0.3s;
 }
 
-.btn--cancle {
+.btn--cancel {
     background-color: #6c757d;
     color: white;
 }
@@ -732,26 +735,28 @@ body {
     opacity: 0.9;
 }
 
+/* 사이드바 스타일 */
 .data-request__sidebar-title {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     color: #333;
-    margin-bottom: 1rem;
+    margin-bottom: 1em;
 }
 
+/* 댓글 섹션 스타일 */
 .data-request__comments {
-    margin-top: 3rem;
+    margin-top: 3em;
 }
 
 .data-request__comments-title {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     color: #333;
-    margin-bottom: 1rem;
+    margin-bottom: 1em;
 }
 
 .data-request__comment-form {
     display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 1em;
+    margin-top: 1em;
 }
 
 .data-request__comment-form .form-textarea {
@@ -763,38 +768,74 @@ body {
 }
 
 .data-request__comments-list {
-    margin-bottom: 1rem;
+    margin-bottom: 1em;
 }
 
 .data-request__comments-list li {
     border-bottom: 1px solid #dee2e6;
-    padding: 1rem 0;
+    padding: 1em 0;
 }
 
 .comment-publisher {
     font-weight: bold;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.5em;
     display: inline-block;
 }
 
 .comment-text {
     display: block;
-    margin-top: 0.5rem;
+    margin-top: 0.5em;
 }
 
 /* 라디오 버튼 스타일 */
 .form-group input[type="radio"] {
-    margin-right: 0.5rem;
+    margin-right: 0.5em;
 }
 
 /* 반응형 디자인 */
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .data-request__content {
         flex-direction: column;
     }
 
     .data-request__sidebar {
         order: -1;
+    }
+}
+
+/* 페이지 전체 레이아웃 */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout__main {
+    flex: 1;
+    margin-top: 10vh;
+    /* 헤더 높이에 맞게 조정 */
+    margin-bottom: 10vh;
+    /* footer 높이에 맞게 조정 */
+}
+
+/* 푸터 스타일 수정 */
+.footer {
+    background-color: #969a9e;
+    color: #fff;
+    padding: 1vh 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* 모바일 반응형 추가 */
+@media (max-width: 48em) {
+    .layout__main {
+        margin-top: 8vh;
+        /* 모바일에서 헤더 높이가 다를 경우 조정 */
+        margin-bottom: 8vh;
+        /* 모바일에서 footer 높이가 다를 경우 조정 */
     }
 }
 
