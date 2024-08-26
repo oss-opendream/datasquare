@@ -147,7 +147,7 @@ async def manage_teams_info(
 async def update_team_info(
     team_names: List[str] = Form(...),
     profile_ids: List[Optional[str]] = Form(...),
-    team_managers: List[Optional[str]] = Form(...),
+    team_manager_ids: List[Optional[str]] = Form(...),
     delete_flags: List[str] = Form(...),
     current_user=Depends(get_current_user),
 ):
@@ -158,7 +158,7 @@ async def update_team_info(
         team_data.modify_team_info(
             profile_ids=profile_ids,
             team_names=team_names,
-            team_managers=team_managers,
+            team_manager_ids=team_manager_ids,
             delete_flags=delete_flags,
         )
 
@@ -171,3 +171,23 @@ async def update_team_info(
     return RedirectResponse(
         url='/admin/teams',
         status_code=status.HTTP_302_FOUND)
+
+
+@router.get('/teams/members/{team_profile_id}')
+async def get_team_members(
+    team_profile_id: int,
+    current_user=Depends(get_current_user),
+):
+    '''team_profile_id에 해당하는 PersonalProfile.profile_id와 name을 list 형식으로 출력하는 함수'''
+
+    if isinstance(current_user, user_schema.AdminUser):
+        team_data = TeamData()
+        members = team_data.get_team_members(team_id=team_profile_id)
+
+        return [{"profile_id": member.profile_id, "name": member.name} for member in members]
+
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='No permission'
+        )

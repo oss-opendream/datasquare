@@ -64,13 +64,14 @@ class TeamData:
 
         return members
 
-    def get_all(self) -> TeamProfile:
+    def get_all(self,) -> TeamProfile:
         ''' "team_profile" 테이블의 모든 레코드를 TeamProfile 객체로 출력하는 함수'''
 
         with next(self.db.get_db()) as db_session:
 
             teams = db_session \
-                .query(TeamProfile) \
+                .query(TeamProfile, PersonalProfile) \
+                .outerjoin(PersonalProfile, TeamProfile.team_manager == PersonalProfile.profile_id) \
                 .all()
 
         return teams
@@ -112,7 +113,7 @@ class TeamData:
             self,
             team_names: List[str],
             profile_ids: List[Optional[str]],
-            team_managers: List[Optional[str]],
+            team_manager_ids: List[Optional[int]],
             delete_flags: List[str],
     ):
         '''team_profile row 수정, 삭제 및 추가 session commit 함수'''
@@ -121,12 +122,16 @@ class TeamData:
                        else None
                        for pid in profile_ids]
 
+        team_manager_ids = [int(pid) if pid.isdigit()
+                            else None
+                            for pid in team_manager_ids]
+
         with next(self.db.get_db()) as db_session:
 
-            for profile_id, team_name, team_manager, delete_flag in zip(
+            for profile_id, team_name, team_manager_id, delete_flag in zip(
                     profile_ids,
                     team_names,
-                    team_managers,
+                    team_manager_ids,
                     delete_flags,
             ):
 
@@ -145,7 +150,7 @@ class TeamData:
                             .one_or_none()
 
                         profile_to_be_updated.team_name = team_name
-                        profile_to_be_updated.team_manager = team_manager
+                        profile_to_be_updated.team_manager = team_manager_id
 
                         db_session.add(profile_to_be_updated)
 
@@ -153,7 +158,7 @@ class TeamData:
                     if team_name.strip():
                         new_team_profile = TeamProfile(
                             team_name=team_name,
-                            team_manager=team_manager
+                            team_manager=team_manager_id
                         )
                         db_session.add(new_team_profile)
 

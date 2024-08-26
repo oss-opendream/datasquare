@@ -20,7 +20,7 @@
         </div>
         <div class="feed__teams">
             <h3 class="feed__teams-title">Teams</h3>
-            {% for team in teams %}
+            {% for team, member in teams %}
             <li>
                 <a href="/feed/search?team={{ team.team_name }}">{{ team.team_name }}</a>
             </li>
