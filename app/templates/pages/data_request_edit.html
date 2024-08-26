@@ -76,7 +76,7 @@
                 </div>
 
                 <div class="form-actions">
-                    <button type="button" class="btn btn--cancle" onclick="canclePublish()">Cancle</button>
+                    <button type="button" class="btn btn--cancel" onclick="cancelPublish()">Cancel</button>
                     <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
                     <button type="submit" class="btn btn--submit">Edit</button>
                 </div>
@@ -96,7 +96,7 @@
     </div>
 </div>
 <script>
-    function canclePublish() {
+    function cancelPublish() {
         alert('이슈 수정을 취소하였습니다.');
         // 여기에 추가적인 취소 로직 구현 (예: 페이지 이동)
         window.location.href = '/data_request/view?issue_id={{issue.issue_id}}';
