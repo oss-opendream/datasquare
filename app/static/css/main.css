@@ -641,6 +641,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
+    background-color: #f8f9fa;
 }
 
 .data-request__title {
@@ -678,7 +679,7 @@ body {
 .data-request__form .form-select {
     width: 100%;
     padding: 0.5rem;
-    border: 1px solid #ccc;
+    border: 1px solid #ced4da;
     border-radius: 4px;
     font-size: 1rem;
 }
@@ -713,8 +714,8 @@ body {
 }
 
 .btn--cancle {
-    background-color: #f0f0f0;
-    color: #333;
+    background-color: #6c757d;
+    color: white;
 }
 
 .btn--submit {
@@ -761,6 +762,32 @@ body {
     align-self: flex-start;
 }
 
+.data-request__comments-list {
+    margin-bottom: 1rem;
+}
+
+.data-request__comments-list li {
+    border-bottom: 1px solid #dee2e6;
+    padding: 1rem 0;
+}
+
+.comment-publisher {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.comment-text {
+    display: block;
+    margin-top: 0.5rem;
+}
+
+/* 라디오 버튼 스타일 */
+.form-group input[type="radio"] {
+    margin-right: 0.5rem;
+}
+
+/* 반응형 디자인 */
 @media (max-width: 768px) {
     .data-request__content {
         flex-direction: column;
@@ -770,6 +797,7 @@ body {
         order: -1;
     }
 }
+
 /* 회원 로그인 페이지 */
 .sign-in {
     max-width: 25rem !important;
