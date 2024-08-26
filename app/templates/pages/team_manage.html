@@ -1,0 +1,54 @@
+{% extends "admin_base.html" %}
+{% set hide_header = false %}
+{% set hide_footer = false %}
+{% block title %}Team Management - DataSquare{% endblock %}
+{% block content %}
+
+<br>
+<br>
+<br>
+<br>
+<dialog id="memberDialog">
+    <h2 class="select-team-manager__title">Select Team Manager</h2>
+    <div class="select-team-manager__member-table">
+        <ul id="memberList">
+            <!-- 팀 멤버들이 여기 표시됩니다 -->
+        </ul>
+        <button onclick="closeDialog()">Cancel</button>
+</dialog>
+<div class="team-management">
+    <h1 class="team-management__title">Team Management</h1>
+    <div class="team-management__content">
+        <nav class="team-management__nav">
+            <a href="{{ url_for('team_settings') }}" class="team-management__nav-item">Team</a>
+        </nav>
+        <div class="team-management__main">
+            <form method="post" action="/admin/teams/update">
+                <button type="button" onclick="addRow()">Add row</button>
+                <div id="team-rows">
+                    <div class="team-header">
+                        <p>Team Name</p>
+                        <p>Team Manager</p>
+                    </div>
+                    {% for team, member in teams %}
+                    <div class="team-row">
+                        <input readonly type="hidden" name="profile_ids" value="{{ team.profile_id }}">
+                        <input type="text" name="team_names" value="{{ team.team_name }}">
+                        <input type="hidden" name="team_manager_ids" value="{{ team.team_manager }}">
+                        <input type="text" name="team_manager_names" value="{{ member.name }}"
+                            onclick="showDialog({{ team.profile_id }}, this)" readonly>
+                        <input type="hidden" name="delete_flags" value="false">
+                        <button type="button" onclick="removeRow(this)">-</button>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/team_management.js"></script>
+{% endblock %}

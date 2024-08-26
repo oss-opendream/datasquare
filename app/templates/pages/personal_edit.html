@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}로그인 - DataSquare{% endblock %}
+{% block content %}
+
+<div class="wrapper">
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Profile</h3>
+        </div>
+        <ul class="sidebar-nav" id="sidebar-nav">
+        </ul>
+    </div>
+
+    <div class="content">
+        <form action="/profile" method="post" enctype="multipart/form-data">
+            <h3 class="form-label">Image</h3>
+            <img src="data:image/png;base64,{{ image }}" alt="Profile Image" id="profileThumb" width="200">
+            <br>
+            <input type="file" id="profile_image" name="image" class="form-input" accept="image/*">
+            <br>
+            <h3 class="form-label">Name</h3>
+            <p id="name"><input type="text" name="name" id="nameInput" value="{{name}}" ></p>
+            <br>
+            <h3 class="form-label">Email</h3>
+            <p id="email"><input type="email" name="email" id="emailInput" value="{{email}}" ></p>
+            <br>
+            <h3 class="form-label">Phone</h3>
+            <p id="phone"><input type="text" name="phone_number" id="phoneInput" value="{{phone}}" ></p>
+            <br>
+            <h3 class="form-label">Department</h3>
+            <p id="department">{{department}}</p> <!-- 변경 불가 -->
+            <br>
+            <button type="submit" id="saveButton" >Save</button>
+        </form>
+    </div>
+</div>
+
+<script src="{{ url_for('static', path='/js/profile_sidebar.js') }}"></script>
+<!-- <script src="{{ url_for('static', path='/js/profile_edit.js') }}"></script> -->
+
+{% endblock %}

@@ -1,0 +1,17 @@
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.layout__main {
+    margin-top: 3rem;
+    /* Assuming header height */
+}
+
+@media (max-width: 768px) {
+    .layout__main {
+        margin-top: 3rem;
+    }
+}

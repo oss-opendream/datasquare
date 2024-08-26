@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}로그인 - DataSquare{% endblock %}
+{% block content %}
+
+<div class="wrapper">
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Profile</h3>
+        </div>
+        <ul class="sidebar-nav" id="sidebar-nav">
+        </ul>
+    </div>
+
+    <div class="content">
+            <h3 class="form-label">Image</h3>
+            <img src="data:image/png;base64,{{ image }}" alt="Profile Image" id="profileThumb" width="200">
+            <br>
+            <h3 class="form-label">Name</h3>
+            <p id="name">{{name}}</p>
+            <br>
+            <h3 class="form-label">Email</h3>
+            <p id="email">{{email}}</p>
+            <br>
+            <h3 class="form-label">Phone</h3>
+            <p id="phone">{{phone}}</p>
+            <br>
+            <h3 class="form-label">Department</h3>
+            <p id="department">{{department}}</p> <!-- 변경 불가 -->
+            <br>
+            <a href="/profile/profile_edit">
+                <button type="submit" id="editButton">Edit</button> 
+            </a>
+    </div>
+</div>
+
+<script src="{{ url_for('static', path='/js/profile_sidebar.js') }}"></script>
+<!-- <script src="{{ url_for('static', path='/js/profile_edit.js') }}"></script> -->
+
+{% endblock %}

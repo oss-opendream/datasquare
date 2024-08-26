@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}팀 프로필 - DataSquare{% endblock %}
+{% block content %}
+
+<script src="{{ url_for('static', path='/js/profile_sidebar.js') }}"></script>
+<script src="{{ url_for('static', path='/js/team_profile.js') }}"></script>
+
+<div class="wrapper">
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Profile</h3>
+        </div>
+        <ul class="sidebar-nav" id="sidebar-nav">
+        </ul>
+    </div>
+    <div class="team-profile-view">
+        <h1 class="team-profile-view__title">Team Profile</h1>
+        <div class="team-profile-view__content">
+            <div class="team-profile-view__details">
+                <h2>Team Name</h2>
+                <p class="team-profile-view__name" id = "team_name">{{ team.team_name}}</p>
+                <h2>Team Introduction</h2>
+                <p class="team-profile-view__introduction" id = "team_introduction"> {{team.team_introduction}}</p>
+                <div class="team-profile-view__members">
+                    <h2 class="team-profile-view__members-title">Team members</h2>
+                    {% for member in members %}
+                    <div class="team-profile-view__member">
+                        <img src="data:image/png;base64,{{ member.image }}" id="profileThumb" width="200">
+                            <!-- alt="{{ member.name }}" class="team-profile-view__member-avatar"> -->
+                        <span class="team-profile-view__member-name">{{ member.name }}</span>
+                        <span class="team-profile-view__member-name">{{ member.email }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class = "team-profile-view__edit" id = "team-profile-view__edit">
+                    {% if has_permission %}
+                        <button id="editButton" class="edit-button" onclick="editComment()">Edit</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

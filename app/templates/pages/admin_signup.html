@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% set hide_header = true %}
+{% set hide_footer = true %}
+{% block title %}관리자 회원가입 - DataSquare{% endblock %}
+{% block content %}
+
+<div class="sign-up">
+    <script src="{{ url_for('static', path='/js/sign_up_admin.js') }}"></script>
+    <h1 class="sign-up__title">Admin Sign Up</h1>
+    <form class="sign-up__form" method="post"  action = "/admin">
+        <div class="form-group">
+            <label for="email" class="form-label">Company Email</label>
+            <input type="email" id="email" name="email" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" name="name" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" name="password" class="form-input" required>
+            <p class="form-help">Password must be at least 8 characters long and include uppercase, lowercase, numbers,
+                and special characters.</p>
+        </div>
+        <div class="form-group">
+            <label for="password" class="form-label">Check Password</label>
+            <input type="password" id="password2" name="password2" class="form-input" required>
+        </div>
+        <button type="submit" class="btn btn--primary">Sign Up</button>
+    </form>
+</div>
+
+{% endblock %}

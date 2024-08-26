@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% set hide_header = true %}
+{% set hide_footer = true %}
+{% block title %}{{ status_code }} - {{error_message}}{% endblock %}
+{% block content %}
+
+<div class="error-container">
+    <img src="{{ url_for('static', path='images/rocket.png') }}" alt="Error" class="error-image">
+    <h1 class="error-title">{{ status_code }}</h1>
+    <h2 class="error-subtitle">{{error_message}}</h2>
+    <!-- <p class="error-description">The page does not exist or you have accessed an incorrect address.</p> -->
+    <p class="error-description">Please click the button below to go to the main page.</p>
+    <a href="/" class="btn btn--error">메인 페이지</a>
+</div>
+
+{% endblock %} 

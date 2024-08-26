@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Issue feed - DataSquare{% endblock %}
+{% block content %}
+
+<script type="text/javascript" src="{{ url_for('static', path='/js/feed.js') }}"></script>
+
+<div class="feed">
+    <div class="feed__left-column">
+        <div class="feed__search">
+            <input type="text" id="search_input" class="form-input feed__search-input" placeholder="Search"
+                onkeydown="if(event.keyCode==13) search()">
+        </div>
+        <div class="feed__recent-searches" id="feed__recent-searches">
+            <h3 class="feed__keywords-title">Keywords</h3>
+            <div id="recent-searches">
+                <ul id="recent-searches">
+                    <!-- 최근 검색어 목록 -->
+                </ul>
+            </div>
+        </div>
+        <div class="feed__teams">
+            <h3 class="feed__teams-title">Teams</h3>
+            {% for team, member in teams %}
+            <li>
+                <a href="/feed/search?team={{ team.team_name }}">{{ team.team_name }}</a>
+            </li>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="feed__right-column">
+        <div class="feed__controls">
+            <a href="{{ url_for('my_issues') }}" class="feed__control-text">My Issues</a>
+            <button class="btn feed__control-btn" onclick="sortIssues('desc')">Newest</button>
+            <button class="btn feed__control-btn" onclick="sortIssues('asc')">Oldest</button>
+        </div>
+        <div class="feed__issues">
+            {% for issue in issues %}
+            <a href="/data_request/view?issue_id={{ issue.id }}">
+                <div class="feed__issue-card">
+                    <img src="data:image;base64,{{ issue.profile_pic | safe }}" alt="{{ issue.author_name }}"
+                        class="feed__issue-profile-pic">
+                    <div class="feed__issue-content">
+                        <h3 class="feed__issue-title">{{ issue.title }}</h3>
+                        <p class="feed__issue-description">{{ issue.content }}</p>
+                        <div class="feed__issue-meta">
+                            <span class="feed__issue-author">{{ issue.author_name }}</span>
+                            <span class="feed__issue-team">{{ issue.team }}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+</div>
+</div>
+
+{% endblock %}

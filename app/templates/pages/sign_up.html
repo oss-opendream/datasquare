@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% set hide_header = true %}
+{% set hide_footer = true %}
+{% block title %}회원가입 - DataSquare{% endblock %}
+{% block content %}
+<script src="{{ url_for('static',path='js/sign_up.js' )}}"></script>
+<div class="sign-up">
+    <h1 class="sign-up__title">Sign Up</h1>
+    <form class="sign-up__form" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="email" class="form-label">Company Email</label>
+            <input type="email" id="email" name="email" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" name="name" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" name="password" class="form-input" required>
+            <p class="form-help">Password must be at least 8 characters long and include uppercase, lowercase, numbers,
+                and special characters.</p>
+        </div>
+        <div class="form-group">
+            <label for="password" class="form-label">Check Password</label>
+            <input type="password" id="password2" name="password2" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label for="phone_number" class="form-label">Phone</label>
+            <input type="tel" id="phone_number" name="phone_number" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label for="department" class="form-label">Department</label>
+            <select id="department" name="department" class="form-select" required>
+                <option value="">--Department--</option>
+                {% for department in departments %}
+                <option value="{{ department }}">{{ department }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="profile_image" class="form-label">Profile Image</label>
+            <input type="file" id="profile_image" name="image" class="form-input" accept="image/*">
+            <p class="form-help">Image size must be at least 400px by 400px. File size must be under 2MB.</p>
+        </div>
+        <button type="submit" class="btn btn--primary">Sign Up</button>
+    </form>
+    <p class="sign-up__signin-link">
+        이미 계정이 있으신가요? <a href="{{ url_for('auth.signin') }}">Sign In</a>
+    </p>
+</div>
+
+{% endblock %}
