@@ -105,8 +105,8 @@ async def personal_post(request: Request,
         UserData().update_user_data(current_user.profile_id, update_data)
 
         data = {
-        'sub': email,  # 사용자 식별
-        'exp': datetime.utcnow() + timedelta(hours=ACCESS_TOKEN_EXPIRE_MINUTES)  # token 유효기간
+            'sub': email,  # 사용자 식별
+            'exp': datetime.utcnow() + timedelta(hours=ACCESS_TOKEN_EXPIRE_MINUTES)  # token 유효기간
         }
         access_token = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
 
@@ -186,7 +186,7 @@ async def team_profile_post(
         )
     except:
         ret = JSONResponse(
-             content={
+            content={
                 "error": 'The team name must be unique. Please check the team name.'
             },
             status_code=status.HTTP_400_BAD_REQUEST

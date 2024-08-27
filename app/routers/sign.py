@@ -119,11 +119,12 @@ async def signup_post(
     '''로그인 페이지 라우터 함수'''
 
     image_content = await image.read()
-    
+
     # 이미지가 아무것도 없을 때 default값 지정해주기
-    if not image_content : 
+    if not image_content:
         current_dir = os.path.dirname(__file__)
-        image_path = os.path.abspath(os.path.join(current_dir, "../static/images/default_user_thumb.png"))
+        image_path = os.path.abspath(os.path.join(
+            current_dir, "../static/images/default_user_thumb.png"))
         with open(image_path, 'rb') as image_file:
             image_content = image_file.read()
 
