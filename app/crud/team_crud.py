@@ -2,6 +2,7 @@
 
 
 from typing import List, Optional
+import base64
 
 from sqlalchemy.orm import Session
 
@@ -63,6 +64,9 @@ class TeamData:
                                       ) \
                                 .all()
 
+        for member in members:
+            member.profile_image = base64.b64encode(
+                member.profile_image).decode('utf-8')
         return members
 
     def get_all(self,) -> TeamProfile:

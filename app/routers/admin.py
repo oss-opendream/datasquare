@@ -173,7 +173,8 @@ async def update_team_info(
 
         else:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
+                # status_code=status.HTTP_401_UNAUTHORIZED,
+                status_code=404,
                 detail='No permission'
             )
 
