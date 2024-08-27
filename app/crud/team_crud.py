@@ -181,8 +181,6 @@ class TeamData:
             team = db_session.query(TeamProfile).filter(
                 TeamProfile.team_name == origin_name).one_or_none()
 
-            print(team)
-
             if team:
                 team.team_name = team_name
                 team.team_introduction = team_intro
