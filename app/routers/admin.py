@@ -86,13 +86,19 @@ async def teams_settings(
     '''팀 생성 페이지 함수'''
 
     if isinstance(current_user, user_schema.AdminUser):
-        return templates.TemplateResponse(
-            'pages/team_create.html',
-            {
-                'request': request
-            }
-        )
+        team_data = TeamData()
+        team_profiles = team_data.get_all()
 
+        if not team_profiles:
+            return templates.TemplateResponse(
+                'pages/team_create.html',
+                {
+                    'request': request
+                }
+            )
+
+        else:
+            return RedirectResponse(url='/admin/teams', status_code=status.HTTP_302_FOUND)
     else:
         raise HTTPException(status_code=401)
 
