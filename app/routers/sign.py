@@ -42,7 +42,7 @@ async def singin_get(
                                       )
 
 
-@router.post('/signin/post', response_model=user_schema.Token, name='sign_post')
+@router.post('/signin/post', name='sign_post')
 async def signin_post(
     request: Request,
     form_data: OAuth2PasswordRequestForm = Depends(),
@@ -61,8 +61,14 @@ async def signin_post(
 
 
     if not user or not userdata_obj.pwd_context.verify(form_data.password, user.password):
-        return RedirectResponse(url='/signin?error=비밀번호가 일치하지 않습니다.',
-                                status_code=status.HTTP_302_FOUND)
+        # return RedirectResponse(url='/signin?error=비밀번호가 일치하지 않습니다.',
+        #                         status_code=status.HTTP_302_FOUND)
+        return JSONResponse(
+            content={
+                "error": "비밀번호가 일치하지 않습니다."
+            },
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
 
     data = {
         'sub': user.email,  # 사용자 식별
@@ -71,9 +77,11 @@ async def signin_post(
     access_token = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
 
     # HTTPOnly 쿠키로 토큰 반환
-    response = RedirectResponse(url=url,
-                                status_code=status.HTTP_302_FOUND
-                                )
+    response = JSONResponse(
+        content={"redirect_url": url},  # 리디렉션 URL을 JSON으로 반환
+        status_code=status.HTTP_200_OK
+    )
+
     response.set_cookie(
         key='access_token',
         value=access_token,
@@ -117,12 +125,10 @@ async def signup_post(
 
     image_content = await image.read()
     
-    # 아무것도 없을 때 확인하기 
+    # 이미지가 아무것도 없을 때 default값 지정해주기
     if not image_content : 
-        print('image is not')
         current_dir = os.path.dirname(__file__)
         image_path = os.path.abspath(os.path.join(current_dir, "../static/images/default_user_thumb.png"))
-        # image_path = os.path.join(current_dir, "../static/image/defult_user_thumb.png")
         with open(image_path, 'rb') as image_file:
             image_content = image_file.read()
 
