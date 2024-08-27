@@ -12,7 +12,8 @@ from app.crud.team_crud import TeamData
 from app.crud.user_crud import UserData
 from app.schemas.user_schema import User
 from app.utils.get_current_user import get_current_user
-
+from sqlalchemy.exc import IntegrityError
+from starlette import status
 
 templates = Jinja2Templates(directory='app/templates')
 profilerouter = APIRouter(prefix="/profile")
@@ -90,20 +91,29 @@ async def personal_post(request: Request,
         team_id=current_user.team_id
     )
 
-    UserData().update_user_data(current_user.profile_id, update_data)
+    try:
+        UserData().update_user_data(current_user.profile_id, update_data)
 
-    return templates.TemplateResponse(
-        'pages/personal.html',
-        {
-            'request': request,
-            'notification_count': get_notification_count(update_data.profile_id),
-            'image': base64.b64encode(update_data.profile_image).decode('utf-8'),
-            'name': update_data.name,
-            'email': update_data.email,
-            'phone': update_data.phone_number,
-            'department': current_user.department,
-        }
-    )
+        return templates.TemplateResponse(
+            'pages/personal.html',
+            {
+                'request': request,
+                'notification_count': get_notification_count(update_data.profile_id),
+                'image': base64.b64encode(update_data.profile_image).decode('utf-8'),
+                'name': update_data.name,
+                'email': update_data.email,
+                'phone': update_data.phone_number,
+                'department': current_user.department,
+            }
+        )
+
+    except IntegrityError:
+        return JSONResponse(
+            content={
+                'error': '이미 있는 존재하는 계정입니다. 전화번호 및 이메일을 다시 확인해주세요'
+            },
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
 
 
 @profilerouter.get('/team')

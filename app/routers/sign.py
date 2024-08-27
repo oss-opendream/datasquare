@@ -14,6 +14,7 @@ from fastapi.responses import JSONResponse
 from fastapi import Response
 from jose import jwt
 from starlette import status
+from sqlalchemy.exc import IntegrityError
 
 from app.crud.team_crud import TeamData
 from app.crud.user_crud import UserData
@@ -155,19 +156,19 @@ async def signup_post(
             status_code=status.HTTP_400_BAD_REQUEST
         )
 
-    if userdata_obj.get_user_password(email, key='email'):  # 이미 회원가입이 되어있는지 확인
-        return JSONResponse(
-            content={
-                "error": "이미 존재하는 계정입니다. 다른 계정으로 회원가입해주세요"
-            },
-            status_code=status.HTTP_400_BAD_REQUEST
-        )
-    else:
+    try:
         userdata_obj.create_user(user_create=user_create)
 
         return RedirectResponse(
             url='/signin',
             status_code=status.HTTP_302_FOUND
+        )
+    except IntegrityError:
+        return JSONResponse(
+            content={
+                'error': '이미 있는 존재하는 계정입니다. 전화번호 및 이메일을 다시 확인해주세요'
+            },
+            status_code=status.HTTP_400_BAD_REQUEST
         )
 
 
