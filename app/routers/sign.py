@@ -48,7 +48,6 @@ async def signin_post(
     form_data: OAuth2PasswordRequestForm = Depends(),
 ):
     '''로그인 정보 라우터 함수'''
-    print(form_data)
 
     userdata_obj = UserData()
     user = userdata_obj.get_user_password(form_data.username,
@@ -60,7 +59,6 @@ async def signin_post(
         user = userdata_obj.get_admin_data(form_data.username)
         url = '/admin'
 
-    # print(user)
 
     if not user or not userdata_obj.pwd_context.verify(form_data.password, user.password):
         return RedirectResponse(url='/signin?error=비밀번호가 일치하지 않습니다.',
@@ -118,6 +116,15 @@ async def signup_post(
     '''로그인 페이지 라우터 함수'''
 
     image_content = await image.read()
+    
+    # 아무것도 없을 때 확인하기 
+    if not image_content : 
+        print('image is not')
+        current_dir = os.path.dirname(__file__)
+        image_path = os.path.abspath(os.path.join(current_dir, "../static/images/default_user_thumb.png"))
+        # image_path = os.path.join(current_dir, "../static/image/defult_user_thumb.png")
+        with open(image_path, 'rb') as image_file:
+            image_content = image_file.read()
 
     try:
         user_create = user_schema.UserCreate(
