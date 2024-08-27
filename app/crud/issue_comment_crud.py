@@ -9,7 +9,7 @@ from sqlalchemy import and_
 from app.models.profile import TeamProfile, PersonalProfile, TeamMembership
 from app.models.issue import IssueComment
 from app.models.database import datasquare_db
-from app.schemas.issue_comment import IssueCommentView
+from app.schemas.issue import IssueCommentView
 
 
 class IssueCommentData():
@@ -73,6 +73,7 @@ class IssueCommentData():
             comment = IssueCommentView(
                 issue_id=issue_comment.within,
                 comment_id=issue_comment.comment_id,
+                publisher_id=issue_comment.publisher,
                 publisher=personal_profile.name,
                 team=team_profile.team_name,
                 content=issue_comment.content,

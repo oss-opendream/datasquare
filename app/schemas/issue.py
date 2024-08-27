@@ -9,6 +9,7 @@ class IssueCommentView(BaseModel):
 
     issue_id: int
     comment_id: int
+    publisher_id: int
     publisher: str
     team: str
     content: str

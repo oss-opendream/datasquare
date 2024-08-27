@@ -1,6 +1,8 @@
 '''이슈 페이지 관리 라우터 모듈'''
 
 
+import base64
+
 from fastapi import APIRouter, Request, HTTPException, Form, Depends
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -9,7 +11,6 @@ from app.crud.issue_crud import IssueData
 from app.crud.issue_comment_crud import IssueCommentData
 from app.crud.noti import get_notification_count
 from app.crud.team_crud import TeamData
-from app.crud.user_crud import UserData
 from app.schemas.user_schema import User
 from app.utils.get_current_user import get_current_user
 
@@ -63,6 +64,8 @@ async def issue_views(
             'issue': issue_data[0],
             'publisher': issue_data[1],
             'publisher_team': issue_data[2],
+            'issue_publisher_image': base64.b64encode(
+                issue_data[1].profile_image).decode('utf-8'),
             'comments': comments,
             'team_name': requested_team_name,
             'current_user': current_user,

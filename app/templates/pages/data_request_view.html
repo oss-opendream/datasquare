@@ -15,8 +15,8 @@
 
             <div class="form-group">
                 <label for="publisher" class="form-label">Publisher</label>
-                <!-- <img class="publisher_image" id="profilePic" src="data:image;base64,{{ publisher.profile_image | safe }}" alt="{{ publisher.name }}"
-                        class="feed__issue-profile-pic"> -->
+                <img class="publisher_image" id="profilePic" src="data:image;base64,{{ issue_publisher_image | safe }}" width="200" alt="{{ publisher.name }}"
+                        class="feed__issue-profile-pic">
                 <span id="publisher" name="publisher" class="form-textarea">{{ publisher.name }}</span>
                 <span id="publisher" name="publisher_team" class="form-textarea">{{ publisher_team.team_name }}</span>
             </div>
@@ -80,20 +80,20 @@
         <div class="data-request__comments-list">
             {% for comment in comments %}
             <li id="comment-{{ comment.comment_id }}">
-                {% if comment.publisher == current_user.profile_id %}
-
-                <img src="data:image;base64,{{ comment.image | safe }}" alt="{{ comment.publisher }}"
+                <img src="data:image;base64,{{ comment.image | safe }}"width="30" alt="{{ comment.publisher }}"
                         class="comment-publisher-profile-pic">
                 <span id="comment-publisher" name="comment-publisher" class="form-textarea">{{ comment.publisher }}</span>
                 <span id="comment_publisher_team" name="comment_publisher_team" class="form-textarea">{{ comment.team }}</span>
                 <br>
-                <span class="comment-text">{{ comment.content }}</span>
-                <button class="btn btn--primary issue-comment-button"
-                    onclick="editComment({{ comment.comment_id }})">Edit</button>
-                <button class="btn btn--primary issue-comment-button"
-                    onclick="deleteComment({{ comment.comment_id }})">Delete</button>
-                <hr>
+                <span class="comment-text">{{ comment.content }}
+                {% if comment.publisher_id == current_user.profile_id %}
+                    <button class="btn btn--primary issue-comment-button"
+                        onclick="editComment({{ comment.comment_id }})">Edit</button>
+                    <button class="btn btn--primary issue-comment-button"
+                        onclick="deleteComment({{ comment.comment_id }})">Delete</button>
+                    <hr>
                 {% endif %}
+            </span>
             </li>
             {% endfor %}
         </div>
