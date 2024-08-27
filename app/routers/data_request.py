@@ -4,7 +4,6 @@
 import base64
 
 from fastapi import APIRouter, Request, HTTPException, Form, Depends
-from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
 
 from app.crud.issue_crud import IssueData
@@ -13,10 +12,9 @@ from app.crud.noti import get_notification_count
 from app.crud.team_crud import TeamData
 from app.schemas.user_schema import User
 from app.utils.get_current_user import get_current_user
-
+from app.utils.template import template
 
 data_request_router = APIRouter(prefix='/data_request')
-templates = Jinja2Templates(directory='app/templates')
 
 
 @data_request_router.get('/publish', response_class=HTMLResponse, name='data_request')
@@ -27,7 +25,7 @@ async def issue_pulish(
     '''이슈 발행 페이지 함수'''
 
     departments = TeamData().get_team_name()
-    ret = templates.TemplateResponse(
+    ret = template.TemplateResponse(
         'pages/data_request.html',
         {
             'request': request,
@@ -57,7 +55,7 @@ async def issue_views(
     requested_team_name = TeamData().get_team_name_one(
         issue_data.requested_team)
 
-    ret = templates.TemplateResponse(
+    ret = template.TemplateResponse(
         'pages/data_request_view.html',
         {
             'request': request,
@@ -154,7 +152,7 @@ async def issue_edit_page(request: Request,
     departments = TeamData().get_team_name()
     selected_team_name = TeamData().get_team_name_one(issue.requested_team)
 
-    ret = templates.TemplateResponse(
+    ret = template.TemplateResponse(
         'pages/data_request_edit.html',
         {
             'request': request,

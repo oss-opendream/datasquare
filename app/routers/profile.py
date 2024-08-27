@@ -4,7 +4,6 @@ import base64
 from typing import Annotated
 
 from fastapi import APIRouter, Request, Depends, Form, File, UploadFile
-from fastapi.templating import Jinja2Templates
 from fastapi.responses import JSONResponse
 
 from app.crud.noti import get_notification_count
@@ -14,8 +13,9 @@ from app.schemas.user_schema import User
 from app.utils.get_current_user import get_current_user
 from sqlalchemy.exc import IntegrityError
 from starlette import status
+from app.utils.template import template
 
-templates = Jinja2Templates(directory='app/templates')
+
 profilerouter = APIRouter(prefix="/profile")
 
 
@@ -31,7 +31,7 @@ async def personal(
 
     team_name = TeamData().get_current_user_team_data(current_user.profile_id)
 
-    return templates.TemplateResponse(
+    return template.TemplateResponse(
         'pages/personal.html',
         {
             'request': request,
@@ -52,7 +52,7 @@ async def personal_edit(
 ):
     '''개인 프로필 수정 페이지 라우터'''
 
-    return templates.TemplateResponse(
+    return template.TemplateResponse(
         'pages/personal_edit.html',
         {
             'request': request,
@@ -94,7 +94,7 @@ async def personal_post(request: Request,
     try:
         UserData().update_user_data(current_user.profile_id, update_data)
 
-        return templates.TemplateResponse(
+        return template.TemplateResponse(
             'pages/personal.html',
             {
                 'request': request,
@@ -129,7 +129,7 @@ async def team_profile_get(
     team_members = team.get_team_members(team_data.profile_id)
     team_manager = team_data.team_manager
 
-    return templates.TemplateResponse(
+    return template.TemplateResponse(
         'pages/team_profile_view.html',
         {
             'request': request,
