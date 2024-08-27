@@ -1,10 +1,14 @@
 '''개인 프로필 페이지 관리 라우터 함수'''
 
+import os
 import base64
 from typing import Annotated
+from datetime import timedelta, datetime
+from dotenv import load_dotenv
 
 from fastapi import APIRouter, Request, Depends, Form, File, UploadFile
 from fastapi.responses import JSONResponse
+from jose import jwt
 
 from app.crud.noti import get_notification_count
 from app.crud.team_crud import TeamData
@@ -17,6 +21,12 @@ from app.utils.template import template
 
 
 profilerouter = APIRouter(prefix="/profile")
+
+load_dotenv(override=True)
+
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES'))
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
+ALGORITHM = str(os.getenv('ALGORITHM'))
 
 
 @profilerouter.get("/")
@@ -94,7 +104,13 @@ async def personal_post(request: Request,
     try:
         UserData().update_user_data(current_user.profile_id, update_data)
 
-        return template.TemplateResponse(
+        data = {
+        'sub': email,  # 사용자 식별
+        'exp': datetime.utcnow() + timedelta(hours=ACCESS_TOKEN_EXPIRE_MINUTES)  # token 유효기간
+        }
+        access_token = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
+
+        response = template.TemplateResponse(
             'pages/personal.html',
             {
                 'request': request,
@@ -106,11 +122,20 @@ async def personal_post(request: Request,
                 'department': current_user.department,
             }
         )
+        response.set_cookie(
+            key='access_token',
+            value=access_token,
+            httponly=True,
+            secure=False,
+            samesite='Lax'
+        )
+
+        return response
 
     except IntegrityError:
         return JSONResponse(
             content={
-                'error': '이미 있는 존재하는 계정입니다. 전화번호 및 이메일을 다시 확인해주세요'
+                'error': 'This account already exists. Please check your phone number and email again.'
             },
             status_code=status.HTTP_400_BAD_REQUEST
         )
@@ -151,12 +176,20 @@ async def team_profile_post(
     '''team 프로필 View 페이지 저장 라우터'''
 
     team = TeamData()
-    team.modify_team_info_profile(origin_name, team_name, team_intro)
+    try:
+        team.modify_team_info_profile(origin_name, team_name, team_intro)
 
-    ret = JSONResponse(
-        content={
-            "status": "success",
-        }
-    )
+        ret = JSONResponse(
+            content={
+                "status": "success",
+            }
+        )
+    except:
+        ret = JSONResponse(
+             content={
+                "error": 'The team name must be unique. Please check the team name.'
+            },
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
 
     return ret

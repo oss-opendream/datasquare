@@ -58,11 +58,9 @@ async def signin_post(
         url = '/admin'
 
     if not user or not userdata_obj.pwd_context.verify(form_data.password, user.password):
-        # return RedirectResponse(url='/signin?error=비밀번호가 일치하지 않습니다.',
-        #                         status_code=status.HTTP_302_FOUND)
         return JSONResponse(
             content={
-                "error": "비밀번호가 일치하지 않습니다."
+                "error": "The password is incorrect."
             },
             status_code=status.HTTP_400_BAD_REQUEST
         )
@@ -142,7 +140,7 @@ async def signup_post(
     except:
         return JSONResponse(
             content={
-                "error": "이메일형식이 올바르지않습니다. 다시 작성해주세요"
+                "error": "The email format is incorrect. Please try again."
             },
             status_code=status.HTTP_400_BAD_REQUEST
         )
@@ -152,7 +150,7 @@ async def signup_post(
     if password != password2:
         return JSONResponse(
             content={
-                "error": "비밀번호가 일치하지 않습니다."
+                "error": "The password is incorrect."
             },
             status_code=status.HTTP_400_BAD_REQUEST
         )
@@ -161,7 +159,7 @@ async def signup_post(
     if userdata_obj.get_admin_data(user_create.email):
         return JSONResponse(
             content={
-                "error": "admin계정에 존재하는 계정입니다. 다른 계정으로 회원가입해주세요"
+                "error": "This account exists as an admin account. Please sign up with a different account."
             },
             status_code=status.HTTP_400_BAD_REQUEST
         )
@@ -176,7 +174,7 @@ async def signup_post(
     except IntegrityError:
         return JSONResponse(
             content={
-                'error': '이미 있는 존재하는 계정입니다. 전화번호 및 이메일을 다시 확인해주세요'
+                'error': 'This account already exists. Please check your phone number and email again.'
             },
             status_code=status.HTTP_400_BAD_REQUEST
         )
