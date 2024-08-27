@@ -44,9 +44,10 @@ class TeamData:
 
         with next(self.db.get_db()) as db_session:
             for team in team_names:
-                new_team = TeamProfile(team_name=team,
-                                       team_manager='')
-                db_session.add(new_team)
+                if team.strip():
+                    new_team = TeamProfile(team_name=team,
+                                           team_manager='')
+                    db_session.add(new_team)
 
             db_session.commit()
             db_session.refresh(new_team)
