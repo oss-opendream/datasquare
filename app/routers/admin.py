@@ -9,6 +9,7 @@ from fastapi.responses import RedirectResponse
 from fastapi import APIRouter, Request, Depends, Form, HTTPException
 from fastapi.templating import Jinja2Templates
 from starlette import status
+from sqlalchemy.exc import SQLAlchemyError
 
 from app.crud.team_crud import TeamData
 from app.crud.user_crud import UserData
@@ -110,17 +111,20 @@ async def set_teams(
 ):
     '''팀 설정 함수'''
 
-    if isinstance(current_user, user_schema.AdminUser):
-        teamdata = TeamData()
-        teamdata.create_teams(team_names=team_names)
+    try:
+        if isinstance(current_user, user_schema.AdminUser):
+            teamdata = TeamData()
+            teamdata.create_teams(team_names=team_names)
 
-        return RedirectResponse(
-            url='/admin/teams',
-            status_code=status.HTTP_302_FOUND,
-        )
+            return RedirectResponse(
+                url='/admin/teams',
+                status_code=status.HTTP_302_FOUND,
+            )
 
-    else:
-        raise HTTPException(status_code=401)
+        else:
+            raise HTTPException(status_code=401)
+    except SQLAlchemyError as e:
+        raise HTTPException(status_code=500) from e
 
 
 @router.get('/teams', name='team_settings')
@@ -159,24 +163,28 @@ async def update_team_info(
 ):
     '''팀 정보 생성, 수정, 삭제 함수'''
 
-    if isinstance(current_user, user_schema.AdminUser):
-        team_data = TeamData()
-        team_data.modify_team_info(
-            profile_ids=profile_ids,
-            team_names=team_names,
-            team_manager_ids=team_manager_ids,
-            delete_flags=delete_flags,
-        )
+    try:
+        if isinstance(current_user, user_schema.AdminUser):
+            team_data = TeamData()
+            team_data.modify_team_info(
+                profile_ids=profile_ids,
+                team_names=team_names,
+                team_manager_ids=team_manager_ids,
+                delete_flags=delete_flags,
+            )
 
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='No permission'
-        )
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail='No permission'
+            )
 
-    return RedirectResponse(
-        url='/admin/teams',
-        status_code=status.HTTP_302_FOUND)
+        return RedirectResponse(
+            url='/admin/teams',
+            status_code=status.HTTP_302_FOUND)
+
+    except SQLAlchemyError as e:
+        raise HTTPException(status_code=500) from e
 
 
 @router.get('/teams/members/{team_profile_id}')
