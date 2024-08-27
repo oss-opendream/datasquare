@@ -88,7 +88,7 @@ class IssueData():
             publisher=issue_object.publisher,
             requested_team=issue_object.requested_team,
             is_private=issue_object.is_private,
-            create_at=issue_object.created_at,
+            created_at=issue_object.created_at,
             modified_at=issue_object.modified_at,
             is_deleted=issue_object.is_deleted,
             publisher_name=personal_object.name,

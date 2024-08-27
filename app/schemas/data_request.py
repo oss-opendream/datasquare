@@ -13,7 +13,7 @@ class DataRequestCreate(BaseModel):
     publisher: int
     requested_team: int
     is_private: int
-    create_at: str
+    created_at: str
     modified_at: str
     is_deleted: int
 
