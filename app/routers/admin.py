@@ -7,7 +7,6 @@ from typing import List, Optional
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi import APIRouter, Request, Depends, Form, HTTPException
-from fastapi.templating import Jinja2Templates
 from starlette import status
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -15,10 +14,9 @@ from app.crud.team_crud import TeamData
 from app.crud.user_crud import UserData
 from app.schemas import user_schema
 from app.utils.get_current_user import get_current_user
-
+from app.utils.template import template
 
 router = APIRouter(prefix='/admin')
-templates = Jinja2Templates(directory='app/templates')
 
 
 @asynccontextmanager
@@ -52,7 +50,7 @@ async def create_admin(request: Request):
     '''관리자 관리자 회원가입 페이지 함수'''
 
     if not UserData().is_admin_table():
-        return templates.TemplateResponse(
+        return template.TemplateResponse(
             'pages/admin_signup.html',
             {
                 'request': request
@@ -91,7 +89,7 @@ async def teams_settings(
         team_profiles = team_data.get_all()
 
         if not team_profiles:
-            return templates.TemplateResponse(
+            return template.TemplateResponse(
                 'pages/team_create.html',
                 {
                     'request': request
@@ -144,7 +142,7 @@ async def manage_teams_info(
                 status_code=status.HTTP_302_FOUND,
             )
 
-        return templates.TemplateResponse(
+        return template.TemplateResponse(
             'pages/team_manage.html',
             {
                 'request': request,

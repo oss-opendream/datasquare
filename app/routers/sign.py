@@ -8,7 +8,6 @@ from typing import Annotated
 
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi import APIRouter, Request, Depends, Form, File, UploadFile
-from fastapi.templating import Jinja2Templates
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 from fastapi import Response
@@ -19,10 +18,9 @@ from sqlalchemy.exc import IntegrityError
 from app.crud.team_crud import TeamData
 from app.crud.user_crud import UserData
 from app.schemas import user_schema
-
+from app.utils.template import template
 
 router = APIRouter()
-templates = Jinja2Templates(directory='app/templates')
 
 load_dotenv(override=True)
 
@@ -37,9 +35,9 @@ async def singin_get(
 ):
     '''로그인 페이지 라우터 함수'''
 
-    return templates.TemplateResponse(request=request,
-                                      name='pages/sign_in.html',
-                                      )
+    return template.TemplateResponse(request=request,
+                                     name='pages/sign_in.html',
+                                     )
 
 
 @router.post('/signin/post', name='sign_post')
@@ -58,7 +56,6 @@ async def signin_post(
     if not user:
         user = userdata_obj.get_admin_data(form_data.username)
         url = '/admin'
-
 
     if not user or not userdata_obj.pwd_context.verify(form_data.password, user.password):
         # return RedirectResponse(url='/signin?error=비밀번호가 일치하지 않습니다.',
@@ -101,7 +98,7 @@ async def signup_get(
 
     departments = TeamData().get_team_name()
 
-    return templates.TemplateResponse(
+    return template.TemplateResponse(
         'pages/sign_up.html',
         context={
             'request': request,
