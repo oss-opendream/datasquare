@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "datasquare"
+version = "0.1.0"
+description = "Cross-organizational communication platform for data collaboration"
+authors = ["Open Dream"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "~3.10.14"
+fastapi = {extras = ["standard"], version = "~0.112.2"}
+passlib = "~1.7.4"
+bcrypt = "~4.2.0"
+psycopg = "~3.2.1"
+psycopg-binary = "~3.2.1"
+pydantic = "~2.8"
+python-dotenv = "~1.0.1"
+python-jose = "~3.3.0"
+pytz = "~2024.1"
+SQLAlchemy = "~2.0.32"
+starlette = "~0.38.2"
+uvicorn = "~0.30.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
