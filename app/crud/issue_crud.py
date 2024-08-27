@@ -1,13 +1,15 @@
 '''이슈 데이터를 CRUD하기 위한 모듈'''
 
 
-from sqlalchemy.orm import Session
+import base64
 
+from sqlalchemy.orm import Session
 
 from app.crud.issue_comment_crud import IssueCommentData
 from app.models.profile import TeamProfile, PersonalProfile, TeamMembership
 from app.models.issue import Issue
 from app.models.database import datasquare_db
+from app.schemas.data_request import DataRequestView
 from app.utils.time import current_time
 
 
@@ -75,7 +77,27 @@ class IssueData():
                 .outerjoin(TeamProfile, TeamMembership.team_id == TeamProfile.profile_id) \
                 .filter(Issue.is_deleted == 0).one_or_none()
 
-        return issue_data
+        issue_object = issue_data[0]
+        personal_object = issue_data[1]
+        team_object = issue_data[2]
+
+        ret = DataRequestView(
+            issue_id=issue_object.issue_id,
+            title=issue_object.title,
+            content=issue_object.content,
+            publisher=issue_object.publisher,
+            requested_team=issue_object.requested_team,
+            is_private=issue_object.is_private,
+            create_at=issue_object.created_at,
+            modified_at=issue_object.modified_at,
+            is_deleted=issue_object.is_deleted,
+            publisher_name=personal_object.name,
+            publisher_image=base64.b64encode(
+                personal_object.profile_image).decode('utf-8'),
+            publisher_team=team_object.team_name
+        )
+
+        return ret
 
     def update_issue_data(
         self,

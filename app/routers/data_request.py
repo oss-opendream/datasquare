@@ -55,17 +55,13 @@ async def issue_views(
         current_user.profile_id).read_issue_comments(issue_id)
 
     requested_team_name = TeamData().get_team_name_one(
-        issue_data[0].requested_team)
+        issue_data.requested_team)
 
     ret = templates.TemplateResponse(
         'pages/data_request_view.html',
         {
             'request': request,
-            'issue': issue_data[0],
-            'publisher': issue_data[1],
-            'publisher_team': issue_data[2],
-            'issue_publisher_image': base64.b64encode(
-                issue_data[1].profile_image).decode('utf-8'),
+            'issue': issue_data,
             'comments': comments,
             'team_name': requested_team_name,
             'current_user': current_user,

@@ -15,10 +15,10 @@
 
             <div class="form-group">
                 <label for="publisher" class="form-label">Publisher</label>
-                <img class="publisher_image" id="profilePic" src="data:image;base64,{{ issue_publisher_image | safe }}" width="200" alt="{{ publisher.name }}"
+                <img class="publisher_image" id="profilePic" src="data:image;base64,{{ issue.publisher_image | safe }}" width="200" alt="{{ issue.publisher_name }}"
                         class="feed__issue-profile-pic">
-                <span id="publisher" name="publisher" class="form-textarea">{{ publisher.name }}</span>
-                <span id="publisher" name="publisher_team" class="form-textarea">{{ publisher_team.team_name }}</span>
+                <span id="publisher" name="publisher" class="form-textarea">{{ issue.publisher_name }}</span>
+                <span id="publisher" name="publisher_team" class="form-textarea">{{ issue.publisher_team }}</span>
             </div>
 
             <div class="form-group">
