@@ -14,6 +14,14 @@
             </div>
 
             <div class="form-group">
+                <label for="publisher" class="form-label">Publisher</label>
+                <!-- <img class="publisher_image" id="profilePic" src="data:image;base64,{{ publisher.profile_image | safe }}" alt="{{ publisher.name }}"
+                        class="feed__issue-profile-pic"> -->
+                <span id="publisher" name="publisher" class="form-textarea">{{ publisher.name }}</span>
+                <span id="publisher" name="publisher_team" class="form-textarea">{{ publisher_team.team_name }}</span>
+            </div>
+
+            <div class="form-group">
                 <label for="department" class="form-label">Requested Team</label>
                 <span id="department" name="department" class="form-textarea">{{ team_name }}</span>
             </div>
@@ -74,7 +82,10 @@
             <li id="comment-{{ comment.comment_id }}">
                 {% if comment.publisher == current_user.profile_id %}
 
-                <span class="comment-publisher">{{ comment.publisher }}</span>
+                <img src="data:image;base64,{{ comment.image | safe }}" alt="{{ comment.publisher }}"
+                        class="comment-publisher-profile-pic">
+                <span id="comment-publisher" name="comment-publisher" class="form-textarea">{{ comment.publisher }}</span>
+                <span id="comment_publisher_team" name="comment_publisher_team" class="form-textarea">{{ comment.team }}</span>
                 <br>
                 <span class="comment-text">{{ comment.content }}</span>
                 <button class="btn btn--primary issue-comment-button"
@@ -97,5 +108,4 @@
     </div>
 </div>
 <script src="{{ url_for('static', path='js/issue_comment.js') }}"></script>
-
 {% endblock %}

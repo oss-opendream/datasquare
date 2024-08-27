@@ -9,6 +9,7 @@ from app.crud.issue_crud import IssueData
 from app.crud.issue_comment_crud import IssueCommentData
 from app.crud.noti import get_notification_count
 from app.crud.team_crud import TeamData
+from app.crud.user_crud import UserData
 from app.schemas.user_schema import User
 from app.utils.get_current_user import get_current_user
 
@@ -45,23 +46,25 @@ async def issue_views(
 ):
     '''이슈 조회 페이지 함수'''
 
-    issue = IssueData(current_user.profile_id).read_issue(issue_id)
-
-    if not issue:
+    issue_data = IssueData(current_user.profile_id).read_issue(issue_id)
+    if not issue_data:
         raise HTTPException(status_code=404, detail='Issue not found')
 
     comments = IssueCommentData(
         current_user.profile_id).read_issue_comments(issue_id)
 
-    team_name = TeamData().get_team_name_one(issue.requested_team)
+    requested_team_name = TeamData().get_team_name_one(
+        issue_data[0].requested_team)
 
     ret = templates.TemplateResponse(
         'pages/data_request_view.html',
         {
             'request': request,
-            'issue': issue,
+            'issue': issue_data[0],
+            'publisher': issue_data[1],
+            'publisher_team': issue_data[2],
             'comments': comments,
-            'team_name': team_name,
+            'team_name': requested_team_name,
             'current_user': current_user,
             'notification_count': get_notification_count(current_user.profile_id)
         }
@@ -145,6 +148,7 @@ async def issue_edit_page(request: Request,
     issue = IssueData(current_userid=current_user).read_issue(
         issue_id=issue_id)
 
+    print()
     if not issue:
         raise HTTPException(status_code=404, detail='Issue not found')
 

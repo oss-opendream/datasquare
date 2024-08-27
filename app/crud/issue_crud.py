@@ -1,12 +1,11 @@
 '''이슈 데이터를 CRUD하기 위한 모듈'''
 
 
-from sqlalchemy import and_
 from sqlalchemy.orm import Session
 
 
 from app.crud.issue_comment_crud import IssueCommentData
-from app.models.profile import TeamProfile
+from app.models.profile import TeamProfile, PersonalProfile, TeamMembership
 from app.models.issue import Issue
 from app.models.database import datasquare_db
 from app.utils.time import current_time
@@ -64,16 +63,19 @@ class IssueData():
 
         return issues
 
-    def read_issue(self, issue_id: int) -> Issue:
+    def read_issue(self, issue_id: int):
         '''주어진 ID에 해당하는 이슈 데이터를 읽어오는 함수'''
 
         with next(self.db.get_db()) as db_session:
-            issue = db_session.query(Issue) \
-                .filter(and_(Issue.issue_id == issue_id,
-                             Issue.is_deleted == 0)) \
-                .one_or_none()
+            issue_data = db_session \
+                .query(Issue, PersonalProfile, TeamProfile) \
+                .filter(Issue.issue_id == issue_id) \
+                .outerjoin(PersonalProfile, Issue.publisher == PersonalProfile.profile_id) \
+                .outerjoin(TeamMembership, PersonalProfile.profile_id == TeamMembership.member_id) \
+                .outerjoin(TeamProfile, TeamMembership.team_id == TeamProfile.profile_id) \
+                .filter(Issue.is_deleted == 0).one_or_none()
 
-        return issue
+        return issue_data
 
     def update_issue_data(
         self,
