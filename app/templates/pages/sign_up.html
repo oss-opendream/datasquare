@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% set hide_header = true %}
 {% set hide_footer = true %}
-{% block title %}회원가입 - DataSquare{% endblock %}
+{% block title %}Sign Up - DataSquare{% endblock %}
 {% block content %}
 <script src="{{ url_for('static',path='js/sign_up.js' )}}"></script>
 <div class="sign-up">
@@ -46,7 +46,7 @@
         <button type="submit" class="btn btn--primary">Sign Up</button>
     </form>
     <p class="sign-up__signin-link">
-        이미 계정이 있으신가요? <a href="{{ url_for('auth.signin') }}">Sign In</a>
+        Have an account? <a href="{{ url_for('auth.signin') }}">Sign In</a>
     </p>
 </div>
 
