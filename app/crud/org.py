@@ -4,7 +4,7 @@ from app.database import Base, engine
 from app.models.org import OrgDatabase, OrgDatabaseTable, OrgDatabaseTableColumn
 
 
-class DBInterface:
+class DBInterface(Base):
     def __init__(self, db: Session, org_metadata: list[tuple] = None):
         self.db = db
         self.org_metadata = org_metadata

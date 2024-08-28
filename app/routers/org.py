@@ -66,7 +66,7 @@ async def handle_insertion_request(
             detail='Failed to create metadata for the organization using the provided database connection.'
         )
 
-    return RedirectResponse('/admin/org/database')
+    return RedirectResponse('/admin/org/databases')
 
 
 @router.get('/databases', name='databases')
