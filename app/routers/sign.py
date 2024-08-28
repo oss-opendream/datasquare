@@ -1,11 +1,10 @@
 '''사용자 로그인과 회원가입 기능을 하는 Router.'''
 
 import os
-from dotenv import load_dotenv
-
 from datetime import timedelta, datetime
 from typing import Annotated
 
+from dotenv import load_dotenv
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi import APIRouter, Request, Depends, Form, File, UploadFile
 from fastapi.security import OAuth2PasswordRequestForm
