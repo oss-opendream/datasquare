@@ -146,13 +146,13 @@ button {
 
 .btn--primary,
 button[type="submit"] {
-    background-color: #007bff;
+    background-color: #69BEB7;
     color: white;
 }
 
 .btn--primary:hover,
 button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #69BEB7;
 }
 
 /* 팀 관리 테이블 스타일 */

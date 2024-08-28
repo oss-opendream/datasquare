@@ -11,8 +11,7 @@
 }
 
 .btn:hover {
-    background-color: #0056b3;
-    /* 예시로 어두운 파란색을 직접 지정 */
+    background-color: #69BEB7;
 }
 
 .btn--secondary {
@@ -22,10 +21,10 @@
 .btn--error {
     background-color: transparent !important;
     /* 배경을 투명하게 설정 */
-    border: 2px solid rgb(25, 0, 255) !important;
-    /* 파란색 테두리 */
-    color: rgb(0, 0, 255) !important;
-    /* 버튼 텍스트 색상을 파란색으로 설정 */
+    border: 2px solid #69BEB7 !important;
+    /* 민트색 테두리 */
+    color: #69BEB7 !important;
+    /* 버튼 텍스트 색상을 민트색으로 설정 */
     padding: 10px 20px !important;
     /* 버튼의 패딩 조정 */
     border-radius: 5px !important;
@@ -41,17 +40,35 @@
 }
 
 .btn--error:hover {
-    background-color: rgba(0, 0, 255, 0.1) !important;
+    background-color: #59a9a3 !important;
     /* 호버 시 배경색 추가 */
-    color: darkblue !important;
+    color: rgb(126, 195, 200) !important;
     /* 호버 시 텍스트 색상 변경 */
 }
 
 .btn--delete {
-    background-color: #ff0019 !important;
+    background-color: #F55E5E !important;
     color: white !important;
 }
 
 .btn--delete:hover {
-    background-color: #c82333 !important;
+    background-color: #d74d4d !important;
+}
+
+.btn--cancel {
+    background-color: #F55E5E !important; 
+    color: white !important;
+}
+
+.btn--cancel:hover {
+    background-color: #d74d4d !important; 
+}
+
+.btn--submit {
+    background-color: #F55E5E !important;
+    color: white !important;
+}
+
+.btn--submit:hover {
+    background-color: #d74d4d !important;
 }
