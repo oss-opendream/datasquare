@@ -3,16 +3,20 @@
 
 import base64
 
-from fastapi import APIRouter, Request, HTTPException, Form, Depends
+from icecream import ic
+
+from fastapi import APIRouter, Request, HTTPException, Form, Depends, Body
 from fastapi.responses import HTMLResponse, RedirectResponse
 
 from app.crud.issue_crud import IssueData
 from app.crud.issue_comment_crud import IssueCommentData
 # from app.crud.noti import get_notification_count
 from app.crud.team_crud import TeamData
+from app.crud.org import DBInterface
 from app.schemas.user_schema import User
 from app.utils.get_current_user import get_current_user
 from app.utils.template import template
+from app.services.llm.interface import llm_trigger
 
 data_request_router = APIRouter(prefix='/data_request')
 
@@ -206,3 +210,14 @@ async def delete_issue(issue_id: int = Form(...),
         )
 
     return ret
+
+
+@data_request_router.post('/get_llm_response')
+async def get_llm_response(query_data: str = Body(...),
+                           current_user: User = Depends(get_current_user)):
+
+    test_result = DBInterface().get_org_for_llm()
+    print(test_result)
+    result = llm_trigger(DBInterface().get_org_for_llm(), query_data)
+
+    return result

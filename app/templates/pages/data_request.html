@@ -124,4 +124,46 @@ endblock %} {% block content %}
     window.location.href = "/feed";
   }
 </script>
+<form id="ai-form">
+  <label for="llm_input">LLM Input:</label>
+  <textarea id="llm_input" name="llm_input" rows="4" cols="50"></textarea><br><br>
+
+  <button type="button" onclick="fillFormWithAI()">Fill with AI</button><br><br>
+</form>
+<script>
+  function fillFormWithAI() {
+      const llm_input = document.getElementById('llm_input').value;
+
+      // FastAPI 서버의 경로
+      const api_url = '/data_request/get_llm_response';
+      
+
+
+      try {
+          // Fetch API를 이용하여 POST 요청을 보냅니다.
+          const response = fetch(api_url, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              body: `query_data=${llm_input}`
+          });
+
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+
+          const result = response.json();
+
+          // 결과값을 HTML 폼에 채웁니다.
+          document.getElementById('title').value = result['subject'];
+          document.getElementById('content').value = result['request_detail'];
+          document.getElementById('purpose').value = result['usage_purposes'];
+          document.getElementById('data_format').value = result['data format'];
+
+      } catch (error) {
+          console.error('There was a problem with the fetch operation:', error);
+      }
+  }
+</script>
 {% endblock %}

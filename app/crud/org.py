@@ -124,3 +124,20 @@ class DBInterface():
                     [databases, table, len(col), ', '.join(col_name)])
 
         return database_list
+
+    def get_org_for_llm(self):
+        databases_dict = {
+            'columns': [],
+            'owner': [],
+            'title': []
+        }
+        with next(self.db.get_db()) as db:
+            databases = db.query(OrgDatabase, OrgDatabaseTable).all()
+            for _, table in databases:
+                col = db.query(OrgDatabaseTableColumn).filter(
+                    OrgDatabaseTableColumn.within_table == table.table_id).all()
+                col_name = [c.column_name for c in col]
+                databases_dict['columns'].append(col_name)
+                databases_dict['title'].append(table.table_name)
+                databases_dict['owner'].append('')
+        return databases_dict
