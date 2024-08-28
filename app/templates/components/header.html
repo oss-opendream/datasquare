@@ -16,20 +16,19 @@
         </nav>
         <div class="header__user-actions">
             <div id="header__notification-button" class="header__notification-container">
-                <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications">
+                <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications" class="header__notification-icon">
                 {% if notification_count > 0 %}
                 <span class="header__notification-badge">{{ notification_count }}</span>
                 {% endif %}
             </div>
-            <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings"
-                class="header__settings-icon">
-            <a href="/profile">
-            <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile"
-                class="header__user-icon">
+            <div class="header__icon-container">
+                <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings" class="header__settings-icon">
+            </div>
+            <a href="/profile" class="header__icon-container">
+                <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile" class="header__user-icon">
             </a>
-            <a class="header__logout-button">
-                <img src="{{ url_for('static', path='images/logout-icon.svg') }}" alt="Logout"
-                    class="header__logout-icon">
+            <a class="header__logout-button header__icon-container">
+                <img src="{{ url_for('static', path='images/logout-icon.svg') }}" alt="Logout" class="header__logout-icon">
             </a>
         </div>
 </header>
