@@ -128,10 +128,11 @@ endblock %} {% block content %}
       {% for comment in comments %}
       <li id="comment-{{ comment.comment_id }}">
         <img
-          src="data:image;base64,{{ comment.image | safe }}"
+          src="data:image;base64, {{ comment.image | safe }}"
           width="30"
           alt="{{ comment.publisher }}"
           class="comment-publisher-profile-pic"
+          id="image"
         />
         <span
           id="comment-publisher"
@@ -146,24 +147,22 @@ endblock %} {% block content %}
           >{{ comment.team }}</span
         >
         <br />
-        <span class="comment-text"
-          >{{ comment.content }} {% if comment.publisher_id ==
-          current_user.profile_id %}
-          <button
-            class="btn btn--primary issue-comment-button"
-            onclick="editComment({{ comment.comment_id }})"
-          >
-            Edit
-          </button>
-          <button
-            class="btn btn--primary issue-comment-button"
-            onclick="deleteComment({{ comment.comment_id }})"
-          >
-            Delete
-          </button>
-          <hr />
-          {% endif %}
-        </span>
+        <span class="comment-text">{{ comment.content }} </span>
+        {% if comment.publisher_id == current_user.profile_id %}
+        <button
+          class="btn btn--primary issue-comment-button"
+          onclick="editComment({{ comment.comment_id }})"
+        >
+          Edit
+        </button>
+        <button
+          class="btn btn--primary issue-comment-button"
+          onclick="deleteComment({{ comment.comment_id }})"
+        >
+          Delete
+        </button>
+        <hr />
+        {% endif %}
       </li>
       {% endfor %}
     </div>
