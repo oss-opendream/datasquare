@@ -1,8 +1,9 @@
 '''이슈 페이지 관리 라우터 모듈'''
 
 
+import base64
+
 from fastapi import APIRouter, Request, HTTPException, Form, Depends
-from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
 
 from app.crud.issue_crud import IssueData
@@ -11,10 +12,9 @@ from app.crud.noti import get_notification_count
 from app.crud.team_crud import TeamData
 from app.schemas.user_schema import User
 from app.utils.get_current_user import get_current_user
-
+from app.utils.template import template
 
 data_request_router = APIRouter(prefix='/data_request')
-templates = Jinja2Templates(directory='app/templates')
 
 
 @data_request_router.get('/publish', response_class=HTMLResponse, name='data_request')
@@ -25,7 +25,7 @@ async def issue_pulish(
     '''이슈 발행 페이지 함수'''
 
     departments = TeamData().get_team_name()
-    ret = templates.TemplateResponse(
+    ret = template.TemplateResponse(
         'pages/data_request.html',
         {
             'request': request,
@@ -45,23 +45,23 @@ async def issue_views(
 ):
     '''이슈 조회 페이지 함수'''
 
-    issue = IssueData(current_user.profile_id).read_issue(issue_id)
-
-    if not issue:
+    issue_data = IssueData(current_user.profile_id).read_issue(issue_id)
+    if not issue_data:
         raise HTTPException(status_code=404, detail='Issue not found')
 
     comments = IssueCommentData(
         current_user.profile_id).read_issue_comments(issue_id)
 
-    team_name = TeamData().get_team_name_one(issue.requested_team)
+    requested_team_name = TeamData().get_team_name_one(
+        issue_data.requested_team)
 
-    ret = templates.TemplateResponse(
+    ret = template.TemplateResponse(
         'pages/data_request_view.html',
         {
             'request': request,
-            'issue': issue,
+            'issue': issue_data,
             'comments': comments,
-            'team_name': team_name,
+            'team_name': requested_team_name,
             'current_user': current_user,
             'notification_count': get_notification_count(current_user.profile_id)
         }
@@ -145,13 +145,14 @@ async def issue_edit_page(request: Request,
     issue = IssueData(current_userid=current_user).read_issue(
         issue_id=issue_id)
 
+    print()
     if not issue:
         raise HTTPException(status_code=404, detail='Issue not found')
 
     departments = TeamData().get_team_name()
     selected_team_name = TeamData().get_team_name_one(issue.requested_team)
 
-    ret = templates.TemplateResponse(
+    ret = template.TemplateResponse(
         'pages/data_request_edit.html',
         {
             'request': request,

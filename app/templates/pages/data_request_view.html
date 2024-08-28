@@ -14,6 +14,14 @@
             </div>
 
             <div class="form-group">
+                <label for="publisher" class="form-label">Publisher</label>
+                <img class="publisher_image" id="profilePic" src="data:image;base64,{{ issue.publisher_image | safe }}" width="200" alt="{{ issue.publisher_name }}"
+                        class="feed__issue-profile-pic">
+                <span id="publisher" name="publisher" class="form-textarea">{{ issue.publisher_name }}</span>
+                <span id="publisher" name="publisher_team" class="form-textarea">{{ issue.publisher_team }}</span>
+            </div>
+
+            <div class="form-group">
                 <label for="department" class="form-label">Requested Team</label>
                 <span id="department" name="department" class="form-textarea">{{ team_name }}</span>
             </div>
@@ -39,6 +47,11 @@
                     <input type="date" id="start-date" name="start-date" class="form-input date-input">
                     <input type="date" id="end-date" name="end-date" class="form-input date-input">
                 </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="data-format" class="form-label">Data Request Create Time</label>
+                <span id="data-format" name="data-format" class="form-textarea">{{ issue.created_at }}</span>
             </div>
 
             <div class="form-group">
@@ -72,17 +85,20 @@
         <div class="data-request__comments-list">
             {% for comment in comments %}
             <li id="comment-{{ comment.comment_id }}">
-                {% if comment.publisher == current_user.profile_id %}
-
-                <span class="comment-publisher">{{ comment.publisher }}</span>
+                <img src="data:image;base64,{{ comment.image | safe }}"width="30" alt="{{ comment.publisher }}"
+                        class="comment-publisher-profile-pic">
+                <span id="comment-publisher" name="comment-publisher" class="form-textarea">{{ comment.publisher }}</span>
+                <span id="comment_publisher_team" name="comment_publisher_team" class="form-textarea">{{ comment.team }}</span>
                 <br>
-                <span class="comment-text">{{ comment.content }}</span>
-                <button class="btn btn--primary issue-comment-button"
-                    onclick="editComment({{ comment.comment_id }})">Edit</button>
-                <button class="btn btn--primary issue-comment-button"
-                    onclick="deleteComment({{ comment.comment_id }})">Delete</button>
-                <hr>
+                <span class="comment-text">{{ comment.content }}
+                {% if comment.publisher_id == current_user.profile_id %}
+                    <button class="btn btn--primary issue-comment-button"
+                        onclick="editComment({{ comment.comment_id }})">Edit</button>
+                    <button class="btn btn--primary issue-comment-button"
+                        onclick="deleteComment({{ comment.comment_id }})">Delete</button>
+                    <hr>
                 {% endif %}
+            </span>
             </li>
             {% endfor %}
         </div>
@@ -97,5 +113,4 @@
     </div>
 </div>
 <script src="{{ url_for('static', path='js/issue_comment.js') }}"></script>
-
 {% endblock %}

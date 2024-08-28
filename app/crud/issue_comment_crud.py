@@ -1,11 +1,15 @@
 '''이슈 댓글 데이터를 CRUD하기 위한 모듈'''
 
 
+import base64
+
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
 
+from app.models.profile import TeamProfile, PersonalProfile, TeamMembership
 from app.models.issue import IssueComment
 from app.models.database import datasquare_db
+from app.schemas.issue import IssueCommentView
 
 
 class IssueCommentData():
@@ -52,16 +56,33 @@ class IssueCommentData():
 
     def read_issue_comments(self,
                             issue_id: int
-                            ) -> IssueComment:
+                            ) -> list:
         '''특정 이슈에 대한 모든 댓글을 조회하는 함수'''
 
         with next(self.db.get_db()) as db_session:
-            comments = db_session.query(IssueComment) \
+            comments = db_session.query(IssueComment, PersonalProfile, TeamProfile) \
                 .filter(and_(IssueComment.within == issue_id,
                              IssueComment.is_deleted == 0)) \
+                .outerjoin(PersonalProfile, PersonalProfile.profile_id == IssueComment.publisher) \
+                .outerjoin(TeamMembership, TeamMembership.member_id == PersonalProfile.profile_id) \
+                .outerjoin(TeamProfile, TeamProfile.profile_id == TeamMembership.team_id) \
                 .all()
 
-        return comments
+        issue_comments = []
+        for issue_comment, personal_profile, team_profile in comments:
+            comment = IssueCommentView(
+                issue_id=issue_comment.within,
+                comment_id=issue_comment.comment_id,
+                publisher_id=issue_comment.publisher,
+                publisher=personal_profile.name,
+                team=team_profile.team_name,
+                content=issue_comment.content,
+                image=base64.b64encode(
+                    personal_profile.profile_image).decode('utf-8')
+            )
+            issue_comments.append(comment)
+
+        return issue_comments
 
     def modified_issue_comment(self,
                                comment_id: int,

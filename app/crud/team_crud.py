@@ -2,6 +2,7 @@
 
 
 from typing import List, Optional
+import base64
 
 from sqlalchemy.orm import Session
 
@@ -44,9 +45,10 @@ class TeamData:
 
         with next(self.db.get_db()) as db_session:
             for team in team_names:
-                new_team = TeamProfile(team_name=team,
-                                       team_manager='')
-                db_session.add(new_team)
+                if team.strip():
+                    new_team = TeamProfile(team_name=team,
+                                           team_manager='')
+                    db_session.add(new_team)
 
             db_session.commit()
             db_session.refresh(new_team)
@@ -62,6 +64,9 @@ class TeamData:
                                       ) \
                                 .all()
 
+        for member in members:
+            member.profile_image = base64.b64encode(
+                member.profile_image).decode('utf-8')
         return members
 
     def get_all(self,) -> TeamProfile:
@@ -179,8 +184,6 @@ class TeamData:
 
             team = db_session.query(TeamProfile).filter(
                 TeamProfile.team_name == origin_name).one_or_none()
-
-            print(team)
 
             if team:
                 team.team_name = team_name

@@ -2,16 +2,13 @@
 
 
 from fastapi import APIRouter, Form, Depends
-from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse, JSONResponse
 
 from app.crud.issue_comment_crud import IssueCommentData
 from app.schemas.user_schema import User
 from app.utils.get_current_user import get_current_user
 
-
 issue_comment_router = APIRouter(prefix='/issue_comment')
-templates = Jinja2Templates(directory='app/templates')
 
 
 @issue_comment_router.post('/create')
@@ -70,7 +67,6 @@ async def delete_issue_comment(comment_id: int = Form(...),
     ret = JSONResponse(
         content={
             "status": "success",
-            # "issue_id": issue_id,
             "comment_id": comment_id
         }
     )
