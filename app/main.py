@@ -10,7 +10,7 @@ from starlette import status
 
 
 from app.models.database import Base, datasquare_db
-from app.routers import feed, data_request, issue_comment, sign, database_router, profile, admin, org
+from app.routers import feed, data_request, issue_comment, sign, org, profile, admin, org
 from app.utils.error_handlers import error_handlers
 
 
@@ -42,7 +42,6 @@ def create_app():
         feed.router,
         data_request.data_request_router,
         issue_comment.issue_comment_router,
-        database_router.router,
         profile.profilerouter,
         admin.router,
         org.router,
@@ -86,6 +85,7 @@ def root_redirect(request: Request):
 
     except:
         return RedirectResponse('/signin', status_code=status.HTTP_302_FOUND)
+
 
 if __name__ == '__main__':
 

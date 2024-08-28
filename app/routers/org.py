@@ -1,3 +1,7 @@
+'''데이터베이스 페이지 관리 라우터 모듈'''
+
+from datetime import datetime
+
 from fastapi import APIRouter, Request, Form, Depends, HTTPException
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
@@ -10,7 +14,7 @@ from app.database import get_db
 from app.utils.template import template
 from app.schemas import user_schema
 from app.utils.get_current_user import get_current_user
-
+from app.schemas.user_schema import User
 
 router = APIRouter(prefix='/admin/org')
 
@@ -62,4 +66,19 @@ async def handle_insertion_request(
             detail='Failed to create metadata for the organization using the provided database connection.'
         )
 
-    return RedirectResponse('/database')
+    return RedirectResponse('/admin/org/database')
+
+
+@router.get('/databases', name='databases')
+async def databases(
+    request: Request,
+    current_user: User = Depends(get_current_user)
+):
+    '''데이터베이스 페이지 함수'''
+
+    return template.TemplateResponse('pages/databases.html', {
+        'request': request,
+        'company_name': 'Your Company',
+        'current_year': datetime.now().year,
+        # 'notification_count': get_notification_count(current_user.profile_id)
+    })
