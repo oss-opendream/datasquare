@@ -6,7 +6,7 @@ authors = ["Open Dream"]
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "~3.10.14"
+python = "3.11.9"
 fastapi = {extras = ["standard"], version = "~0.112.2"}
 passlib = "~1.7.4"
 bcrypt = "~4.2.0"
@@ -20,6 +20,13 @@ SQLAlchemy = "~2.0.32"
 starlette = "~0.38.2"
 uvicorn = "~0.30.6"
 
+
+[tool.poetry.group.llm.dependencies]
+gensim = "~4.3.3"
+pandas = "~2.2.2"
+langchain-community = "~0.2.12"
+transformers = "~4.44.0"
+torch = "~2.4.0"
 
 [build-system]
 requires = ["poetry-core"]
