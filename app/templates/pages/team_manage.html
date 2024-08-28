@@ -3,18 +3,19 @@
 {% set hide_footer = false %}
 {% block title %}Team Management - DataSquare{% endblock %}
 {% block content %}
-
-<br>
-<br>
-<br>
-<br>
 <dialog id="memberDialog">
     <h2 class="select-team-manager__title">Select Team Manager</h2>
     <div class="select-team-manager__member-table">
         <ul id="memberList">
             <!-- 팀 멤버들이 여기 표시됩니다 -->
         </ul>
-        <button onclick="closeDialog()">Cancel</button>
+        <button onclick="closeDialog('memberDialog')">Cancel</button>
+</dialog>
+<dialog id="DuplicatedTeamNameDialog">
+    <h2 class="duplicated_team_name__title">Error</h2>
+    <div class="duplicated_team_name__content">
+        <p>Duplicate team names detected.<br>Please ensure all team names are unique.</p>
+        <button onclick="closeDialog('DuplicatedTeamNameDialog')">OK</button>
 </dialog>
 <div class="team-management">
     <h1 class="team-management__title">Team Management</h1>

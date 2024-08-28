@@ -8,22 +8,21 @@ from typing import Annotated
 
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi import APIRouter, Request, Depends, Form, File, UploadFile
-from fastapi.templating import Jinja2Templates
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 from fastapi import Response
 from jose import jwt
 from starlette import status
+from sqlalchemy.exc import IntegrityError
 
 from app.crud.team_crud import TeamData
 from app.crud.user_crud import UserData
 from app.schemas import user_schema
-
+from app.utils.template import template
 
 router = APIRouter()
-templates = Jinja2Templates(directory='app/templates')
 
-load_dotenv( override=True)
+load_dotenv(override=True)
 
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES'))
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
@@ -36,18 +35,17 @@ async def singin_get(
 ):
     '''로그인 페이지 라우터 함수'''
 
-    return templates.TemplateResponse(request=request,
-                                      name='pages/sign_in.html',
-                                      )
+    return template.TemplateResponse(request=request,
+                                     name='pages/sign_in.html',
+                                     )
 
 
-@router.post('/signin/post',response_model=user_schema.Token, name='sign_post')
+@router.post('/signin/post', name='sign_post')
 async def signin_post(
     request: Request,
     form_data: OAuth2PasswordRequestForm = Depends(),
 ):
     '''로그인 정보 라우터 함수'''
-    print(form_data)
 
     userdata_obj = UserData()
     user = userdata_obj.get_user_password(form_data.username,
@@ -59,19 +57,13 @@ async def signin_post(
         user = userdata_obj.get_admin_data(form_data.username)
         url = '/admin'
 
-    # print(user)
-
     if not user or not userdata_obj.pwd_context.verify(form_data.password, user.password):
-        return RedirectResponse(url='/signin?error=비밀번호가 일치하지 않습니다.',
-                                status_code=status.HTTP_302_FOUND)
-
-        #                         )
-        # return JSONResponse(
-        #     content={
-        #         "error": "비밀번호가 일치하지 않습니다."
-        #     },
-        #     status_code=status.HTTP_400_BAD_REQUEST
-        # )
+        return JSONResponse(
+            content={
+                "error": "The password is incorrect."
+            },
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
 
     data = {
         'sub': user.email,  # 사용자 식별
@@ -80,9 +72,11 @@ async def signin_post(
     access_token = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
 
     # HTTPOnly 쿠키로 토큰 반환
-    response = RedirectResponse(url=url,
-                                status_code=status.HTTP_302_FOUND
-                                )
+    response = JSONResponse(
+        content={"redirect_url": url},  # 리디렉션 URL을 JSON으로 반환
+        status_code=status.HTTP_200_OK
+    )
+
     response.set_cookie(
         key='access_token',
         value=access_token,
@@ -102,7 +96,7 @@ async def signup_get(
 
     departments = TeamData().get_team_name()
 
-    return templates.TemplateResponse(
+    return template.TemplateResponse(
         'pages/sign_up.html',
         context={
             'request': request,
@@ -126,6 +120,14 @@ async def signup_post(
 
     image_content = await image.read()
 
+    # 이미지가 아무것도 없을 때 default값 지정해주기
+    if not image_content:
+        current_dir = os.path.dirname(__file__)
+        image_path = os.path.abspath(os.path.join(
+            current_dir, "../static/images/default_user_thumb.png"))
+        with open(image_path, 'rb') as image_file:
+            image_content = image_file.read()
+
     try:
         user_create = user_schema.UserCreate(
             name=name,
@@ -139,7 +141,7 @@ async def signup_post(
     except:
         return JSONResponse(
             content={
-                "error": "이메일형식이 올바르지않습니다. 다시 작성해주세요"
+                "error": "The email format is incorrect. Please try again."
             },
             status_code=status.HTTP_400_BAD_REQUEST
         )
@@ -149,7 +151,7 @@ async def signup_post(
     if password != password2:
         return JSONResponse(
             content={
-                "error": "비밀번호가 일치하지 않습니다."
+                "error": "The password is incorrect."
             },
             status_code=status.HTTP_400_BAD_REQUEST
         )
@@ -158,24 +160,24 @@ async def signup_post(
     if userdata_obj.get_admin_data(user_create.email):
         return JSONResponse(
             content={
-                "error": "admin계정에 존재하는 계정입니다. 다른 계정으로 회원가입해주세요"
+                "error": "This account exists as an admin account. Please sign up with a different account."
             },
             status_code=status.HTTP_400_BAD_REQUEST
         )
 
-    if userdata_obj.get_user_password(email, key='email'):  # 이미 회원가입이 되어있는지 확인
-        return JSONResponse(
-            content={
-                "error": "이미 존재하는 계정입니다. 다른 계정으로 회원가입해주세요"
-            },
-            status_code=status.HTTP_400_BAD_REQUEST
-        )
-    else:
+    try:
         userdata_obj.create_user(user_create=user_create)
 
         return RedirectResponse(
             url='/signin',
             status_code=status.HTTP_302_FOUND
+        )
+    except IntegrityError:
+        return JSONResponse(
+            content={
+                'error': 'This account already exists. Please check your phone number and email again.'
+            },
+            status_code=status.HTTP_400_BAD_REQUEST
         )
 
 

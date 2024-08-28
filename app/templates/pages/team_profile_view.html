@@ -25,7 +25,7 @@
                     <h2 class="team-profile-view__members-title">Team members</h2>
                     {% for member in members %}
                     <div class="team-profile-view__member">
-                        <img src="data:image/png;base64,{{ member.image }}" id="profileThumb" width="200">
+                        <img src="data:image/png;base64,{{ member.profile_image }}" id="profileThumb" width="200">
                             <!-- alt="{{ member.name }}" class="team-profile-view__member-avatar"> -->
                         <span class="team-profile-view__member-name">{{ member.name }}</span>
                         <span class="team-profile-view__member-name">{{ member.email }}</span>

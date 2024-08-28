@@ -44,7 +44,10 @@ function saveComment() {
                 </div>
     `;
             } else {
-                alert('Failed to save the comment.');
+                // 에러 처리
+                return response.json().then(data => {
+                    alert(data.error);
+                });
             }
 })
 
