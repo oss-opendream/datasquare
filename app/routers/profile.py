@@ -10,7 +10,7 @@ from fastapi import APIRouter, Request, Depends, Form, File, UploadFile
 from fastapi.responses import JSONResponse
 from jose import jwt
 
-from app.crud.noti import get_notification_count
+# from app.crud.noti import get_notification_count
 from app.crud.team_crud import TeamData
 from app.crud.user_crud import UserData
 from app.schemas.user_schema import User
@@ -45,7 +45,7 @@ async def personal(
         'pages/personal.html',
         {
             'request': request,
-            'notification_count': get_notification_count(current_user.profile_id),
+            # 'notification_count': get_notification_count(current_user.profile_id),
             'image': base64.b64encode(personal_db.profile_image).decode('utf-8'),
             'name': personal_db.name,
             'email': personal_db.email,
@@ -66,7 +66,7 @@ async def personal_edit(
         'pages/personal_edit.html',
         {
             'request': request,
-            'notification_count': get_notification_count(current_user.profile_id),
+            # 'notification_count': get_notification_count(current_user.profile_id),
             'image': base64.b64encode(current_user.profile_image).decode('utf-8'),
             'name': current_user.name,
             'email': current_user.email,
@@ -114,7 +114,7 @@ async def personal_post(request: Request,
             'pages/personal.html',
             {
                 'request': request,
-                'notification_count': get_notification_count(update_data.profile_id),
+                # 'notification_count': get_notification_count(update_data.profile_id),
                 'image': base64.b64encode(update_data.profile_image).decode('utf-8'),
                 'name': update_data.name,
                 'email': update_data.email,
@@ -158,7 +158,7 @@ async def team_profile_get(
         'pages/team_profile_view.html',
         {
             'request': request,
-            'notification_count': get_notification_count(current_user.profile_id),
+            # 'notification_count': get_notification_count(current_user.profile_id),
             'team': team_data,
             'members': team_members,
             'has_permission': (team_manager == current_user.profile_id)

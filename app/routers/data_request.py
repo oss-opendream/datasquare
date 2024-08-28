@@ -8,7 +8,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 
 from app.crud.issue_crud import IssueData
 from app.crud.issue_comment_crud import IssueCommentData
-from app.crud.noti import get_notification_count
+# from app.crud.noti import get_notification_count
 from app.crud.team_crud import TeamData
 from app.schemas.user_schema import User
 from app.utils.get_current_user import get_current_user
@@ -30,7 +30,7 @@ async def issue_pulish(
         {
             'request': request,
             'departments': departments,
-            'notification_count': get_notification_count(current_user.profile_id)
+            # 'notification_count': get_notification_count(current_user.profile_id)
         }
     )
 
@@ -63,7 +63,7 @@ async def issue_views(
             'comments': comments,
             'team_name': requested_team_name,
             'current_user': current_user,
-            'notification_count': get_notification_count(current_user.profile_id)
+            # 'notification_count': get_notification_count(current_user.profile_id)
         }
     )
 
@@ -159,7 +159,7 @@ async def issue_edit_page(request: Request,
             'departments': departments,
             'selected_team_name': selected_team_name,
             'issue': issue,
-            'notification_count': get_notification_count(current_user.profile_id)
+            # 'notification_count': get_notification_count(current_user.profile_id)
         }
     )
 
