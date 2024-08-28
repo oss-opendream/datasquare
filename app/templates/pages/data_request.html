@@ -1,79 +1,127 @@
-{% extends "base.html" %}
-{% block title %}Data Request Form - DataSquare{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}Data Request Form - DataSquare{%
+endblock %} {% block content %}
 
 <div class="data-request">
-    <h1 class="data-request__title">Data Request Form</h1>
+  <h1 class="data-request__title">Data Request Form</h1>
 
-    <div class="data-request__content">
-        <div class="data-request__main-section">
-            <form class="data-request__form" action="/data_request/publish" method="post">
-                <div class="form-group">
-                    <label for="title" class="form-label">Title</label>
-                    <input type="text" id="title" name="title" class="form-input" placeholder="Title" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="content" class="form-label">Reqiurement</label>
-                    <textarea id="content" name="content" class="form-textarea" placeholder="Reqiurement"
-                        required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="purpose" class="form-label">Data Use Purpose</label>
-                    <input type="text" id="purpose" name="purpose" class="form-input" placeholder="Data Use Purpose"
-                        required>
-                </div>
-
-                <div class="form-group">
-                    <label for="data-format" class="form-label">Data Format</label>
-                    <input type="text" id="data-format" name="data-format" class="form-input" value="CSV(*.csv)"
-                        readonly>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Data Request Time Frame</label>
-                    <div class="date-range">
-                        <input type="date" id="start-date" name="start-date" class="form-input date-input">
-                        <input type="date" id="end-date" name="end-date" class="form-input date-input">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Publication Settings </label>
-                    <input type="radio" name="is_private" value="1">
-                    Private
-                    <br>
-                    <input type="radio" name="is_private" value="0" checked>
-                    Public
-                </div>
-
-                <div class="data-request__sidebar">
-                    <h2 class="data-request__sidebar-title">Department</h2>
-                    <div class="form-group">
-                        <label for="department" class="form-label">Departments</label>
-                        <select id="department" name="requested_team" class="form-select" required>
-                            <option value="">--Department--</option>
-                            {% for department in departments %}
-                            <option value="{{ department }}">{{ department }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="btn btn--cancel" onclick="cancelPublish()">Cancel</button>
-                    <button type="submit" class="btn btn--submit">Publish</button>
-                </div>
-            </form>
+  <div class="data-request__content">
+    <div class="data-request__main-section">
+      <form
+        class="data-request__form"
+        action="/data_request/publish"
+        method="post"
+      >
+        <div class="form-group">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="form-input"
+            placeholder="Title"
+            required
+          />
         </div>
+
+        <div class="form-group">
+          <label for="content" class="form-label">Reqiurement</label>
+          <textarea
+            id="content"
+            name="content"
+            class="form-textarea"
+            placeholder="Reqiurement"
+            required
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="purpose" class="form-label">Data Use Purpose</label>
+          <input
+            type="text"
+            id="purpose"
+            name="purpose"
+            class="form-input"
+            placeholder="Data Use Purpose"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="data-format" class="form-label">Data Format</label>
+          <input
+            type="text"
+            id="data-format"
+            name="data_format"
+            class="form-input"
+            value="CSV(*.csv)"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Data Request Time Frame</label>
+          <div class="date-range">
+            <input
+              type="date"
+              id="start-date"
+              name="start_date"
+              class="form-input date-input"
+            />
+            <input
+              type="date"
+              id="end-date"
+              name="end_date"
+              class="form-input date-input"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Publication Settings </label>
+          <input type="radio" name="is_private" value="1" />
+          Private
+          <br />
+          <input type="radio" name="is_private" value="0" checked />
+          Public
+        </div>
+
+        <div class="data-request__sidebar">
+          <h2 class="data-request__sidebar-title">Department</h2>
+          <div class="form-group">
+            <label for="department" class="form-label">Departments</label>
+            <select
+              id="department"
+              name="requested_team"
+              class="form-select"
+              required
+            >
+              <option value="">--Department--</option>
+              {% for department in departments %}
+              <option value="{{ department }}">{{ department }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn btn--cancel"
+            onclick="cancelPublish()"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="btn btn--submit">Publish</button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 <script>
-    function cancelPublish() {
-        alert('이슈 발행을 취소하였습니다.');
-        // 여기에 추가적인 취소 로직 구현 (예: 페이지 이동)
-        window.location.href = '/feed';
-    }
+  function cancelPublish() {
+    alert("이슈 발행을 취소하였습니다.");
+    // 여기에 추가적인 취소 로직 구현 (예: 페이지 이동)
+    window.location.href = "/feed";
+  }
 </script>
 {% endblock %}

@@ -73,6 +73,10 @@ async def issue_views(
 @ data_request_router.post('/publish')
 async def create_issue(title: str = Form(...),
                        content: str = Form(...),
+                       purpose: str = Form(...),
+                       data_format: str = Form(...),
+                       start_date: str = Form(...),
+                       end_date: str = Form(...),
                        requested_team: str = Form(...),
                        is_private: int = Form(...),
                        current_user: User = Depends(get_current_user)
@@ -80,6 +84,13 @@ async def create_issue(title: str = Form(...),
     '''새로운 Issue와 초기 IssueComment를 생성하고 저장'''
 
     issue_data = IssueData(current_user.profile_id)
+
+    content = f'''content: {content}
+    purpose: {purpose}
+    data_format: {data_format}
+    start_date: {start_date}
+    end_date: {end_date}
+    '''
 
     team_id = TeamData().get_team_id(requested_team)
     new_issue = issue_data.create_issue(
@@ -105,11 +116,23 @@ async def update_issue(
     issue_id: int = Form(...),
     title: str = Form(...),
     content: str = Form(...),
+    purpose: str = Form(...),
+    data_format: str = Form(...),
+    start_date: str = Form(...),
+    end_date: str = Form(...),
     requested_team: str = Form(...),
     is_private: int = Form(...),
     current_user: User = Depends(get_current_user)
+
 ):
     '''issue data 수정한 것을 반영하는 함수'''
+
+    content = f'''content: {content}
+    purpose: {purpose}
+    data_format: {data_format}
+    start_date: {start_date}
+    end_date: {end_date}
+    '''
 
     team_id = TeamData().get_team_id(requested_team)
     IssueData(current_userid=current_user.profile_id) \
