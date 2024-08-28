@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class DBConnectionForm(BaseModel):
@@ -6,4 +7,4 @@ class DBConnectionForm(BaseModel):
     port: int
     db_name: str
     user: str
-    password: str
+    password: Optional[str] = None
