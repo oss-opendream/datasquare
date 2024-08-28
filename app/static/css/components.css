@@ -96,7 +96,7 @@
 }
 
 .header__nav-item:hover {
-    color: #325ab7;
+    color: #69BEB7;
     text-decoration: underline;
 }
 
@@ -200,7 +200,7 @@
 }
 
 .header__notification-show-all {
-    color: #007bff;
+    color: #69BEB7;
     text-decoration: none;
     font-size: 14px;
 }
