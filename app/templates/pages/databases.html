@@ -1,9 +1,15 @@
-{% extends "base.html" %}
-{% block title %}Databases - DataSquare{% endblock %}
+{% extends "admin_base.html" %}
+{% set hide_header = false %}
+{% set hide_footer = false %}
+{% block title %}Team Management - DataSquare{% endblock %}
 {% block content %}
-
 <div class="databases">
     <h1 class="databases__title">Databases</h1>
+    <div class="databases__insert-data">
+        <form class="data-request__form" action="/admin/org/" method="get">
+            <button type="submit" class="btn btn--cancel">Data Insert</button>
+        </form>
+    </div>
     <div class="databases__controls">
         <div class="databases__filters">
             <button class="databases__filter-btn databases__filter-btn--active">All</button>

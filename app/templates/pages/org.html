@@ -1,0 +1,48 @@
+{% extends "admin_base.html" %}
+{% set hide_header = false %}
+{% set hide_footer = false %}
+{% block title %}Insert Database Metadata{% endblock %}
+{% block content %}
+<div class="data-request">
+    <h1 class="data-request__title">Insert Database Metadata</h1>
+
+    <div class="data-insert_database_metadata">
+        <div class="data-request__main-section">
+            <form class="data-request__form" action="/admin/org/" method="post">
+                <div class="form-group">
+                    <label for="HOST" class="form-label">HOST</label>
+                    <input type="text" id="title" name="host" class="form-input" placeholder="e.g. 127.0.0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="Port" class="form-label">Port</label>
+                    <input type="number" id="port" name="port" class="form-textarea" placeholder="e.g. 5432"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="db_name" class="form-label">DATABASE NAME</label>
+                    <input type="text" id="port" name="db_name" class="form-textarea" placeholder="e.g. world_population"
+                        required>
+                </div>
+                <label>Copy the name of the database you are trying to connect to.</label>
+                <div class="form-group">
+                    <label for="USERNAME" class="form-label">USER NAME</label>
+                    <input type="text" id="username" name="user" class="form-input" placeholder="USER NAME"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="text" id="password" name="password" class="form-input" placeholder="e.g. ********">
+                </div>
+
+
+                <div class="form-actions">
+                    <!-- <button type="button" class="btn btn--cancel" onclick="cancelPublish()">Cancel</button> -->
+                    <button type="submit" class="btn btn--submit">Insert</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
