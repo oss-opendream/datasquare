@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 # from app.database import Base, engine
 from app.models.database import datasquare_db, Base
 from app.models.org import OrgDatabase, OrgDatabaseTable, OrgDatabaseTableColumn, DatabaseTag, DatabaseTagRelationship
-from app.schemas.org import DBView
 
 
 class DBInterface():
