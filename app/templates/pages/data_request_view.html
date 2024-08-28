@@ -68,6 +68,7 @@ endblock %} {% block content %}
             name="start-date"
             class="form-input date-input"
             value="{{issue.content.split('\n')[3].split(':')[1].strip()}}"
+            readonly
           />
           <input
             type="date"
@@ -75,6 +76,7 @@ endblock %} {% block content %}
             name="end-date"
             class="form-input date-input"
             value="{{issue.content.split('\n')[4].split(':')[1].strip()}}"
+            readonly
           />
         </div>
       </div>
