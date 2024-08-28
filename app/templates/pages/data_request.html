@@ -131,7 +131,7 @@ endblock %} {% block content %}
   <button type="button" onclick="fillFormWithAI()">Fill with AI</button><br><br>
 </form>
 <script>
-  function fillFormWithAI() {
+  async function fillFormWithAI() {
       const llm_input = document.getElementById('llm_input').value;
 
       // FastAPI 서버의 경로
@@ -141,25 +141,25 @@ endblock %} {% block content %}
 
       try {
           // Fetch API를 이용하여 POST 요청을 보냅니다.
-          const response = fetch(api_url, {
+          const response = await fetch(api_url, {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/x-www-form-urlencoded'
               },
-              body: `query_data=${llm_input}`
+              body: `query_data="${llm_input}"`
           });
 
           if (!response.ok) {
               throw new Error('Network response was not ok');
           }
 
-          const result = response.json();
+          const result = await response.json();
 
           // 결과값을 HTML 폼에 채웁니다.
-          document.getElementById('title').value = result['subject'];
-          document.getElementById('content').value = result['request_detail'];
-          document.getElementById('purpose').value = result['usage_purposes'];
-          document.getElementById('data_format').value = result['data format'];
+          document.querySelector('.data-request__form #title').value = result['subject'];
+          document.querySelector('.data-request__form #content').value = result['request_detail'];
+          document.querySelector('.data-request__form #purpose').value = result['usage_purposes'];
+          document.querySelector('.data-request__form #data_format').value = result['data format'];
 
       } catch (error) {
           console.error('There was a problem with the fetch operation:', error);

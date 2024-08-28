@@ -3,10 +3,8 @@
 
 import base64
 
-from icecream import ic
-
 from fastapi import APIRouter, Request, HTTPException, Form, Depends, Body
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 
 from app.crud.issue_crud import IssueData
 from app.crud.issue_comment_crud import IssueCommentData
@@ -216,8 +214,8 @@ async def delete_issue(issue_id: int = Form(...),
 async def get_llm_response(query_data: str = Body(...),
                            current_user: User = Depends(get_current_user)):
 
-    test_result = DBInterface().get_org_for_llm()
-    print(test_result)
     result = llm_trigger(DBInterface().get_org_for_llm(), query_data)
 
-    return result
+    print(result)
+
+    return JSONResponse(content=result)
