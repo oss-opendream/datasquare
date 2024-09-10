@@ -131,7 +131,7 @@ endblock %} {% block content %}
   </div>
 
   <div class="data-request__comments">
-    <h2 class="data-request__comments-title">댓글</h2>
+    <h2 class="data-request__comments-title">Comments</h2>
     <div class="data-request__comments-list">
       <!-- Add comments here -->
     </div>
@@ -140,15 +140,15 @@ endblock %} {% block content %}
         id="comment"
         name="comment"
         class="form-textarea"
-        placeholder="댓글 본문"
+        placeholder="Add your comment here.."
       ></textarea>
-      <button type="button" class="btn btn--primary">등록</button>
+      <button type="button" class="btn btn--primary">Comment</button>
     </div>
   </div>
 </div>
 <script>
   function cancelPublish() {
-    alert("이슈 수정을 취소하였습니다.");
+    alert("Request was canceled.");
     // 여기에 추가적인 취소 로직 구현 (예: 페이지 이동)
     window.location.href = "/data_request/view?issue_id={{issue.issue_id}}";
   }

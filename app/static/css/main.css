@@ -87,7 +87,7 @@ body {
 .home__section-link {
     font-size: 1rem;
     /* 링크 크기 조정 */
-    color: #007bff;
+    color: #69BEB7;
     /* 링크 색상 설정 */
     text-decoration: underline;
     /* 밑줄 추가 */
@@ -412,7 +412,7 @@ body {
 .feed__teams a {
     display: block !important;
     padding: 0.5rem 0 !important;
-    color: #0d6efd !important;
+    color: #69BEB7 !important;
     text-decoration: none !important;
     font-size: 0.9rem !important;
 }
@@ -433,7 +433,7 @@ body {
 
 .feed__control-btn {
     padding: 0.5rem 1rem !important;
-    background-color: #0d6efd !important;
+    background-color: #69BEB7 !important;
     color: white !important;
     border: none !important;
     border-radius: 4px !important;
@@ -442,7 +442,7 @@ body {
 }
 
 .feed__control-btn:hover {
-    background-color: #0b5ed7 !important;
+    background-color: #58a69f !important;
 }
 
 .feed__issues {
@@ -473,7 +473,7 @@ body {
     font-size: 1.1rem !important;
     font-weight: bold !important;
     margin-bottom: 0.5rem !important;
-    color: #0d6efd !important;
+    color: #69BEB7 !important;
 }
 
 .feed__issue-description,
@@ -717,17 +717,20 @@ body {
 }
 
 .btn--cancel {
-    background-color: #6c757d;
+    background-color: #F55E5E;
     color: white;
 }
 
 .btn--submit {
-    background-color: #0056b3;
-    color: white;
+    background-color: #F55E5E !important;
+    color: white !important;
+}
+
+.btn--submit:hover {
+    background-color: #d74d4d !important;
 }
 
 .btn--primary {
-    background-color: #007bff;
     color: white;
 }
 
@@ -923,7 +926,7 @@ body {
 
 .btn {
     padding: 0.75rem !important;
-    background-color: #0F62FE !important;
+    background-color: #69BEB7 !important;
     color: white !important;
     border: none !important;
     border-radius: 0.25rem !important;
@@ -933,7 +936,7 @@ body {
 }
 
 .btn:hover {
-    background-color: #0D56D9 !important;
+    background-color: #589f99 !important;
 }
 
 .sign-in__signup-link {
@@ -944,7 +947,7 @@ body {
 }
 
 .sign-in__signup-link a {
-    color: #0F62FE !important;
+    color: #69BEB7!important;
     text-decoration: none !important;
 }
 
@@ -970,8 +973,8 @@ body {
 
 /* 회원가입 페이지 */
 .sign-up {
-    max-width: 30rem !important;
-    margin: 6.25rem 5% 6.25rem auto !important;
+    max-width: 27rem !important;
+    margin: 6.25rem 10% 6.25rem auto !important;
     /* 오른쪽 정렬 */
     padding: 2.5rem !important;
     background-color: #fff !important;
@@ -984,12 +987,12 @@ body {
 .sign-up::before {
     content: '' !important;
     position: absolute !important;
-    left: -270% !important;
-    /* 로고 위치 조정: 이 값을 조절하여 로고의 좌우 위치 변경 가능 */
+    left: calc(-100% - 19rem) !important;
     top: 50% !important;
-    transform: translateY(-60%) !important;
-    width: 600px !important;
-    height: 500px !important;
+    transform: translateY(-50%) !important;
+    width: 130% !important;
+    height: 0 !important;
+    padding-bottom: 83.33% !important;
     background-image: url('/static/images/logo_text.svg') !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
@@ -1006,6 +1009,35 @@ body {
 .sign-up__form {
     display: flex !important;
     flex-direction: column !important;
+}
+
+@media (max-width: 1100px) {
+    .sign-up {
+        margin: 8.25rem auto !important;
+        max-width: 90% !important;
+    }
+
+    .sign-up::before {
+        left: 50% !important;
+        top: -180px !important;
+        transform: translateX(-50%) !important;
+        width: 300px !important;
+        height: 250px !important;
+        padding-bottom: 0 !important;
+    }
+}
+
+@media (max-width: 48rem) {
+    .sign-up {
+        margin: 10rem auto 3.125rem !important;
+        padding: 1.25rem !important;
+    }
+
+    .sign-up::before {
+        top: -150px !important;
+        width: 200px !important;
+        height: 166px !important;
+    }
 }
 
 .form-group {
@@ -1036,7 +1068,7 @@ body {
 
 .btn {
     padding: 0.75rem !important;
-    background-color: #0F62FE !important;
+    background-color: #69BEB7 !important;
     color: white !important;
     border: none !important;
     border-radius: 0.25rem !important;
@@ -1046,7 +1078,7 @@ body {
 }
 
 .btn:hover {
-    background-color: #0D56D9 !important;
+    background-color: #5ba29c !important;
 }
 
 .sign-up__signin-link {
@@ -1057,7 +1089,7 @@ body {
 }
 
 .sign-up__signin-link a {
-    color: #0F62FE !important;
+    color: #69BEB7 !important;
     text-decoration: none !important;
 }
 
@@ -1130,7 +1162,7 @@ body {
     .sign-up::before {
         left: 50% !important;
         top: -10px !important;
-        transform: translateX(-50%) !important;
+        transform: translateX(-70%) translateY(-80%)!important;
         width: 300px !important;
         height: 250px !important;
         padding-bottom: 0 !important;
@@ -1244,13 +1276,13 @@ body {
 }
 
 .btn--primary {
-    background-color: #0d6efd !important;
+    background-color: #69BEB7 !important;
     color: white !important;
     border: none !important;
 }
 
 .btn--primary:hover {
-    background-color: #0b5ed7 !important;
+    background-color: #56a9a2 !important;
 }
 
 .checkbox-group {
@@ -1271,4 +1303,340 @@ body {
     .issue-publish__sidebar {
         margin-top: 2rem !important;
     }
+}
+
+/* 팀 프로필 페이지 스타일 */
+.wrapper {
+    display: flex;
+    max-width: 90%;
+    margin: 5vh auto;
+    background-color: #f8f9fa;
+}
+
+.sidebar {
+    flex: 1;
+    padding: 2em;
+    background-color: #fff;
+    border-right: 1px solid #dee2e6;
+}
+
+.sidebar-header h3 {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+
+.sidebar-nav {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-nav li a {
+    display: block;
+    padding: 0.5em 1em;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.sidebar-nav li a:hover {
+    background-color: #f1f3f5;
+}
+
+.team-profile-view {
+    flex: 3;
+    padding: 2em;
+}
+
+.team-profile-view__title {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 1em;
+}
+
+.team-profile-view__content {
+    background-color: #fff;
+    padding: 2em;
+    border-radius: 0.5em;
+    box-shadow: 0 0.125em 0.25em rgba(0, 0, 0, 0.075);
+}
+
+.team-profile-view__details h2 {
+    font-size: 1.5em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    color: #495057;
+}
+
+.team-profile-view__name,
+.team-profile-view__introduction {
+    font-size: 1em;
+    color: #212529;
+    margin-bottom: 1em;
+}
+
+.team-profile-view__members {
+    margin-top: 2em;
+}
+
+.team-profile-view__members-title {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    color: #495057;
+}
+
+.team-profile-view__member {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.team-profile-view__member img {
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    margin-right: 1em;
+}
+
+.team-profile-view__member-name,
+.team-profile-view__member-email {
+    font-size: 1em;
+    color: #212529;
+    margin-right: 1em;
+}
+
+.team-profile-view__actions {
+    margin-top: 2em;
+}
+
+.btn {
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 0.25em;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.btn--primary {
+    background-color: #69BEB7;
+    color: white;
+}
+
+.btn--primary:hover {
+    background-color: #548f8a;
+}
+
+.btn--secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn--secondary:hover {
+    background-color: #545b62;
+}
+
+/* 폼 입력 필드 스타일 (편집 모드) */
+.team-profile-view__name input,
+.team-profile-view__introduction textarea {
+    width: 100%;
+    padding: 0.5em;
+    border: 1px solid #ced4da;
+    border-radius: 0.25em;
+    font-size: 1em;
+}
+
+.team-profile-view__introduction textarea {
+    min-height: 5em;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 48em) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        border-right: none;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .team-profile-view {
+        padding: 1em;
+    }
+}
+/* Team Management 페이지 */
+.team-management {
+    max-width: 1200px;
+    margin: 1 auto;
+    padding: 2rem;
+}
+
+.team-header {
+    display: flex;
+    align-items: center; /* 세로 정렬 */
+}
+
+.team-header p {
+    margin: 0; /* 기본 여백 제거 */
+}
+
+.team-header p:last-child {
+    padding-right: 14rem; /* 뒤에만 왼쪽 패딩 추가 */
+}
+
+.team-management__title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.team-management__content {
+    display: flex;
+    gap: 2rem;
+}
+
+.team-management__nav {
+    flex: 0 0 200px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.team-management__nav-item {
+    display: block;
+    padding: 1rem;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.team-management__nav-item--active {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.team-management__main {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 2rem;
+}
+
+.team-management__section-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.team-row {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.team-row input[type="text"] {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    margin-right: 1rem;
+    background-color: #fff;
+}
+
+.team-row input[type="text"]:nth-child(2) {
+    flex: 1 1 200px; /* 팀 매니저 입력 필드의 너비 조정 */
+    margin-right: 1rem; /* 필요한 경우 오른쪽 여백 추가 */
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+.btn--delete {
+    background-color: #F55E5E;
+    color: white;
+}
+
+.btn--edit {
+    background-color: #6c757d;
+    color: white;
+}
+
+#addTeamBtn {
+    background-color: #f1f3f4;
+    color: #333;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.btn--primary {
+    background-color: #7CBDC1;
+    color: white;
+    float: right;
+    margin-top: 1rem;
+}
+
+.notification {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification__close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #155724;
+}
+
+.btn--cancel {
+    background-color: #F55E5E;
+    color: white;
+}
+
+.btn--submit {
+    background-color: #F55E5E !important;
+    color: white !important;
+}
+
+.btn--submit:hover {
+    background-color: #d74d4d !important;
+}
+
+.btn--primary.issue-comment-button:nth-of-type(2) {
+    background-color: #F55E5E !important; /* 배경색 */
+    color: white !important; /* 텍스트 색상 */
+    border: none !important; /* 테두리 제거 */
+    padding: 10px 20px !important; /* 패딩 */
+    text-align: center !important; /* 텍스트 정렬 */
+    text-decoration: none !important; /* 텍스트 장식 제거 */
+    display: inline-block !important; /* 인라인 블록으로 설정 */
+    font-size: 16px !important; /* 글자 크기 */
+    cursor: pointer !important; /* 커서 모양 변경 */
+    border-radius: 5px !important; /* 모서리 둥글게 */
+    transition: background-color 0.3s !important; /* 배경색 변경 시 애니메이션 */
+}
+
+.btn--primary.issue-comment-button:nth-of-type(2):hover {
+    background-color: #d44e4e !important; /* 호버 시 배경색 변경 */
 }
