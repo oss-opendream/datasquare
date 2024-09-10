@@ -10,7 +10,7 @@ from starlette import status
 
 
 from app.models.database import Base, datasquare_db
-from app.routers import feed, data_request, issue_comment, sign, org, profile, admin, org
+from app.routers import feed, data_request, issue_comment, sign, org, profile, admin
 from app.utils.error_handlers import error_handlers
 
 
