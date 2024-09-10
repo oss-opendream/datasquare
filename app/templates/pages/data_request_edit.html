@@ -1,88 +1,134 @@
-{% extends "base.html" %}
-{% block title %}Data Request Edit - DataSquare{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}Data Request Edit - DataSquare{%
+endblock %} {% block content %}
 
 <div class="data-request">
-    <h1 class="data-request__title">Data Request Edit</h1>
+  <h1 class="data-request__title">Data Request Edit</h1>
 
-    <div class="data-request__content">
-        <div class="data-request__main-section">
-            <form class="data-request__form" action="/data_request/edit" method="post">
-                <div class="form-group">
-                    <label for="title" class="form-label">Title</label>
-                    <input type="text" id="title" name="title" class="form-input" value="{{issue.title}}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="content" class="form-label">Reqiurement</label>
-                    <textarea id="content" name="content" class="form-textarea" required>{{issue.content}}</textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="purpose" class="form-label">Data Use Purpose</label>
-                    <!-- value 넣기 -->
-                    <input type="text" id="purpose" name="purpose" class="form-input" placeholder="Data Use Purpose"
-                        required>
-                </div>
-
-                <div class="form-group">
-                    <label for="data-format" class="form-label">Data Format</label>
-                    <!-- value 넣기 -->
-                    <input type="text" id="data-format" name="data-format" class="form-input" value="CSV(*.csv)"
-                        readonly>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Data Request Time Frame</label>
-                    <div class="date-range">
-                        <!-- value 넣기 -->
-                        <input type="date" id="start-date" name="start-date" class="form-input date-input">
-                        <input type="date" id="end-date" name="end-date" class="form-input date-input">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Publication Settings </label>
-                    {% if issue.is_private == 0 %}
-                    <input type="radio" name="is_private" value="1">
-                    Private
-                    <br>
-                    <input type="radio" name="is_private" value="0" checked>
-                    Public
-                    {% else %}
-                    <input type="radio" name="is_private" value="1" checked>
-                    Private
-                    <br>
-                    <input type="radio" name="is_private" value="0">
-                    Public
-                    {% endif %}
-                </div>
-
-                <div class="data-request__sidebar">
-                    <h2 class="data-request__sidebar-title">Department</h2>
-                    <div class="form-group">
-                        <label for="department" class="form-label">Departments</label>
-                        <select id="department" name="requested_team" class="form-select" required>
-                            <option value="">--Department--</option>
-                            {% for department in departments %}
-                            {% if department == selected_team_name %}
-                            <option value="{{ department }}" selected>{{ department }}</option>
-                            {% else %}
-                            <option value="{{ department }}">{{ department }}</option>
-                            {% endif %}
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="btn btn--cancel" onclick="cancelPublish()">Cancel</button>
-                    <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
-                    <button type="submit" class="btn btn--submit">Edit</button>
-                </div>
-            </form>
+  <div class="data-request__content">
+    <div class="data-request__main-section">
+      <form
+        class="data-request__form"
+        action="/data_request/edit"
+        method="post"
+      >
+        <div class="form-group">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="form-input"
+            value="{{issue.title}}"
+            required
+          />
         </div>
+
+        <div class="form-group">
+          <label for="content" class="form-label">Requirement</label>
+          <textarea id="content" name="content" class="form-textarea" required>
+{{ issue.content.split("\n")[0].split(":")[1] }}</textarea
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="purpose" class="form-label">Data Use Purpose</label>
+          <!-- value 넣기 -->
+          <input
+            type="text"
+            id="purpose"
+            name="purpose"
+            class="form-input"
+            placeholder="Data Use Purpose"
+            value='{{
+          issue.content.split("\n")[1].split(":")[1] }}'
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="data-format" class="form-label">Data Format</label>
+          <!-- value 넣기 -->
+          <input
+            type="text"
+            id="data_format"
+            name="data_format"
+            class="form-input"
+            value='{{ issue.content.split("\n")[2].split(":")[1] }}'
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Data Request Time Frame</label>
+          <div class="date-range">
+            <input
+              type="date"
+              id="start-date"
+              name="start_date"
+              class="form-input date-input"
+              value="{{issue.content.split('\n')[3].split(':')[1].strip()}}"
+            />
+            <input
+              type="date"
+              id="end-date"
+              name="end_date"
+              class="form-input date-input"
+              value="{{issue.content.split('\n')[4].split(':')[1].strip()}}"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Publication Settings </label>
+          {% if issue.is_private == 0 %}
+          <input type="radio" name="is_private" value="1" />
+          Private
+          <br />
+          <input type="radio" name="is_private" value="0" checked />
+          Public {% else %}
+          <input type="radio" name="is_private" value="1" checked />
+          Private
+          <br />
+          <input type="radio" name="is_private" value="0" />
+          Public {% endif %}
+        </div>
+
+        <div class="data-request__sidebar">
+          <h2 class="data-request__sidebar-title">Department</h2>
+          <div class="form-group">
+            <label for="department" class="form-label">Departments</label>
+            <select
+              id="department"
+              name="requested_team"
+              class="form-select"
+              required
+            >
+              <option value="">--Department--</option>
+              {% for department in departments %} {% if department ==
+              selected_team_name %}
+              <option value="{{ department }}" selected>
+                {{ department }}
+              </option>
+              {% else %}
+              <option value="{{ department }}">{{ department }}</option>
+              {% endif %} {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn btn--cancel"
+            onclick="cancelPublish()"
+          >
+            Cancel
+          </button>
+          <input type="hidden" name="issue_id" value="{{ issue.issue_id }}" />
+          <button type="submit" class="btn btn--submit">Edit</button>
+        </div>
+      </form>
     </div>
+  </div>
 
   <div class="data-request__comments">
     <h2 class="data-request__comments-title">Comments</h2>

@@ -4,7 +4,7 @@
 from fastapi import APIRouter, Request, Depends
 
 from app.crud.feed_crud import FeedData
-from app.crud.noti import get_notification_count
+# from app.crud.noti import get_notification_count
 from app.crud.team_crud import TeamData
 from app.schemas.user_schema import User
 from app.utils.get_current_user import get_current_user
@@ -36,7 +36,7 @@ async def read_dashboard(
             'request': request,
             'teams': teams_list,
             'issues': issue_data,
-            'notification_count': get_notification_count(current_user.profile_id)
+            # 'notification_count': get_notification_count(current_user.profile_id)
         }
     )
 
@@ -64,7 +64,7 @@ async def read_my_issues(
             'request': request,
             'teams': teams_list,
             'issues': issue_data,
-            'notification_count': get_notification_count(current_user.profile_id)
+            # 'notification_count': get_notification_count(current_user.profile_id)
         }
     )
 
@@ -97,6 +97,6 @@ async def search_issues(
             'request': request,
             'teams': teams_list,
             'issues': result_data,
-            'notification_count': get_notification_count(current_user.profile_id)
+            # 'notification_count': get_notification_count(current_user.profile_id)
         }
     )

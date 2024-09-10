@@ -6,8 +6,8 @@
                     class="header__logo-image">
                 <div class="header__logo-text">
                     <span class="header__logo-brand">DataSquare</span>
-                    <br>
-                    <span class="header__logo-company">for {{ company_name }}</span>
+                    <!-- <br>
+                    <span class="header__logo-company">for company_name</span> -->
                 </div>
             </div>
         </a>
@@ -15,12 +15,12 @@
             <a href="{{ url_for('data_request') }}" class="header__nav-item">Data Request</a>
         </nav>
         <div class="header__user-actions">
-            <div id="header__notification-button" class="header__notification-container">
+            <!-- <div id="header__notification-button" class="header__notification-container">
                 <img src="{{ url_for('static', path='/images/bell-icon.svg') }}" alt="Notifications">
                 <span class="header__notification-badge">notification_count</span>
             </div> -->
-            <!-- <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings"
-                class="header__settings-icon"> -->
+            <img src="{{ url_for('static', path='/images/settings-icon.svg') }}" alt="Settings"
+                class="header__settings-icon">
             <a href="/profile">
             <img src="{{ url_for('static', path='/images/user-icon.svg') }}" alt="User Profile"
                 class="header__user-icon">
@@ -31,18 +31,15 @@
         </div>
 </header>
 
-<div id="header__notification-popup" class="header__notification-popup">
+<!-- <div id="header__notification-popup" class="header__notification-popup">
     <div class="header__notification-header">
         <h3 class="header__notification-title">알림</h3>
         <button class="header__notification-close">&times;</button>
     </div>
     <ul class="header__notification-list">
-        {% if notifications %}
-        {% for notification in notifications %}
-        <li class="header__notification-item">{{ notification.message }}</li>
-        {% endfor %}
-        {% else %}
-        <li class="header__notification-item header__notification-item--empty">새로운 알림이 없습니다.</li>
-        {% endif %}
+        <!-- notifications -->
+        <!-- for notification in notifications -->
+        <!-- <li class="header__notification-item">notification.message</li> -->
+        <!-- <li class="header__notification-item header__notification-item--empty">새로운 알림이 없습니다.</li>
     </ul>
-</div>
+</div>  -->

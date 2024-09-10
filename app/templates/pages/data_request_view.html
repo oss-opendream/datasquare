@@ -1,116 +1,190 @@
-{% extends "base.html" %}
-{% block title %}Data Request Form - DataSquare{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}Data Request Form - DataSquare{%
+endblock %} {% block content %}
 
 <div class="data-request">
-    <h1 class="data-request__title">Data Request Form</h1>
+  <h1 class="data-request__title">Data Request Form</h1>
 
-    <div class="data-request__content">
-        <div class="data-request__main-section">
+  <div class="data-request__content">
+    <div class="data-request__main-section">
+      <div class="form-group">
+        <label for="title" class="form-label">Title</label>
+        <span id="title" name="title" class="form-textarea"
+          >{{ issue.title }}</span
+        >
+      </div>
 
-            <div class="form-group">
-                <label for="title" class="form-label">Title</label>
-                <span id="title" name="title" class="form-textarea">{{ issue.title }}</span>
-            </div>
+      <div class="form-group">
+        <label for="publisher" class="form-label">Publisher</label>
+        <img
+          class="publisher_image"
+          id="profilePic"
+          src="data:image;base64,{{ issue.publisher_image | safe }}"
+          width="200"
+          alt="{{ issue.publisher_name }}"
+          class="feed__issue-profile-pic"
+        />
+        <span id="publisher" name="publisher" class="form-textarea"
+          >{{ issue.publisher_name }}</span
+        >
+        <span id="publisher" name="publisher_team" class="form-textarea"
+          >{{ issue.publisher_team }}</span
+        >
+      </div>
 
-            <div class="form-group">
-                <label for="publisher" class="form-label">Publisher</label>
-                <img class="publisher_image" id="profilePic" src="data:image;base64,{{ issue.publisher_image | safe }}" width="200" alt="{{ issue.publisher_name }}"
-                        class="feed__issue-profile-pic">
-                <span id="publisher" name="publisher" class="form-textarea">{{ issue.publisher_name }}</span>
-                <span id="publisher" name="publisher_team" class="form-textarea">{{ issue.publisher_team }}</span>
-            </div>
+      <div class="form-group">
+        <label for="department" class="form-label">Requested Team</label>
+        <span id="department" name="department" class="form-textarea"
+          >{{ team_name }}</span
+        >
+      </div>
 
-            <div class="form-group">
-                <label for="department" class="form-label">Requested Team</label>
-                <span id="department" name="department" class="form-textarea">{{ team_name }}</span>
-            </div>
+      <div class="form-group">
+        <label for="content" class="form-label">Requirement</label>
+        <span id="content" name="content" class="form-textarea"
+          >{{ issue.content.split("\n")[0].split(":")[1] }}</span
+        >
+      </div>
 
-            <div class="form-group">
-                <label for="content" class="form-label">Reqiurement</label>
-                <span id="content" name="content" class="form-textarea">{{ issue.content }}</span>
-            </div>
+      <div class="form-group">
+        <label for="purpose" class="form-label">Data Use Purpose</label>
+        <span id="purpose" name="purpose" class="form-textarea"
+          >{{ issue.content.split("\n")[1].split(":")[1] }}</span
+        >
+      </div>
 
-            <div class="form-group">
-                <label for="purpose" class="form-label">Data Use Purpose</label>
-                <span id="purpose" name="purpose" class="form-textarea">{{ issue.purpose }}</span>
-            </div>
+      <div class="form-group">
+        <label for="data-format" class="form-label">Data Format</label>
+        <span id="data-format" name="data-format" class="form-textarea"
+          >{{ issue.content.split("\n")[2].split(":")[1] }}</span
+        >
+      </div>
 
-            <div class="form-group">
-                <label for="data-format" class="form-label">Data Format</label>
-                <span id="data-format" name="data-format" class="form-textarea">{{ issue.format }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Data Request Time Frame</label>
-                <div class="date-range">
-                    <input type="date" id="start-date" name="start-date" class="form-input date-input">
-                    <input type="date" id="end-date" name="end-date" class="form-input date-input">
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="data-format" class="form-label">Data Request Create Time</label>
-                <span id="data-format" name="data-format" class="form-textarea">{{ issue.created_at }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Publication Settings </label>
-                {% if issue.is_private == 0 %}
-                <input type="radio" name="is_private" value="0" checked disabled>
-                Public
-                {% else %}
-                <input type="radio" name="is_private" value="1" checked disabled>
-                Private
-                {% endif %}
-            </div>
-
-            {% if issue.publisher == current_user.profile_id %}
-            <div class="form-actions">
-                <form class="data-request__form" action="/data_request/edit" method="get">
-                    <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
-                    <button type="submit" class="btn btn--cancel">Modify</button>
-                </form>
-                <form class="data-request__form" action="/data_request/delete" method="post">
-                    <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
-                    <button type="submit" class="btn btn--submit">Delete</button>
-                </form>
-            </div>
-            {% endif %}
+      <div class="form-group">
+        <label class="form-label">Data Request Time Frame</label>
+        <div class="date-range">
+          <input
+            type="date"
+            id="start-date"
+            name="start-date"
+            class="form-input date-input"
+            value="{{issue.content.split('\n')[3].split(':')[1].strip()}}"
+            readonly
+          />
+          <input
+            type="date"
+            id="end-date"
+            name="end-date"
+            class="form-input date-input"
+            value="{{issue.content.split('\n')[4].split(':')[1].strip()}}"
+            readonly
+          />
         </div>
-    </div>
+      </div>
 
+      <div class="form-group">
+        <label for="data-format" class="form-label"
+          >Data Request Create Time</label
+        >
+        <span id="data-format" name="data-format" class="form-textarea"
+          >{{ ' '.join(issue.created_at.replace('I','').split('T')) }}</span
+        >
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Publication Settings </label>
+        {% if issue.is_private == 0 %}
+        <input type="radio" name="is_private" value="0" checked disabled />
+        Public {% else %}
+        <input type="radio" name="is_private" value="1" checked disabled />
+        Private {% endif %}
+      </div>
+
+      {% if issue.publisher == current_user.profile_id %}
+      <div class="form-actions">
+        <form
+          class="data-request__form"
+          action="/data_request/edit"
+          method="get"
+        >
+          <input type="hidden" name="issue_id" value="{{ issue.issue_id }}" />
+          <button type="submit" class="btn btn--cancel">Modify</button>
+        </form>
+        <form
+          class="data-request__form"
+          action="/data_request/delete"
+          method="post"
+        >
+          <input type="hidden" name="issue_id" value="{{ issue.issue_id }}" />
+          <button type="submit" class="btn btn--submit">Delete</button>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="data-request__comments">
+    <h2 class="data-request__comments-title">Comments</h2>
+    <div class="data-request__comments-list">
+      {% for comment in comments %}
+      <li id="comment-{{ comment.comment_id }}">
+        <img
+          src="data:image;base64, {{ comment.image | safe }}"
+          width="30"
+          alt="{{ comment.publisher }}"
+          class="comment-publisher-profile-pic"
+          id="image"
+        />
+        <span
+          id="comment-publisher"
+          name="comment-publisher"
+          class="form-textarea"
+          >{{ comment.publisher }}</span
+        >
+        <span
+          id="comment_publisher_team"
+          name="comment_publisher_team"
+          class="form-textarea"
+          >{{ comment.team }}</span
+        >
+        <br />
+        <span class="comment-text">{{ comment.content }} </span>
+        {% if comment.publisher_id == current_user.profile_id %}
+        <button
+          class="btn btn--primary issue-comment-button"
+          onclick="editComment({{ comment.comment_id }})"
+        >
+          Edit
+        </button>
+        <button
+          class="btn btn--primary issue-comment-button"
+          onclick="deleteComment({{ comment.comment_id }})"
+        >
+          Delete
+        </button>
+        <hr />
+        {% endif %}
+      </li>
+      {% endfor %}
+    </div>
     <div class="data-request__comments">
-        <h2 class="data-request__comments-title">Comments</h2>
-        <div class="data-request__comments-list">
-            {% for comment in comments %}
-            <li id="comment-{{ comment.comment_id }}">
-                <img src="data:image;base64,{{ comment.image | safe }}"width="30" alt="{{ comment.publisher }}"
-                        class="comment-publisher-profile-pic">
-                <span id="comment-publisher" name="comment-publisher" class="form-textarea">{{ comment.publisher }}</span>
-                <span id="comment_publisher_team" name="comment_publisher_team" class="form-textarea">{{ comment.team }}</span>
-                <br>
-                <span class="comment-text">{{ comment.content }}
-                {% if comment.publisher_id == current_user.profile_id %}
-                    <button class="btn btn--primary issue-comment-button"
-                        onclick="editComment({{ comment.comment_id }})">Edit</button>
-                    <button class="btn btn--primary issue-comment-button"
-                        onclick="deleteComment({{ comment.comment_id }})">Delete</button>
-                    <hr>
-                {% endif %}
-            </span>
-            </li>
-            {% endfor %}
-        </div>
-        <div class="data-request__comments">
-            <h2 class="data-request__comments-title">Comments</h2>
-            <form class="data-request__comment-form" action="/issue_comment/create" method="post">
-                <input type="hidden" name="issue_id" value="{{ issue.issue_id }}">
-                <textarea id="comment" name="comment" class="form-textarea" placeholder="Comment" required></textarea>
-                <button type="submit" class="btn btn--primary">Comment</button>
-            </form>
-        </div>
+      <h2 class="data-request__comments-title">Comments</h2>
+      <form
+        class="data-request__comment-form"
+        action="/issue_comment/create"
+        method="post"
+      >
+        <input type="hidden" name="issue_id" value="{{ issue.issue_id }}" />
+        <textarea
+          id="comment"
+          name="comment"
+          class="form-textarea"
+          placeholder="Comment"
+          required
+        ></textarea>
+        <button type="submit" class="btn btn--primary">Comment</button>
+      </form>
     </div>
+  </div>
 </div>
 <script src="{{ url_for('static', path='js/issue_comment.js') }}"></script>
 {% endblock %}
