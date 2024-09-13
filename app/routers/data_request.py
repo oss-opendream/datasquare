@@ -2,6 +2,7 @@
 
 
 import base64
+from typing import Optional
 
 from fastapi import APIRouter, Request, HTTPException, Form, Depends, Body
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
@@ -42,14 +43,15 @@ async def issue_pulish(
 @data_request_router.get('/view', response_class=HTMLResponse, name='issue_views')
 async def issue_views(
     request: Request,
-    issue_id: int,
+    issue_id: Optional[int] = None,
     current_user: User = Depends(get_current_user)
 ):
     '''이슈 조회 페이지 함수'''
-
+    if not issue_id:
+        raise HTTPException(status_code=422, detail='Unprocessable Entity')
     issue_data = IssueData(current_user.profile_id).read_issue(issue_id)
     if not issue_data:
-        raise HTTPException(status_code=404, detail='Issue not found')
+        raise HTTPException(status_code=500, detail='Issue not found')
 
     comments = IssueCommentData(
         current_user.profile_id).read_issue_comments(issue_id)

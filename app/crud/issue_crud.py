@@ -77,27 +77,30 @@ class IssueData():
                 .outerjoin(TeamProfile, TeamMembership.team_id == TeamProfile.profile_id) \
                 .filter(Issue.is_deleted == 0).one_or_none()
 
-        issue_object = issue_data[0]
-        personal_object = issue_data[1]
-        team_object = issue_data[2]
+        try:
+            issue_object = issue_data[0]
+            personal_object = issue_data[1]
+            team_object = issue_data[2]
 
-        ret = DataRequestView(
-            issue_id=issue_object.issue_id,
-            title=issue_object.title,
-            content=issue_object.content,
-            publisher=issue_object.publisher,
-            requested_team=issue_object.requested_team,
-            is_private=issue_object.is_private,
-            created_at=issue_object.created_at,
-            modified_at=issue_object.modified_at,
-            is_deleted=issue_object.is_deleted,
-            publisher_name=personal_object.name,
-            publisher_image=base64.b64encode(
-                personal_object.profile_image).decode('utf-8'),
-            publisher_team=team_object.team_name
-        )
+            ret = DataRequestView(
+                issue_id=issue_object.issue_id,
+                title=issue_object.title,
+                content=issue_object.content,
+                publisher=issue_object.publisher,
+                requested_team=issue_object.requested_team,
+                is_private=issue_object.is_private,
+                created_at=issue_object.created_at,
+                modified_at=issue_object.modified_at,
+                is_deleted=issue_object.is_deleted,
+                publisher_name=personal_object.name,
+                publisher_image=base64.b64encode(
+                    personal_object.profile_image).decode('utf-8'),
+                publisher_team=team_object.team_name
+            )
 
-        return ret
+            return ret
+        except:
+            return None
 
     def update_issue_data(
         self,
