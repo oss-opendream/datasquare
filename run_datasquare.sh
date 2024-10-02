@@ -4,7 +4,7 @@
 set -e
 
 which pyenv
-/root/.pyenv/bin/pyenv activate ds_env 
-poetry install 
-python3 ./app/utils/key_scribe.py "$@"
-poetry run fastapi run 
+# /root/.pyenv/bin/pyenv activate ds_env 
+# poetry install 
+# python3 ./app/utils/key_scribe.py "$@"
+# poetry run fastapi run 
