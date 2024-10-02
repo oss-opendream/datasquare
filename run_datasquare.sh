@@ -4,6 +4,7 @@
 set -e
 
 cd /datasquare
+echo asdf
 which pyenv
 # /root/.pyenv/bin/pyenv activate ds_env 
 # poetry install 
