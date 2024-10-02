@@ -1,7 +1,7 @@
 #!/usr/bin/expect
 
 set timeout -1
-spawn ./run_datasquare.sh
+spawn /root/.local/share/pypoetry/venv/bin/poetry run fastapi run 
 expect "Enter your token (input will not be visible):"
 send "$env(TOKEN)\r"
 expect "Add token as git credential? (Y/n)"
