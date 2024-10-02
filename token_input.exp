@@ -1,0 +1,9 @@
+#!/usr/bin/expect
+
+set timeout -1
+spawn ./run_datasquare.sh
+expect "Enter your token (input will not be visible):"
+send "$env(TOKEN)\r"
+expect "Add token as git credential? (Y/n)"
+send "\r"
+expect eof

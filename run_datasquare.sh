@@ -4,5 +4,6 @@
 set -e
 
 # pip install -r ./requirements.txt
+poetry install 
 python3 ./app/utils/key_scribe.py "$@"
-fastapi run 
+poetry run fastapi run 
